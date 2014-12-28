@@ -1,13 +1,16 @@
 (ns mafia-votecount.scraper.team-liquid
   (:require [net.cgrand.enlive-html :as html])
+  (:import [java.net URL URLConnection])
   (:gen-class))
 
 (defn- fetch-page [path]
-  ;; TODO: Do important validations
-  ;; - Path
-  ;; - File size
-  ;; - File type
-  (html/html-resource (java.io.StringReader. (slurp path))))
+  (if-not (.contains path "teamliquid.net/forum/") nil
+    (try
+      (let [connection (. (URL. path) openConnection)]
+        (cond (not (.contains (.getContentType connection) "text/html")) nil
+              (> (.getContentLengthLong connection) 1048576) nil ;; Over megabyte
+              :else (html/html-resource (java.io.StringReader. (slurp path)))))
+      (catch Exception ex (println ex)))))
 
 (defn- only-main-content [resource]
   (html/select resource [:div#main-content]))
