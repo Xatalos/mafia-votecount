@@ -1,5 +1,6 @@
 
 function requestData() {
+    "use strict";
     var req = new XMLHttpRequest();
     req.open("GET", "/games", false);
     req.setRequestHeader("accept", "application/json");
@@ -8,31 +9,27 @@ function requestData() {
     req.onload = function() {
         if (req.status >= 200 && req.status < 400){
             var gamesjson = req.responseText;
-            console.log(gamesjson);
- 
-            var gamesobj = JSON.parse(gamesjson);
-            var gamestohtml = "";
-            var key, count = 0;
-            for(key in gamesobj.games) {
-                if(gamesobj.games.hasOwnProperty(key)) {
-                    count++;
-                }
+            var gamesData = JSON.parse(gamesjson);
+            var gamesToHtml = "";
+            var key, x = 0;
+            
+            for (key in gamesData.games) {
+                gamesToHtml += "<tr>";
+                gamesToHtml += "<td>" + gamesData.games[x].gameid + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].name + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].address + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].currentDay + "</td>";
+                gamesToHtml += "</tr>";
+                x++;
             }
-            for (var i = 0; i < count; i++) {
-                gamestohtml += "<tr>";
-                gamestohtml += "<td>" + gamesobj.games[i].gameid + "</td>";
-                gamestohtml += "<td>" + gamesobj.games[i].name + "</td>";
-                gamestohtml += "<td>" + gamesobj.games[i].address + "</td>";
-                gamestohtml += "<td>" + gamesobj.games[i].currentDay + "</td>";
-                gamestohtml += "</tr>";
-            }
-            document.getElementById("games").innerHTML = gamestohtml;
+            
+            document.getElementById("games").innerHTML = gamesToHtml;
             // Success!
-            } else {
-                console.log("Error. Status code " + req.status);
-                // We reached our target server, but it returned an error
+        } else {
+            console.log("Error. Status code " + req.status);
+            // We reached our target server, but it returned an error
  
-            }
+        }
     };
     req.send(null);
 }
