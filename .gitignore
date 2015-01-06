@@ -12,3 +12,4 @@ pom.xml
 .lein-repl-history
 .nrepl-port
 .DS_Store
+/resources/.DS_Store
