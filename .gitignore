@@ -14,3 +14,6 @@ pom.xml
 .DS_Store
 .project
 .classpath
+/bin/
+.directory
+.settings
