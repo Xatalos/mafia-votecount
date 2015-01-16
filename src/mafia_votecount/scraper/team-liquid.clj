@@ -1,5 +1,6 @@
 (ns mafia-votecount.scraper.team-liquid
   (:require [net.cgrand.enlive-html :as html])
+  (:require [clojurewerkz.urly.core :as urly])
   (:import [java.net URL URLConnection])
   (:gen-class))
 
@@ -38,6 +39,19 @@
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
        users messages))
+
+(defn- fetch-certain-page [url page-num]
+  (-> (urly/url-like url)
+    (.withoutQuery)
+    (urly/mutate-query (format "page=%s" page-num))
+    (str)
+    (fetch-page)))
+
+(defn get-game-title [url]
+  (-> (fetch-certain-page url 1)
+    (html/select [:h1.title])
+    (nth 0)
+    (html/text)))
 
 (defn get-player-message-maps [path]
   (some->> (fetch-page path)
