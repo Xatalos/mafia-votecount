@@ -6,29 +6,25 @@
     </head>
     <body>
         <h1>Create Game</h1>
-        <form class="pure-form pure-form-aligned" action="CreateGame" method="POST">
+        <form class="pure-form pure-form-aligned" action="/create-game" method="POST">
             <fieldset>
                 <div class="pure-control-group">
-                    <label>Name:</label>
-                    <input type="text" name="gamename" placeholder="Name">
-                </div>
-                <div class="pure-control-group">
                     <label>URL Address:</label>
-                    <input type="text" name="gamename" placeholder="URL Address">
+                    <input type="text" name="url" placeholder="URL Address" required>
                 </div>
                 <div class="pure-control-group">
                     <label>Host Name:</label>
-                    <input type="text" name="gamename" placeholder="Host Name">
+                    <input type="text" name="hostname" placeholder="Host Name" required>
                 </div>
                 <div class="pure-control-group">
                     <label>Time Cycle (for example '48h24h'):</label>
-                    <input type="text" name="gamename" placeholder="Time Cycle">
+                    <input type="text" name="timecycle" placeholder="Time Cycle" required>
                 </div>
                 <div class="pure-control-group">
                     <label>Players (for example 'test1, test2, test3'):</label>
-                    <input type="text" name="gamename" placeholder="Players">
+                    <input type="text" name="players" placeholder="Players" required>
                 <div class="pure-controls">
-                    <a href="index.html"><button type="button" class="pure-button">Go Back</button>                     </a>
+                    <a href="index.html" class="pure-button">Go Back</a>
                     <button type="submit" class="pure-button">Create Game</button>
                 </div>
             </fieldset>
