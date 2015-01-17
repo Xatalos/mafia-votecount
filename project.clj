@@ -7,8 +7,8 @@
                  [enlive "1.1.5"]
                  [ring-server "0.3.1"]                 
                  [lobos "1.0.0-beta3"]
-                 [korma "0.3.0"]
-                 [org.xerial/sqlite-jdbc "3.8.7"]
+                 [korma "0.4.0"]
+                 [com.h2database/h2 "1.4.184"]                 
                  [clojurewerkz/urly "1.0.0"]]
   :plugins [[lein-ring "0.8.12"]]
   :ring {:handler mafia-votecount.handler/app

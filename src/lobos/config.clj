@@ -1,10 +1,9 @@
 (ns lobos.config
   (:use lobos.connectivity))
 
-(def db
-  {:classname "org.sqlite.JDBC"
-   :subprotocol "sqlite"
-   :subname "resources/database.sqlite"
-   :create true })
+(def h2
+  {:classname   "org.h2.Driver"
+   :subprotocol "h2"
+   :subname     "./resources/database"})
 
-(open-global db)
+(open-global h2)

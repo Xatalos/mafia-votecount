@@ -1,10 +1,23 @@
-(ns mafia-votecount.models.db
-  (:use [[korma.db]]))
+(ns mafia-votecount.models.modify
+  (:use [korma.db]
+        [korma.core]))
 
-(def db (sqlite3 {:db "resources/database.sqlite"}))
+(def db (h2 {:db "./resources/database"}))
 
 (defdb korma-db db)
 
 (defentity game
-  (table :game)
-  )
+  (table :game))
+
+(defn has-game [id]
+  (not-empty 
+    (select game
+            (fields :id)
+            (where {:id id}))))
+
+(defn add-game [id name url] 
+  (insert game
+          (values {:id id
+                   :name name
+                   :url (str url)
+                   :start_date nil})))
