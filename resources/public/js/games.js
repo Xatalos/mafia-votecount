@@ -2,10 +2,9 @@
 function requestData() {
     "use strict";
     var req = new XMLHttpRequest();
-    req.open("GET", "/games", false);
+    req.open("GET", "/games", true);
     req.setRequestHeader("accept", "application/json");
- 
- 
+
     req.onload = function() {
         if (req.status >= 200 && req.status < 400){
             var gamesjson = req.responseText;
@@ -15,10 +14,10 @@ function requestData() {
             
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
-                gamesToHtml += "<td>" + gamesData.games[x].gameid + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].id + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].name + "</td>";
-                gamesToHtml += "<td>" + gamesData.games[x].address + "</td>";
-                gamesToHtml += "<td>" + gamesData.games[x].currentDay + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
+                gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
                 x++;
             }

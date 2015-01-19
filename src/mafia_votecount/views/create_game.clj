@@ -2,7 +2,7 @@
   (:refer-clojure :exclude [resolve])
   (:use clojurewerkz.urly.core)
   (:require [clojure.string]
-            [mafia-votecount.models.modify :as modify]
+            [mafia-votecount.models :as models]
             [mafia-votecount.scraper.team-liquid :as scraper]))
 
 (defn- get-game-id [url]
@@ -14,7 +14,7 @@
   (let [url (url-like url-string)]
     (if (.endsWith (host-of url) "teamliquid.net")
       (let [game-id (get-game-id url)]
-            (if-not (modify/has-game game-id)
-              (modify/add-game game-id (scraper/get-game-title url) url)
+            (if-not (models/has-game game-id)
+              (models/add-game game-id (scraper/get-game-title url) url)
               nil))
       nil)))

@@ -9,7 +9,8 @@
                  [lobos "1.0.0-beta3"]
                  [korma "0.4.0"]
                  [com.h2database/h2 "1.4.184"]                 
-                 [clojurewerkz/urly "1.0.0"]]
+                 [clojurewerkz/urly "1.0.0"]
+                 [cheshire "5.4.0"]]
   :plugins [[lein-ring "0.8.12"]]
   :ring {:handler mafia-votecount.handler/app
          :init mafia-votecount.handler/init

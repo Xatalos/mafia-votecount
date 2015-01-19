@@ -1,7 +1,0 @@
-{
-	"games": [
-		{ "gameid": 1, "name": "TL Mafia LXIX: Carol Of The Bells", "address": "http://www.teamliquid.net/forum/mafia/472628-tl-mafia-lxix-carol-of-the-bells", "currentDay": 5 },
-		{ "gameid": 2, "name": "Metal Mini Mafia!", "address": "http://www.teamliquid.net/forum/mafia/473002-metal-mini-mafia", "currentDay": 3 },
-		{ "gameid": 3, "name": "Student Mafia IV", "address": "http://www.teamliquid.net/forum/mafia/471489-student-mafia-iv-new-newish-players-welcome", "currentDay": 6 }
-	]
-}

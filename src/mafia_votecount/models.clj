@@ -1,4 +1,4 @@
-(ns mafia-votecount.models.modify
+(ns mafia-votecount.models
   (:use [korma.db]
         [korma.core]))
 
@@ -21,3 +21,6 @@
                    :name name
                    :url (str url)
                    :start_date nil})))
+
+(defn get-games []
+  (select game))
