@@ -1,5 +1,13 @@
 
 requestData();
+centerWindow();
+
+function centerWindow() {
+    "use strict";
+    var centeredWidth = $('.centered').width()/2, 
+    centeredHeight = $(.centered').height()/2;
+    $('.centered').css({ 'margin-left' : -centeredWidth , 'margin-top' : -centeredHeight });
+}
 
 function requestData() {
     "use strict";
