@@ -1,4 +1,6 @@
 
+requestData();
+
 function requestData() {
     "use strict";
     var req = new XMLHttpRequest();
