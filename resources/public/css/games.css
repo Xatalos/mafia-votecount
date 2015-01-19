@@ -8,15 +8,8 @@
     left: 50%;
 }
 
-#index {
-    position: absolute;
-    left: 0;
-    top: 0;
-}
-
-#creategame {
-    position: fixed;
-    left: 0;
-    top: 0;
-    z-index: 3;
+#content {
+    max-width: 960px;
+    margin-right: auto;
+    margin-left: auto;
 }
