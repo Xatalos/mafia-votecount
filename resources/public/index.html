@@ -3,14 +3,42 @@
     <head>
     <title>Mafia Votecount - Games</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+    <link href="css/games.css" rel="stylesheet">
     </head>
     <body onload="requestData();">
+        <div id="creategame" class="hidden">
+            <form class="pure-form pure-form-aligned" action="/create-game" method="POST">
+                <h1>Create Game</h1>
+                <fieldset>
+                    <div class="pure-control-group">
+                        <label>URL Address:</label>
+                        <input type="text" name="url" placeholder="URL Address" required>
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Host Name(s) (for example 'host1 host2'):</label>
+                        <input type="text" name="hostname" placeholder="Host Name" required>
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Time Cycle (for example '48d24n' or '24n48d'):</label>
+                        <input type="text" name="timecycle" placeholder="Time Cycle" required>
+                    </div>
+                    <div class="pure-control-group">
+                        <label>Players (for example 'player1 player2 player3'):</label>
+                        <input type="text" name="players" placeholder="Players" required>
+                    </div>
+                    <div class="pure-controls">
+                        <button type="button" onclick="hideCreateGame();" class="pure-button">Go                            Back</button>
+                        <button type="submit" class="pure-button">Create Game</button>
+                    </div>
+                </fieldset>
+        </form>
+        </div>
+        <div id ="index">
         <h1>Games</h1>
-        <p><a href="creategame.html" class="pure-button">Create New Game</a></p>
+        <button onclick="showCreateGame();" class="pure-button">Create New Game</button>
         <table class="mq-table pure-table-bordered pure-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Name</th>
                     <th>Address</th>
                     <th>Start date</th>
@@ -19,7 +47,7 @@
             <tbody id = "games">
             </tbody>
         </table>
-
+        </div>
         <script src="js/games.js"></script>
     </body>
 </html>

@@ -14,7 +14,6 @@ function requestData() {
             
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
-                gamesToHtml += "<td>" + gamesData.games[x].id + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].name + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
@@ -31,4 +30,20 @@ function requestData() {
         }
     };
     req.send(null);
+}
+
+function showCreateGame() {
+    "use strict";
+    document.getElementById("index").className += ' hidden';
+    document.getElementById("creategame").className =
+    document.getElementById("creategame").className.replace
+      ( /(?:^|\s)hidden(?!\S)/g , '' );
+}
+
+function hideCreateGame() {
+    "use strict";
+    document.getElementById("creategame").className += ' hidden';
+    document.getElementById("index").className =
+    document.getElementById("index").className.replace
+      ( /(?:^|\s)hidden(?!\S)/g , '' );
 }
