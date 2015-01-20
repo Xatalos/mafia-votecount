@@ -8,7 +8,7 @@
     left: 50%;
 }
 
-#content {
+.content {
     max-width: 960px;
     margin-right: auto;
     margin-left: auto;
