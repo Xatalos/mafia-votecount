@@ -1,7 +1,7 @@
 (ns mafia-votecount.views.create-game
   (:refer-clojure :exclude [resolve])
   (:use clojurewerkz.urly.core)
-  (:require [clojure.string]
+  (:require [clojure.string :as string]
             [mafia-votecount.models :as models]
             [mafia-votecount.scraper.team-liquid :as scraper]))
 
@@ -11,8 +11,8 @@
     (nth 3)))
 
 (defn- add-players [game-id players-string]
-  (let [players (clojure.string/split players-string #"\s+")]
-    (models/add-players game-id players)))
+  (->> (map string/trim (string/split-lines players-string))
+    (models/add-players game-id)))
 
 (defn add-game [url-string hoster-name players-string]
   (let [url (url-like url-string)]
