@@ -10,11 +10,17 @@
     (clojure.string/split #"/")
     (nth 3)))
 
-(defn add-game [url-string hoster-name]
+(defn- add-players [game-id players-string]
+  (let [players (clojure.string/split players-string #"\s+")]
+    (models/add-players game-id players)))
+
+(defn add-game [url-string hoster-name players-string]
   (let [url (url-like url-string)]
-    (if (.endsWith (host-of url) "teamliquid.net")
+    (if (and (not (nil? url)) (.endsWith (host-of url) "teamliquid.net"))
       (let [game-id (get-game-id url)]
             (if-not (models/has-game game-id)
-              (models/add-game game-id (scraper/get-game-title url) url)
+              (do 
+                (models/add-game game-id (scraper/get-game-title url) url)
+                (add-players game-id players-string))
               nil))
       nil)))

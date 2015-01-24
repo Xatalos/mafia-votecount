@@ -8,4 +8,4 @@
 (defroutes home-routes
   (GET "/" [] (resource-response "index.html" {:root "public"}))
   (GET "/games" request games/games-resource)
-  (POST "/create-game" [url hoster-name] (create-game/add-game url hoster-name)))
+  (POST "/create-game" [url hoster-name players] (create-game/add-game url hoster-name players)))
