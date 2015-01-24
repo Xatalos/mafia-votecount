@@ -33,10 +33,18 @@
 (defn get-games []
   (select game))
 
+(defn get-game-by-id [id]
+  (let [games (select game (where {:id id}))]
+    (if (seq? games)
+      (first games)
+      nil)))
+
 (defn add-players [game-id names]
-  
-  (do (pprint names) 
-    (let [rows (map (fn [name] {:game game-id :name name}) names)]
-     (do (pprint rows) 
-       (insert player    
-            (values rows))))))
+  (let [rows (map (fn [name] {:game game-id :name name}) names)]
+   (insert player    
+        (values rows))))
+
+(defn get-players [game-id]
+  (select player
+          (fields :id :name)
+          (where {:game game-id})))
