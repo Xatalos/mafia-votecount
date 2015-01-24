@@ -9,7 +9,8 @@
     <body>
         <div class="content">
             <div id="creategame" class="hidden centered">
-                <form id="createform" class="pure-form pure-form-aligned" action="/create-game"                         method="POST">
+                <form id="createform" class="pure-form pure-form-aligned" action="/create-game" 
+                      method="POST">
                     <h1>Create Game</h1>
                     <fieldset>
                         <div class="pure-control-group">
@@ -18,18 +19,22 @@
                         </div>
                         <div class="pure-control-group">
                             <label>Host Name(s) (for example 'host1 line break host2'):</label>
-                            <textarea type="text" form="createform" rows="2" name="hostname"                                           placeholder="Host Name(s)" required></textarea>
+                            <textarea form="createform" rows="2" name="hostname"
+                                      placeholder="Host Name(s)" required></textarea>
                         </div>
                         <div class="pure-control-group">
                             <label>Time Cycle (for example '48d24n' or '24n48d'):</label>
-                            <input type="text" name="timecycle" placeholder="Time Cycle"                                            required>
+                            <input type="text" name="timecycle" placeholder="Time Cycle" 
+                                   required>
                         </div>
                         <div class="pure-control-group">
                             <label>Players (for example 'player1 line break player2'):</label>
-                            <textarea type="text" form="createform" rows="10" name="players"                                           placeholder="Players" required></textarea>
+                            <textarea form="createform" rows="10" name="players"
+                                      placeholder="Players" required></textarea>
                         </div>
                         <div class="pure-controls">
-                            <button type="button" onclick="hideCreateGame();"                                                         class="pure-button">Go Back</button>
+                            <button type="button" onclick="hideCreateGame();" 
+                                    class="pure-button">Go Back</button>
                             <button type="submit" class="pure-button">Create Game</button>
                         </div>
                     </fieldset>
