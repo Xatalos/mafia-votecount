@@ -26,6 +26,22 @@
 (defn- extract-messages [posts]
   (map #(:content %) (html/select posts [[:.forumPost]])))
 
+(defn- get-page-number-bar [content]
+  (-> (html/select content [:table :tr ])
+      (nth 0)
+      (get :content)
+      (nth 3)
+      (get :content)
+      ((fn [pages] (remove string? pages)))
+      ((fn [pages] (map #(first (get % :content)) pages)))))
+
+(defn- get-page-numbers [content]
+  (let [two-last (->> (get-page-number-bar content)
+             (take-last 2))]
+    (if (= (first two-last) "1")
+      [1]
+      (vec (range 1 (inc (Integer/parseInt (first two-last))))))))
+
 (defn- has-class [part]
   (and (map? (:attrs part))
        (if-some [css-class (-> (:attrs part) (:class))]
