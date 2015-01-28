@@ -20,7 +20,8 @@ function requestData() {
             
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
-                gamesToHtml += "<td>" + gamesData.games[x].name + "</td>";
+                gamesToHtml +=  '<td onclick="showGame(\'' + gamesData.games[x].id + '\');">' + gamesData.games[x].name + '</td>';
+                console.log(gamesToHtml);
                 gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
@@ -49,6 +50,50 @@ function showCreateGame() {
 function hideCreateGame() {
     "use strict";
     document.getElementById("creategame").className += ' hidden';
+    document.getElementById("index").className =
+    document.getElementById("index").className.replace
+      ( /(?:^|\s)hidden(?!\S)/g , '' );
+}
+
+function showGame(id) {
+    "use strict";
+    var req = new XMLHttpRequest();
+    var address = "/game/" + id;
+    req.open("GET", address, true);
+    req.setRequestHeader("accept", "application/json");
+
+    req.onload = function() {
+        if (req.status >= 200 && req.status < 400){
+            var gamejson = req.responseText;
+            var gameData = JSON.parse(gamejson);
+            var gameToHtml = "";
+            var key, x = 0;
+            
+            document.getElementById("gameheader").innerHTML = gameData.game.name;
+            
+            for (key in gameData.players) {
+                gameToHtml += "<li>" + gameData.players[x].name + "</li>";
+                x++;
+            }
+            
+            document.getElementById("gamedata").innerHTML = gameToHtml;
+            // Success!
+        } else {
+            console.log("Error. Status code " + req.status);
+            // We reached our target server, but it returned an error
+ 
+        }
+    };
+    req.send(null);
+    document.getElementById("index").className += ' hidden';
+    document.getElementById("gameview").className =
+    document.getElementById("gameview").className.replace
+      ( /(?:^|\s)hidden(?!\S)/g , '' );
+}
+
+function hideGame() {
+    "use strict";
+    document.getElementById("gameview").className += ' hidden';
     document.getElementById("index").className =
     document.getElementById("index").className.replace
       ( /(?:^|\s)hidden(?!\S)/g , '' );
