@@ -45,16 +45,13 @@
       ((fn [pages] (remove string? pages)))
       ((fn [pages] (map #(first (get % :content)) pages)))))
 
-;; TODO: Test this
 (defn- get-page-numbers [content]
-  (let [three-last (->> (get-page-number-bar content)
-             (take-last 3))] ;; NOTE: This fails if last one is "All"
-    (cond
-      (= (first three-last) "1") [1]
-      (= (last three-last) "All")
-      (vec (range 1 (inc (Integer/parseInt (first three-last)))))
-      (= (last three-last) "Next")
-      (vec (range 1 (inc (Integer/parseInt (nth three-last 1))))))))
+  (let [page-number-bar (get-page-number-bar content)
+        last-page  (->> (reverse page-number-bar)
+                        (filter #(Character/isDigit (first %))) ;; Filter is lazy
+                        (first)
+                        (Integer/parseInt))]
+    (vec (range 1 (inc last-page)))))
 
 (defn- has-class? [part]
   (and (map? (:attrs part))
