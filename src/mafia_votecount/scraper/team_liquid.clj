@@ -1,8 +1,16 @@
 (ns mafia-votecount.scraper.team-liquid
-  (:require [net.cgrand.enlive-html :as html])
-  (:require [clojurewerkz.urly.core :as urly])
+  (:require [net.cgrand.enlive-html :as html]
+            [clojurewerkz.urly.core :as urly]
+            [clj-http.client :as client]
+            [clojure.string :as string])
+  (:use [clojure.pprint])
   (:import [java.net URL URLConnection])
   (:gen-class))
+
+(def ^:private user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:35.0) Gecko/20100101 Firefox/35.0")
+
+(def ^:private request-header
+  {"User-Agent" user-agent})
 
 (defn- fetch-page [path]
   (if-not (.contains path "teamliquid.net/forum/") nil
@@ -10,7 +18,9 @@
       (let [connection (. (URL. path) openConnection)]
         (cond (not (.contains (.getContentType connection) "text/html")) nil
               (> (.getContentLengthLong connection) 1048576) nil ;; Over megabyte
-              :else (html/html-resource (java.io.StringReader. (slurp path)))))
+              :else (html/html-resource
+                     (java.io.StringReader.
+                      (:body (client/get path {:headers request-header}))))))
       (catch Exception ex (println ex)))))
 
 (defn- only-main-content [resource]
@@ -35,14 +45,18 @@
       ((fn [pages] (remove string? pages)))
       ((fn [pages] (map #(first (get % :content)) pages)))))
 
+;; TODO: Test this
 (defn- get-page-numbers [content]
-  (let [two-last (->> (get-page-number-bar content)
-             (take-last 2))]
-    (if (= (first two-last) "1")
-      [1]
-      (vec (range 1 (inc (Integer/parseInt (first two-last))))))))
+  (let [three-last (->> (get-page-number-bar content)
+             (take-last 3))] ;; NOTE: This fails if last one is "All"
+    (cond
+      (= (first three-last) "1") [1]
+      (= (last three-last) "All")
+      (vec (range 1 (inc (Integer/parseInt (first three-last)))))
+      (= (last three-last) "Next")
+      (vec (range 1 (inc (Integer/parseInt (nth three-last 1))))))))
 
-(defn- has-class [part]
+(defn- has-class? [part]
   (and (map? (:attrs part))
        (if-some [css-class (-> (:attrs part) (:class))]
          (.contains css-class "quote")
@@ -50,15 +64,17 @@
 
 (defn- remove-quotes [message]
   (remove
-   #(and (map? %) (has-class %)) message))
+   #(and (map? %) (has-class? %)) message))
 
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
        users messages))
 
+(defn- url-without-query [url]
+  (.withoutQuery (urly/url-like url)))
+
 (defn- fetch-certain-page [url page-num]
-  (-> (urly/url-like url)
-    (.withoutQuery)
+  (-> (url-without-query url)
     (urly/mutate-query (format "page=%s" page-num))
     (str)
     (fetch-page)))
@@ -69,8 +85,52 @@
     (nth 0)
     (html/text)))
 
+(defn- get-user-message-pairs [content]
+  (->> (only-main-content content)
+   (get-forum-posts)
+   (#(pair-users-messages (extract-users %) (extract-messages %)))))
+
+(defn- parse-and-wait [content]
+  (do (Thread/sleep 2000)
+      (get-user-message-pairs content)))
+
 (defn get-player-message-maps [path]
-  (some->> (fetch-page path)
-       (only-main-content)
-       (get-forum-posts)
-       (#(pair-users-messages (extract-users %) (extract-messages %)))))
+  (some->>
+   (fetch-certain-page path 1)
+   (only-main-content)
+   (get-page-numbers)
+   ((fn [page-numbers]
+      (map #(-> (fetch-certain-page path %)
+                (parse-and-wait))
+            page-numbers)))
+   (flatten)))
+
+(defn- enumerate [posts]
+  (->> (map-indexed vector posts)
+       (into {})))
+
+(defn- is-host? [index-post host]
+  (= (:user (val index-post)) host))
+
+(defn- is-cycle-change? [message]
+  (->> (map html/text message)
+       (some #(let [lowercased (string/lower-case %)]
+                (or (.startsWith lowercased "day ")
+                    (.startsWith lowercased "night "))))))
+
+(defn- cycle-changes [indexed host]
+  (filter #(and (is-host? % host) (is-cycle-change? (:message (val %))))
+          (rest indexed)))
+
+;; TODO: These are next on line
+
+;; (defn day-ranges [cycle-changes]
+;;   (loop [pairs '()
+;;          left cycle-changes]
+;;     (if (empty? left) pairs
+;;         (recur ()))))
+
+;; (defn get-votes [player-message-maps]
+;;   (let [indexed (enumerate player-message-maps)
+;;         day-indices (day-ranges indexed)]
+;;     ))
