@@ -21,7 +21,6 @@ function requestData() {
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
                 gamesToHtml +=  '<td onclick="showGame(\'' + gamesData.games[x].id + '\');">' + gamesData.games[x].name + '</td>';
-                console.log(gamesToHtml);
                 gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
@@ -37,6 +36,12 @@ function requestData() {
         }
     };
     req.send(null);
+    
+    // work in progress:
+    
+    if (window.location.hash != "") {
+        console.log(window.location.hash);
+    }
 }
 
 function showCreateGame() {
