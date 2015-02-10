@@ -20,7 +20,8 @@ function requestData() {
             
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
-                gamesToHtml +=  '<td onclick="showGame(\'' + gamesData.games[x].id + '\');">' + gamesData.games[x].name + '</td>';
+                var url = "/#" + gamesData.games[x].id;
+                gamesToHtml +=  '<td><a href="' + url + '">' + gamesData.games[x].name + "</a></td>";
                 gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
                 gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
@@ -36,11 +37,14 @@ function requestData() {
         }
     };
     req.send(null);
-    
-    // work in progress:
-    
+    locationHashChanged();
+}
+
+function locationHashChanged() {
     if (window.location.hash != "") {
-        console.log(window.location.hash);
+        var id = "" + window.location.hash;
+        id = id.slice(1, id.length);
+        showGame(id);
     }
 }
 
@@ -58,6 +62,7 @@ function hideCreateGame() {
     document.getElementById("index").className =
     document.getElementById("index").className.replace
       ( /(?:^|\s)hidden(?!\S)/g , '' );
+    window.location.hash = "";
 }
 
 function showGame(id) {
@@ -102,6 +107,7 @@ function hideGame() {
     document.getElementById("index").className =
     document.getElementById("index").className.replace
       ( /(?:^|\s)hidden(?!\S)/g , '' );
+    window.location.hash = "";
 }
 
 requestData();
