@@ -119,15 +119,22 @@
   (filter #(and (is-host? % host) (is-cycle-change? (:message (val %))))
           (rest indexed)))
 
-;; TODO: These are next on line
+(defn- dec-or-nil [num]
+  (if (nil? num)
+    nil
+    (dec num)))
 
-;; (defn day-ranges [cycle-changes]
-;;   (loop [pairs '()
-;;          left cycle-changes]
-;;     (if (empty? left) pairs
-;;         (recur ()))))
+(defn- day-ranges [cycle-changes]
+  (loop [pairs []
+         left cycle-changes]
+    (if (empty? left) pairs
+        (let [next (take 2 left)
+              start (inc (first next))
+              end (first (rest next))]
+          (recur (conj pairs (remove nil? [start (dec-or-nil end)]))
+                 (drop 2 left))))))
 
 ;; (defn get-votes [player-message-maps]
 ;;   (let [indexed (enumerate player-message-maps)
-;;         day-indices (day-ranges indexed)]
+;;         day-ranges (day-ranges indexed)]
 ;;     ))
