@@ -104,10 +104,10 @@
 
 (defn- enumerate [posts]
   (->> (map-indexed vector posts)
-       (into {})))
+       (into (sorted-map))))
 
-(defn- is-host? [index-post host]
-  (= (:user (val index-post)) host))
+(defn- is-host? [index-post hosts]
+  (contains? hosts (:user (val index-post))))
 
 (defn- is-cycle-change? [message]
   (->> (map html/text message)
@@ -115,8 +115,8 @@
                 (or (.startsWith lowercased "day ")
                     (.startsWith lowercased "night "))))))
 
-(defn- cycle-changes [indexed host]
-  (filter #(and (is-host? % host) (is-cycle-change? (:message (val %))))
+(defn- cycle-changes [indexed hosts]
+  (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
           (rest indexed)))
 
 (defn- dec-or-nil [num]
@@ -124,9 +124,9 @@
     nil
     (dec num)))
 
-(defn- day-ranges [cycle-changes]
+(defn- to-day-ranges [cycle-change-indices]
   (loop [pairs []
-         left cycle-changes]
+         left cycle-change-indices]
     (if (empty? left) pairs
         (let [next (take 2 left)
               start (inc (first next))
@@ -134,7 +134,35 @@
           (recur (conj pairs (remove nil? [start (dec-or-nil end)]))
                  (drop 2 left))))))
 
-;; (defn get-votes [player-message-maps]
-;;   (let [indexed (enumerate player-message-maps)
-;;         day-ranges (day-ranges indexed)]
-;;     ))
+(defn- has-vote? [message-part]
+  (->> (html/text message-part)
+       (.toLowerCase)
+       ((fn [html-text]
+          (or (.contains html-text "#vote") (.contains html-text "#unvote"))))))
+
+(defn- analyze-vote [part]
+  (if (.contains (.toLowerCase part) "#unvote")
+    {:unvote true}
+    (-> (string/replace-first part #"(?i)#+vote:?" "")
+        (string/trim)
+        ((fn [target] {:vote true :target target})))))
+
+(defn- get-votes-from-message [user-message-pair]
+  (let [user (:user user-message-pair)
+        parts (filter has-vote? (:message user-message-pair))]
+    (map #(merge {:user user} %) parts)))
+
+(defn- get-votes-in-range [indexed start-end]
+  (let [posts (select-keys indexed
+                           (range (first start-end)
+                                  (if (empty (rest start-end))
+                                    (last indexed)
+                                    (inc (last start-end)))))]
+    (mapcat get-votes-from-message (vals posts))))
+
+(defn get-votes [player-message-maps hosts]
+  (let [indexed (enumerate player-message-maps)
+        day-ranges (-> (cycle-changes indexed hosts)
+                       (keys)
+                       (to-day-ranges))]
+    (mapcat #(get-votes-in-range indexed %) day-ranges)))

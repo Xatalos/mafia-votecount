@@ -1,4 +1,4 @@
-(ns mafia-votecount.scraper.team-liquid
+(ns mafia-votecount.scraper.t-data-linux
   (:gen-class))
 
 (def data-linux

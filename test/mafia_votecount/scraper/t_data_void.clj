@@ -1,4 +1,4 @@
-(ns mafia-votecount.scraper.team-liquid
+(ns mafia-votecount.scraper.t-data-void
   (:gen-class))
 
 (def data-void '({:user "Artanis[Xp]",
