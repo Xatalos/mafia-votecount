@@ -103,7 +103,7 @@
    (flatten)))
 
 (defn- enumerate [posts]
-  (->> (map-indexed vector posts)
+  (->> (map-indexed #(vector (inc %1) %2) posts)
        (into (sorted-map))))
 
 (defn- is-host? [index-post hosts]

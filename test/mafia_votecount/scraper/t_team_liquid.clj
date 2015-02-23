@@ -32,4 +32,4 @@
 
 (fact "cycle changes gives the post id's where admin has changed cycle"
       (keys (cycle-changes (enumerate data-void) #{"Artanis[Xp]" "GlowingBear"}))
-      => '(60 1541 1968 2332 2476 2913 2985 3122))
+      => '(61 1542 1969 2333 2477 2914 2986 3123))
