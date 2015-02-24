@@ -4,7 +4,9 @@
         [mafia-votecount.scraper.t-data-void])
   (:require [mafia-votecount.scraper.team-liquid :as liquid]))
 
-(testable-privates mafia-votecount.scraper.team-liquid to-day-ranges analyze-vote cycle-changes enumerate)
+(testable-privates mafia-votecount.scraper.team-liquid
+                   to-day-ranges analyze-vote cycle-changes enumerate
+                   get-votes-in-range)
 
 (fact "to-day-ranges groups sequence of message ids into day ranges"
       (to-day-ranges []) => []
@@ -14,22 +16,33 @@
 
 (fact "analyze-vote reads posts with ##vote or ##unvote gets the part after ##vote"
       ;; The correct input
-      (analyze-vote "##Vote Qatol") => {:target "Qatol" :vote true}
+      (analyze-vote "##Vote Qatol") => {:target "Qatol"}
       ;; Lowercase vote and :
-      (analyze-vote "##vote: KSC") => {:target "KSC" :vote true}
+      (analyze-vote "##vote: KSC") => {:target "KSC"}
       ;; Spaces in name
-      (analyze-vote "##Vote: Half the Sky") => {:target "Half the Sky" :vote true}
+      (analyze-vote "##Vote: Half the Sky") => {:target "Half the Sky"}
       ;; : and space. Trailing spaces after name
-      (analyze-vote "##vote: liancourt   ") => {:target "liancourt" :vote true}
+      (analyze-vote "##vote: liancourt   ") => {:target "liancourt"}
       ;; No spacing at all
-      (analyze-vote "##vote:alakaslam") => {:target "alakaslam" :vote true}
+      (analyze-vote "##vote:alakaslam") => {:target "alakaslam"}
       ;; Normal use of ##Unvote
       (analyze-vote "##Unvote") => {:unvote true}
       ;; Included username with ##Unvote
       (analyze-vote "##unvote marvolosity") => {:unvote true}
       ;; One # missing
-      (analyze-vote "#vote:alakaslam") => {:target "alakaslam" :vote true})
+      (analyze-vote "#vote:alakaslam") => {:target "alakaslam"}
+      ;; Stuff before ##vote
+      (analyze-vote "whatever ##vote Wile E. Coyote") => {:target "Wile E. Coyote"})
 
 (fact "cycle changes gives the post id's where admin has changed cycle"
       (keys (cycle-changes (enumerate data-void) #{"Artanis[Xp]" "GlowingBear"}))
       => '(61 1542 1969 2333 2477 2914 2986 3123))
+
+(fact "get-votes-in-range gets votes that happened between start and end"
+      (get-votes-in-range (enumerate data-void) [2987 3122])
+      => '({:index 3044 :target "batsnacks" :user "Vivax"}
+           {:index 3062 :unvote true :user "Vivax"}
+           {:index 3062, :target "Wile E. Scum", :user "Vivax"}
+           {:index 3070 :target "batsnacks" :user "sicklucker"}
+           {:index 3096 :target "Bats" :user "Oatsmaster"}
+           {:index 3119 :target "Wile E. Coyote" :user "batsnacks"}))

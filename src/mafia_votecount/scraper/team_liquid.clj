@@ -134,6 +134,17 @@
           (recur (conj pairs (remove nil? [start (dec-or-nil end)]))
                  (drop 2 left))))))
 
+(defn content-flatter [li]
+  (->>
+   (map
+    (fn [val]
+      (cond
+        (string? val) val
+        :else (content-flatter (:content val))))
+    li)
+   (flatten)
+   (remove nil?)))
+
 (defn- has-vote? [message-part]
   (->> (html/text message-part)
        (.toLowerCase)
@@ -143,22 +154,37 @@
 (defn- analyze-vote [part]
   (if (.contains (.toLowerCase part) "#unvote")
     {:unvote true}
-    (-> (string/replace-first part #"(?i)#+vote:?" "")
+    (-> (string/split part #"(?i)#+vote:?")
+        (last)
         (string/trim)
-        ((fn [target] {:vote true :target target})))))
+        ((fn [target] {:target target})))))
 
-(defn- get-votes-from-message [user-message-pair]
-  (let [user (:user user-message-pair)
-        parts (filter has-vote? (:message user-message-pair))]
-    (map #(merge {:user user} %) parts)))
+(defn- get-votes-from-message [index-user-message-pair]
+  (let [user-message-pair (last index-user-message-pair)
+        index (first index-user-message-pair)
+        user (:user user-message-pair)
+        parts (filter has-vote? (:message user-message-pair))
+        text-parts (content-flatter parts)]
+    (map #(merge {:index index :user user} %)
+         (map-indexed #(merge {:subindex %1} (analyze-vote %2)) text-parts))))
+
+(defn- vote-cmp [v1 v2]
+  (let [i1 (:index v1)
+        i2 (:index v2)]
+    (cond
+      (< i1 i2) true
+      (= i1 i2) (< (:subindex v1) (:subindex v2))
+      :else false)))
 
 (defn- get-votes-in-range [indexed start-end]
   (let [posts (select-keys indexed
                            (range (first start-end)
-                                  (if (empty (rest start-end))
+                                  (if (empty? (rest start-end))
                                     (last indexed)
                                     (inc (last start-end)))))]
-    (mapcat get-votes-from-message (vals posts))))
+    (->> (mapcat get-votes-from-message posts)
+         (sort vote-cmp)
+         (map #(dissoc % :subindex)))))
 
 (defn get-votes [player-message-maps hosts]
   (let [indexed (enumerate player-message-maps)
