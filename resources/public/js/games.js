@@ -1,7 +1,7 @@
 function centerWindow() {
     "use strict";
-    var centeredWidth = $('.centered').width()/2, 
-    centeredHeight = $('.centered').height()/2;
+    var centeredWidth = $('.centered').width() / 2,
+        centeredHeight = $('.centered').height() / 2;
     $('.centered').css({ 'margin-left' : -centeredWidth , 'margin-top' : -centeredHeight });
 }
 
@@ -17,7 +17,7 @@ function requestData() {
             var gamesData = JSON.parse(gamesjson);
             var gamesToHtml = "";
             var key, x = 0;
-            
+
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
                 var url = "/#" + gamesData.games[x].id;
@@ -27,20 +27,19 @@ function requestData() {
                 gamesToHtml += "</tr>";
                 x++;
             }
-            
+
             document.getElementById("games").innerHTML = gamesToHtml;
-            // Success!
         } else {
             console.log("Error. Status code " + req.status);
-            // We reached our target server, but it returned an error
- 
         }
     };
+
     req.send(null);
     locationHashChanged();
 }
 
 function locationHashChanged() {
+    "use strict";
     if (window.location.hash != "") {
         var id = "" + window.location.hash;
         id = id.slice(1, id.length);
@@ -78,22 +77,20 @@ function showGame(id) {
             var gameData = JSON.parse(gamejson);
             var gameToHtml = "";
             var key, x = 0;
-            
+
             document.getElementById("gameheader").innerHTML = gameData.game.name;
-            
+
             for (key in gameData.players) {
                 gameToHtml += "<li>" + gameData.players[x].name + "</li>";
                 x++;
             }
-            
+
             document.getElementById("gamedata").innerHTML = gameToHtml;
-            // Success!
         } else {
             console.log("Error. Status code " + req.status);
-            // We reached our target server, but it returned an error
- 
         }
     };
+
     req.send(null);
     document.getElementById("index").className += ' hidden';
     document.getElementById("gameview").className =

@@ -2,7 +2,8 @@
   (:require [net.cgrand.enlive-html :as html]
             [clojurewerkz.urly.core :as urly]
             [clj-http.client :as client]
-            [clojure.string :as string])
+            [clojure.string :as string]
+            [clojure.set])
   (:use [clojure.pprint])
   (:import [java.net URL URLConnection])
   (:gen-class))
@@ -53,7 +54,7 @@
                         (Integer/parseInt))]
     (vec (range 1 (inc last-page)))))
 
-(defn- has-class? [part]
+(defn- has-quote? [part]
   (and (map? (:attrs part))
        (if-some [css-class (-> (:attrs part) (:class))]
          (.contains css-class "quote")
@@ -61,7 +62,7 @@
 
 (defn- remove-quotes [message]
   (remove
-   #(and (map? %) (has-class? %)) message))
+   #(and (map? %) (has-quote? %)) message))
 
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
@@ -91,7 +92,7 @@
   (do (Thread/sleep 2000)
       (get-user-message-pairs content)))
 
-(defn get-player-message-maps [path]
+(defn- get-player-message-maps [path]
   (some->>
    (fetch-certain-page path 1)
    (only-main-content)
@@ -156,8 +157,11 @@
     {:unvote true}
     (-> (string/split part #"(?i)#+vote:?")
         (last)
-        (string/trim)
-        ((fn [target] {:target target})))))
+        (#(if (and (string? %) (< (.length %) 21))
+            (string/trim %)))
+        ((fn [target]
+           {:target
+            target})))))
 
 (defn- get-votes-from-message [index-user-message-pair]
   (let [user-message-pair (last index-user-message-pair)
@@ -165,7 +169,7 @@
         user (:user user-message-pair)
         parts (filter has-vote? (:message user-message-pair))
         text-parts (content-flatter parts)]
-    (map #(merge {:index index :user user} %)
+    (map #(merge {:index index :voter user} %)
          (map-indexed #(merge {:subindex %1} (analyze-vote %2)) text-parts))))
 
 (defn- vote-cmp [v1 v2]
@@ -180,15 +184,32 @@
   (let [posts (select-keys indexed
                            (range (first start-end)
                                   (if (empty? (rest start-end))
-                                    (last indexed)
+                                    (last (keys indexed))
                                     (inc (last start-end)))))]
     (->> (mapcat get-votes-from-message posts)
          (sort vote-cmp)
          (map #(dissoc % :subindex)))))
 
-(defn get-votes [player-message-maps hosts]
+(defn- days-into-votes [days votes-by-days]
+  (flatten (map (fn [day votes-of-day]
+                  (map #(assoc % :day day) votes-of-day))
+                days votes-by-days)))
+
+;; (defn- days-into-votes [votes-by-days]
+;;   (mapcat (fn [day-and-votes]
+;;             (let [day (first day-and-votes)
+;;                   votes (second day-and-votes)]
+;;               (map #(assoc  % :day day) votes)))
+;;           votes-by-days))
+
+(defn- scan-votes [player-message-maps hosts]
   (let [indexed (enumerate player-message-maps)
         day-ranges (-> (cycle-changes indexed hosts)
                        (keys)
                        (to-day-ranges))]
-    (mapcat #(get-votes-in-range indexed %) day-ranges)))
+    (days-into-votes (range 1 (inc (count day-ranges)))
+                     (map #(get-votes-in-range indexed %) day-ranges))))
+
+(defn scan-all-votes [url hosts]
+  (let [player-message-maps (get-player-message-maps url)]
+    (scan-votes player-message-maps hosts)))

@@ -32,7 +32,9 @@
       ;; One # missing
       (analyze-vote "#vote:alakaslam") => {:target "alakaslam"}
       ;; Stuff before ##vote
-      (analyze-vote "whatever ##vote Wile E. Coyote") => {:target "Wile E. Coyote"})
+      (analyze-vote "whatever ##vote Wile E. Coyote") => {:target "Wile E. Coyote"}
+      ;; Target not immediate
+      (analyze-vote "#vote:") => {:target nil})
 
 (fact "cycle changes gives the post id's where admin has changed cycle"
       (keys (cycle-changes (enumerate data-void) #{"Artanis[Xp]" "GlowingBear"}))

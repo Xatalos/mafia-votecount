@@ -11,7 +11,8 @@
       {:found (not (nil? game))
        :game game
        :players players
-       :votes []})))
+       :hosts (models/get-hosts id)
+       :votes (models/get-votes id)})))
 
 (defresource game-resource [id]
   :handle-ok (fn [_] (game-as-json id))

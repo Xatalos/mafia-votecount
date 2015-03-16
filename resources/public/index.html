@@ -5,12 +5,13 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
     <link href="css/games.css" rel="stylesheet">
     <script src="js/jquery.js"></script>
+    <meta charset="utf-8">
     </head>
     <body onhashchange="locationHashChanged();">
         <div class="content">
             <div id="creategame" class="hidden centered">
-                <form id="createform" class="pure-form pure-form-aligned" action="/create-game" 
-                      method="POST">
+                <form id="createform" class="pure-form pure-form-aligned" action="/create-game"
+                      method="POST" accept-charset="utf-8">
                     <h1>Create Game</h1>
                     <fieldset>
                         <div class="pure-control-group">
@@ -19,12 +20,12 @@
                         </div>
                         <div class="pure-control-group">
                             <label>Host Name(s) (for example 'host1 line break host2'):</label>
-                            <textarea form="createform" rows="2" name="hostname"
-                                      placeholder="Host Name(s)" required></textarea>
+                            <textarea form="createform" rows="2" name="hosts"
+                                      placeholder="Host Names (one host per line)" required></textarea>
                         </div>
                         <div class="pure-control-group">
                             <label>Time Cycle (for example '48d24n' or '24n48d'):</label>
-                            <input type="text" name="timecycle" placeholder="Time Cycle" 
+                            <input type="text" name="timecycle" placeholder="Time Cycle"
                                    required>
                         </div>
                         <div class="pure-control-group">
@@ -33,7 +34,7 @@
                                       placeholder="Players" required></textarea>
                         </div>
                         <div class="pure-controls">
-                            <button type="button" onclick="hideCreateGame();" 
+                            <button type="button" onclick="hideCreateGame();"
                                     class="pure-button">Go Back</button>
                             <button type="submit" class="pure-button">Create Game</button>
                         </div>
