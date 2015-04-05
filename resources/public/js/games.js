@@ -89,7 +89,37 @@ function showGame(id) {
                 gameToHtml += "<li>" + gameData.players[x].name + "</li>";
                 x++;
             }
+            
+            x = 0;
+            
+            gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width: 732px"[blue][b][u][big]Day 1 Vote Count[/big][/u][/b][/blue]';
+                                                              
+            for (key in gameData.votes) {
+                gameToHtml += "<br>" + gameData.votes[x].target + ": ";
+                x++;
+            }
 
+//                            [b]Bill Murray (8):[/b] Holyflare, Eden1892, rsoultin, Superbia, Vivax, Breshke, raynpelikoneet, Palmar
+//                            [b]Vivax (7):[/b] [s]Holyflare[/s], Artanis[Xp], [s]Damdred[/s], LightningStrike, sicklucker, Toadesstern, Trfel, ExO_,                             [s]rsoultin[/s], [s]Palmar[/s], Damdred
+//                            [b]LightningStrike (3):[/b] Bill Murray, [s]Toadesstern[/s], FecalFeast, [s]raynpelikoneet[/s], [s]Vivax[/s], Onegu
+//                            [b]Toadesstern (1):[/b] [s]Palmar[/s], [s]Artanis[Xp][/s], [s]raynpelikoneet[/s], [s]Vivax[/s], VisceraEyes,         //                              [s]Palmar[/s]
+//                            [b]sicklucker (1):[/b] [s]Eden1892[/s], [s]Holyflare[/s], [s]rsoultin[/s], [s]Alakaslam[/s], [s]Superbia[/s],         //                              Alakaslam, [s]Eden1892[/s], [s]Breshke[/s]
+//                            [b]raynpelikoneet (0):[/b] [s]Holyflare[/s], [s]Damdred[/s], [s]rsoultin[/s], [s]Trfel[/s], [s]ExO_[/s], [s]Damdred[/s]
+//                            [b]Artanis[Xp] (0):[/b] [s]Toadesstern[/s], [s]Eden1892[/s], [s]VisceraEyes[/s], [s]Eden1892[/s]
+//                            [b]Eden1892 (0):[/b] [s]Fecalfeast[/s], [s]Onegu[/s], [s]Bill Murray[/s], [s]ExO[/s]
+//                            [b]Damdred (0):[/b] [s]raynpelikoneet[/s], [s]sicklucker[/s], [s]Artanis[Xp][/s]
+//                            [b]Superbia (0):[/b] [s]Eden1892[/s]
+//                            [b]VisceraEyes (0):[/b] [s]Artanis[Xp][/s]
+//                            [b]Alakaslam (0):[/b] [s]Holyflare[/s], [s]Artanis[/s], [s]sicklucker[/s], [s]Eden1892[/s]
+//                            [b]ExO_ (0):[/b] [s]Eden1892[/s]
+//                            [b]Palmar (0):[/b] [s]Toadesstern[/s], [s]Toadesstern[/s], [s]Bill Murray[/s]
+//                            [b]Trfel (0):[/b] [s]Artanis[/s], [s]Superbia[/s], [s]Eden1892[/s]
+//                            [b]Holyflare (0):[/b] [s]Alakaslam[/s]
+//
+//                            [b]Not Voting (0):[/b]
+
+            gameToHtml += '</textarea>';
+                       
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
             console.log("Error. Status code " + req.status);
