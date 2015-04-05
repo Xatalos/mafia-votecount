@@ -65,6 +65,11 @@ function hideCreateGame() {
 }
 
 function showGame(id) {
+//                  table :vote    ---> votes!!!
+//                  (integer :day :not-null) - äänestyspäivä
+//                  (integer :index :not-null) - viestin numero #
+//                  (varchar :voter 40 :not-null) - äänestäjä
+//                  (varchar :target 40)))) - äänestyksen kohde
     "use strict";
     var req = new XMLHttpRequest();
     var address = "/game/" + id;
