@@ -81,24 +81,29 @@ function showGame(id) {
             var gamejson = req.responseText;
             var gameData = JSON.parse(gamejson);
             var gameToHtml = "";
-            var key, x = 0;
 
             document.getElementById("gameheader").innerHTML = gameData.game.name;
 
-            for (key in gameData.players) {
-                gameToHtml += "<li>" + gameData.players[x].name + "</li>";
-                x++;
+            for (var i = 0; i < gameData.players.length; i++) {
+                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
             }
             
-            x = 0;
+            var firstNewDayVote = false;
+            var currentDay = 0;
             
-            gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width: 732px"[blue][b][u][big]Day 1 Vote Count[/big][/u][/b][/blue]';
-                                                              
-            for (key in gameData.votes) {
-                gameToHtml += "<br>" + gameData.votes[x].day + ": ";
-                x++;
+            for (var i = 0; i < gameData.votes.length; i++) {
+                if (currentDay != gameData.votes[i].day) {
+                    firstNewDayVote = true;
+                    currentDay = gameData.votes[i].day;
+                }
+                if (firstNewDayVote === true) {
+                    gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1><br>";
+                    firstNewDayVote = false;
+                }
+                gameToHtml += "<li>" + gameData.votes[i].voter + " voted " + gameData.votes[i].target + "</li>";
             }
 
+            
 //                            [b]Bill Murray (8):[/b] Holyflare, Eden1892, rsoultin, Superbia, Vivax, Breshke, raynpelikoneet, Palmar
 //                            [b]Vivax (7):[/b] [s]Holyflare[/s], Artanis[Xp], [s]Damdred[/s], LightningStrike, sicklucker, Toadesstern, Trfel, ExO_,                             [s]rsoultin[/s], [s]Palmar[/s], Damdred
 //                            [b]LightningStrike (3):[/b] Bill Murray, [s]Toadesstern[/s], FecalFeast, [s]raynpelikoneet[/s], [s]Vivax[/s], Onegu
@@ -117,8 +122,6 @@ function showGame(id) {
 //                            [b]Holyflare (0):[/b] [s]Alakaslam[/s]
 //
 //                            [b]Not Voting (0):[/b]
-
-            gameToHtml += '</textarea>';
                        
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
