@@ -95,7 +95,7 @@ function showGame(id) {
             gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width: 732px"[blue][b][u][big]Day 1 Vote Count[/big][/u][/b][/blue]';
                                                               
             for (key in gameData.votes) {
-                gameToHtml += "<br>" + gameData.votes[x].target + ": ";
+                gameToHtml += "<br>" + gameData.votes[x].day + ": ";
                 x++;
             }
 
