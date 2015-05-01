@@ -112,6 +112,10 @@
 
 (defn- is-cycle-change? [message]
   (->> (map html/text message)
+       (remove string/blank?)
+       (first)
+       (string/trim)
+       (vector)
        (some #(let [lowercased (string/lower-case %)]
                 (or (.startsWith lowercased "day ")
                     (.startsWith lowercased "night "))))))
@@ -154,7 +158,7 @@
 
 (defn- analyze-vote [part]
   (if (.contains (.toLowerCase part) "#unvote")
-    {:unvote true}
+    {:unvote true :target ""}
     (-> (string/split part #"(?i)#+vote:?")
         (last)
         (#(if (and (string? %) (< (.length %) 21))
