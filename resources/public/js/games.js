@@ -100,7 +100,13 @@ function showGame(id) {
                     gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1><br>";
                     firstNewDayVote = false;
                 }
-                gameToHtml += "<li>" + gameData.votes[i].voter + " voted " + gameData.votes[i].target + "</li>";
+                if (gameData.votes[i].target == "") {
+                    gameToHtml += "<li>" + gameData.votes[i].voter + " unvoted";
+                } else if (gameData.votes[i].target == null) {
+                    // do nothing
+                } else {
+                    gameToHtml += "<li>" + gameData.votes[i].voter + " voted " + gameData.votes[i].target + "</li>";
+                }
             }
 
             
