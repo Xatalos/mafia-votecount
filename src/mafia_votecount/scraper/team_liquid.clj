@@ -60,9 +60,15 @@
          (.contains css-class "quote")
          nil)))
 
+(defn- has-spoiler? [part]
+  (and (map? (:attrs part))
+       (if-some [id (-> (:attrs part) (:id))]
+         (.contains id "spoiler")
+         nil)))
+
 (defn- remove-quotes [message]
   (remove
-   #(and (map? %) (has-quote? %)) message))
+   #(and (map? %) (or (has-quote? %) (has-spoiler? %))) message))
 
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
@@ -89,7 +95,7 @@
    (#(pair-users-messages (extract-users %) (extract-messages %)))))
 
 (defn- parse-and-wait [content]
-  (do (Thread/sleep 2000)
+  (do (Thread/sleep 1000)
       (get-user-message-pairs content)))
 
 (defn- get-player-message-maps [path]
