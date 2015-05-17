@@ -92,6 +92,10 @@ function showGame(id) {
             var currentDay = 0;
             
             for (var i = 0; i < gameData.votes.length; i++) {
+                var post = gameData.votes[i].index;
+                var page = Math.floor(post/20) + 1;
+                var address = gameData.game.url + "?page=" + page + "#" + post;
+                
                 if (currentDay != gameData.votes[i].day) {
                     firstNewDayVote = true;
                     currentDay = gameData.votes[i].day;
@@ -101,11 +105,11 @@ function showGame(id) {
                     firstNewDayVote = false;
                 }
                 if (gameData.votes[i].target == "") {
-                    gameToHtml += "<li>" + gameData.votes[i].voter + " unvoted";
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a></li>";
                 } else if (gameData.votes[i].target == null) {
-                    // do nothing
+                    gameToHtml += "<li>" + gameData.votes[i].voter + " gave an invalid vote!</li>";
                 } else {
-                    gameToHtml += "<li>" + gameData.votes[i].voter + " voted " + gameData.votes[i].target + "</li>";
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " voted for " + gameData.votes[i].target + "</a></li>";
                 }
             }
 
