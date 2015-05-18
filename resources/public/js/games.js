@@ -49,10 +49,11 @@ function locationHashChanged() {
 
 function showCreateGame() {
     "use strict";
+    var createGame = document.getElementById("creategame");
     document.getElementById("index").className += ' hidden';
-    document.getElementById("creategame").className =
-    document.getElementById("creategame").className.replace
-      ( /(?:^|\s)hidden(?!\S)/g , '' );
+    createGame.className = createGame.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
+
+    centerWindow();
 }
 
 function hideCreateGame() {
@@ -87,15 +88,15 @@ function showGame(id) {
             for (var i = 0; i < gameData.players.length; i++) {
                 gameToHtml += "<li>" + gameData.players[i].name + "</li>";
             }
-            
+
             var firstNewDayVote = false;
             var currentDay = 0;
-            
+
             for (var i = 0; i < gameData.votes.length; i++) {
                 var post = gameData.votes[i].index;
                 var page = Math.floor(post/20) + 1;
                 var address = gameData.game.url + "?page=" + page + "#" + post;
-                
+
                 if (currentDay != gameData.votes[i].day) {
                     firstNewDayVote = true;
                     currentDay = gameData.votes[i].day;
@@ -113,7 +114,7 @@ function showGame(id) {
                 }
             }
 
-            
+
 //                            [b]Bill Murray (8):[/b] Holyflare, Eden1892, rsoultin, Superbia, Vivax, Breshke, raynpelikoneet, Palmar
 //                            [b]Vivax (7):[/b] [s]Holyflare[/s], Artanis[Xp], [s]Damdred[/s], LightningStrike, sicklucker, Toadesstern, Trfel, ExO_,                             [s]rsoultin[/s], [s]Palmar[/s], Damdred
 //                            [b]LightningStrike (3):[/b] Bill Murray, [s]Toadesstern[/s], FecalFeast, [s]raynpelikoneet[/s], [s]Vivax[/s], Onegu
@@ -132,7 +133,7 @@ function showGame(id) {
 //                            [b]Holyflare (0):[/b] [s]Alakaslam[/s]
 //
 //                            [b]Not Voting (0):[/b]
-                       
+
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
             console.log("Error. Status code " + req.status);
@@ -156,4 +157,3 @@ function hideGame() {
 }
 
 requestData();
-centerWindow();
