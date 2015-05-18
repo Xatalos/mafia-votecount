@@ -20,9 +20,10 @@ function requestData() {
 
             for (key in gamesData.games) {
                 gamesToHtml += "<tr>";
-                var url = "/#" + gamesData.games[x].id;
-                gamesToHtml +=  '<td><a href="' + url + '">' + gamesData.games[x].name + "</a></td>";
-                gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
+                var gameurl = "/#" + gamesData.games[x].id;
+                var threadurl = gamesData.games[x].url;
+                gamesToHtml +=  '<td><a href="' + gameurl + '">' + gamesData.games[x].name + "</a></td>";
+                gamesToHtml += '<td><a href="' + threadurl + '">' + threadurl + "</a></td>";
  //             gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
                 x++;
