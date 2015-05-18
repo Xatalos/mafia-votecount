@@ -111,7 +111,8 @@ function showGame(id) {
                 } else if (gameData.votes[i].target == null) {
                     gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a></li>";
                 } else {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " voted for " + gameData.votes[i].target + "</a></li>";
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + 
+                        " voted for " + gameData.votes[i].target + "</a></li>";
                 }
             }
 
