@@ -23,7 +23,7 @@ function requestData() {
                 var url = "/#" + gamesData.games[x].id;
                 gamesToHtml +=  '<td><a href="' + url + '">' + gamesData.games[x].name + "</a></td>";
                 gamesToHtml += "<td>" + gamesData.games[x].url + "</td>";
-                gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
+ //             gamesToHtml += "<td>" + gamesData.games[x].start_date + "</td>";
                 gamesToHtml += "</tr>";
                 x++;
             }
@@ -108,7 +108,7 @@ function showGame(id) {
                 if (gameData.votes[i].target == "") {
                     gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a></li>";
                 } else if (gameData.votes[i].target == null) {
-                    gameToHtml += "<li>" + gameData.votes[i].voter + " gave an invalid vote!</li>";
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a></li>";
                 } else {
                     gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " voted for " + gameData.votes[i].target + "</a></li>";
                 }
