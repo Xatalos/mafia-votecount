@@ -25,4 +25,4 @@
 
 (defn -main [& [port]]
   (let [port (if port (Integer/parseInt port) 8080)]
-    (jetty/run-jetty (app) {:port port :join? false})))
+    (jetty/run-jetty app {:port port :join? false})))

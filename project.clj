@@ -14,7 +14,7 @@
                  [clojurewerkz/urly "1.0.0"]
                  [cheshire "5.4.0"]]
   :plugins [[lein-ring "0.8.12"]]
-  :uberjar-name "mafia-votecount-0.1.0-SNAPSHOT-standalone"
+  :uberjar-name "mafia-votecount-0.1.0-SNAPSHOT-standalone.jar"
   :ring {:handler mafia-votecount.handler/app
          :init mafia-votecount.handler/init
          :destroy mafia-votecount.handler/destroy}
