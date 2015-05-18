@@ -14,13 +14,15 @@
                  [clojurewerkz/urly "1.0.0"]
                  [cheshire "5.4.0"]]
   :plugins [[lein-ring "0.8.12"]]
+  :uberjar-name "mafia-votecount-0.1.0-SNAPSHOT-standalone"
   :ring {:handler mafia-votecount.handler/app
          :init mafia-votecount.handler/init
          :destroy mafia-votecount.handler/destroy}
   :profiles
   {:uberjar {:aot :all}
    :production
-   {:ring
+   {:env {:production true}
+    :ring
     {:open-browser? false, :stacktraces? false, :auto-reload? false}}
    :dev
    {:dependencies [[ring-mock "0.1.5"]
