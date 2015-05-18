@@ -6,7 +6,8 @@
             [compojure.handler :as handler]
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
-            [mafia-votecount.routes.home :refer [home-routes]]))
+            [mafia-votecount.routes.home :refer [home-routes]]
+            [environ.core :refer [env]]))
 
 (defn init []
   (println "mafia-votecount is starting"))
@@ -24,5 +25,5 @@
       (wrap-base-url)))
 
 (defn -main [& [port]]
-  (let [port (if port (Integer/parseInt port) 8080)]
+  (let [port (Integer. (or port (env :port) 5000))]
     (jetty/run-jetty app {:port port :join? false})))
