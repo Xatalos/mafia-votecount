@@ -115,6 +115,11 @@ function showGame(id) {
                         " voted for " + gameData.votes[i].target + "</a></li>";
                 }
             }
+            
+            if (gameData.votes.length === 0) {
+                gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
+            }
+
 
 
 //                            [b]Bill Murray (8):[/b] Holyflare, Eden1892, rsoultin, Superbia, Vivax, Breshke, raynpelikoneet, Palmar
