@@ -3,7 +3,8 @@
             [clojurewerkz.urly.core :as urly]
             [clj-http.client :as client]
             [clojure.string :as string]
-            [clojure.set])
+            [clojure.set]
+            [clojure.zip :as zip])
   (:use [clojure.pprint])
   (:import [java.net URL URLConnection])
   (:gen-class))
@@ -61,14 +62,27 @@
          nil)))
 
 (defn- has-spoiler? [part]
-  (and (map? (:attrs part))
-       (if-some [id (-> (:attrs part) (:id))]
-         (.contains id "spoiler")
-         nil)))
+  (let [stuff 0]
+   (and (map? (:attrs part))
+        (if-some [id (-> (:attrs part) (:id))]
+          (.contains id "spoiler")
+          nil))))
+
+(defn death-to-quotes [loc]
+  (if (zip/end? loc)
+    loc
+    (if (or (has-quote? (zip/node loc)) (has-spoiler? (zip/node loc)))
+      (recur (zip/next (zip/remove loc)))
+      (recur (zip/next loc)))))
+
+
+;; (defn- remove-quotes [message]
+;;   (remove
+;;    #(and (map? %) (or (has-quote? %) (has-spoiler? %))) message))
 
 (defn- remove-quotes [message]
-  (remove
-   #(and (map? %) (or (has-quote? %) (has-spoiler? %))) message))
+  (let [zipped (zip/seq-zip message)]
+    (zip/root (death-to-quotes zipped))))
 
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
