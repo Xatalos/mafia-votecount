@@ -62,11 +62,10 @@
          nil)))
 
 (defn- has-spoiler? [part]
-  (let [stuff 0]
-   (and (map? (:attrs part))
-        (if-some [id (-> (:attrs part) (:id))]
-          (.contains id "spoiler")
-          nil))))
+  (and (map? (:attrs part))
+       (if-some [id (-> (:attrs part) (:id))]
+         (.contains id "spoiler")
+         nil)))
 
 (defn death-to-quotes [loc]
   (if (zip/end? loc)
@@ -76,13 +75,15 @@
       (recur (zip/next loc)))))
 
 
-;; (defn- remove-quotes [message]
-;;   (remove
-;;    #(and (map? %) (or (has-quote? %) (has-spoiler? %))) message))
+(defn- remove-top-level-quotes [message]
+  (remove
+   #(and (map? %) (or (has-quote? %) (has-spoiler? %))) message))
 
 (defn- remove-quotes [message]
-  (let [zipped (zip/seq-zip message)]
-    (zip/root (death-to-quotes zipped))))
+  (map #(-> (zip/xml-zip %)
+            (death-to-quotes)
+            (zip/root))
+       (remove-top-level-quotes message)))
 
 (defn- pair-users-messages [users messages]
   (map (fn [user message] {:user user :message (remove-quotes message)})
