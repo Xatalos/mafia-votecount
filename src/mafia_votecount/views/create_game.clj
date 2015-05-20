@@ -1,7 +1,8 @@
 (ns mafia-votecount.views.create-game
   (:refer-clojure :exclude [resolve])
   (:use [clojurewerkz.urly.core] [clojure.pprint])
-  (:require [clojure.string :as string]
+  (:require [clojure.tools.logging :as log]
+   [clojure.string :as string]
             [mafia-votecount.models :as models]
             [mafia-votecount.scraper.team-liquid :as scraper]))
 
@@ -28,9 +29,16 @@
       (let [game-id (get-game-id url)]
             (if-not (models/has-game game-id)
               (do
-                (models/add-game game-id (scraper/get-game-title url) url)
-                (models/add-hosts game-id hosts)
-                (add-players game-id players-string)
-                (scan-all-votes game-id))
-              nil))
-      nil)))
+                (future
+                  (try
+                    (do
+                     (models/add-game game-id (scraper/get-game-title url) url)
+                     (models/add-hosts game-id hosts)
+                     (add-players game-id players-string)
+                     (scan-all-votes game-id)
+                     (log/info "Succesfully added game"))
+                    (catch Exception e
+                      (log/error e "Failed to scan game"))))
+                "Game is being added. Scanning may take long time")
+              "Game is already in database"))
+      "Invalid url")))

@@ -3,6 +3,7 @@
   :url "http://example.com/FIXME"
   :min-lein-version "2.0.0"
   :dependencies [[org.clojure/clojure "1.6.0"]
+                 [org.clojure/tools.logging "0.3.1"]
                  [compojure "1.1.6"]
                  [liberator "0.12.2"]
                  [clj-http "1.0.1"]
