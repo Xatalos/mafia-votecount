@@ -179,7 +179,7 @@
 
 (defn- analyze-vote [part]
   (if (.contains (.toLowerCase part) "#unvote")
-    {:unvote true :target ""}
+    {:target ""}
     (-> (string/split part #"(?i)#+vote:?")
         (last)
         (#(if (and (string? %) (< (.length %) 21))
