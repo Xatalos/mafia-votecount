@@ -85,6 +85,16 @@ function showGame(id) {
             var gameToHtml = "";
 
             document.getElementById("gameheader").innerHTML = gameData.game.name;
+            
+            gameToHtml += '<a href="' + gameData.game.url +'">' + gameData.game.url + "</a><br><br>";
+            
+            gameToHtml += "<b>Hosts</b>";
+            
+            for (var i = 0; i < gameData.hosts.length; i++) {
+                gameToHtml += "<li>" + gameData.hosts[i] + "</li>";
+            }
+            
+            gameToHtml += "<br><b>Players</b>";
 
             for (var i = 0; i < gameData.players.length; i++) {
                 gameToHtml += "<li>" + gameData.players[i].name + "</li>";
