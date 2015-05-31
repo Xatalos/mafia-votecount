@@ -231,7 +231,7 @@
 ;;               (map #(assoc  % :day day) votes)))
 ;;           votes-by-days))
 
-(defn- last-cycle [day-ranges]
+(defn- last-cycle-type [day-ranges]
   (case (count (last day-ranges))
     0 :none
     1 :day
@@ -249,9 +249,12 @@
                            (cons first-index %)
                            %))
                        (to-day-ranges))
-        last-cycle (last-cycle day-ranges)]
-    (days-into-votes (range 1 (inc (count day-ranges)))
-                     (map #(get-votes-in-range indexed %) day-ranges))))
+        last-cycle-type (last-cycle-type day-ranges)]
+    {:cycle-number (+ cycle-number (count day-ranges))
+     :last-index (-> indexed (last) (first))
+     :cycle-type last-cycle-type
+     :votes (days-into-votes (range 1 (inc (count day-ranges)))
+                      (map #(get-votes-in-range indexed %) day-ranges))}))
 
 (defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
   (let [player-message-maps (get-player-message-maps url first-index)]
