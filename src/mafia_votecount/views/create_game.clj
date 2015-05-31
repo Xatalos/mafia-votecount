@@ -18,7 +18,7 @@
 (defn- scan-all-votes [id]
   (let [hosts (models/get-hosts id)
         url (models/get-game-url id)
-        votes (scraper/scan-all-votes url hosts)]
+        votes (scraper/scan-all-votes-after url hosts 1 0 :none)]
     (-> (map #(assoc % :game id) votes)
         (models/add-votes))))
 
