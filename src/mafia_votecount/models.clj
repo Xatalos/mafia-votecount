@@ -39,6 +39,13 @@
                    :url (str url)
                    :start_date nil})))
 
+(defn update-game [id last-index cycle-number cycle-type]
+  (update game
+          (set-fields {:last_index last-index
+                       :cycle_number cycle-number
+                       :cycle_type cycle-type})
+          (where {:id id})))
+
 (defn get-games []
   (select game))
 

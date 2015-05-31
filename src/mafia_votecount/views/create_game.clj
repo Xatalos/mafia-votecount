@@ -20,8 +20,12 @@
         url (models/get-game-url id)
         scan-data (scraper/scan-all-votes-after url hosts 1 0 :none)
         nothing (pprint (dissoc scan-data :votes))]
-    (-> (map #(assoc % :game id) (:votes scan-data))
-        (models/add-votes))))
+    (do (-> (map #(assoc % :game id) (:votes scan-data))
+            (models/add-votes))
+        (models/update-game id
+                            (:last-index scan-data)
+                            (:cycle-number scan-data)
+                            (name (:cycle-type scan-data))))))
 
 (defn add-game [url-string hosts-string players-string]
   (let [url (url-like url-string)

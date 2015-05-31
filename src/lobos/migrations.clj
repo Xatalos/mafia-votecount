@@ -11,7 +11,10 @@
                   (varchar :id 100 :primary-key)
                   (varchar :name 100 :not-null)
                   (varchar :url 2000 :not-null :unique)
-                  (date :start_date))))
+                  (date :start_date)
+                  (integer :last_index :not-null (default 0))
+                  (integer :cycle_number :not-null (default 0))
+                  (varchar :cycle_type 5 :not-null (default "none")))))
   (down [] (drop (table :game))))
 
 (defmigration add-host-table
