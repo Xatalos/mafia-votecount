@@ -14,6 +14,8 @@
 (def ^:private request-header
   {"User-Agent" user-agent})
 
+(def ^:private ^:const POSTS-PER-PAGE 20)
+
 (defn- fetch-page [path]
   (if-not (.contains path "teamliquid.net/forum/") nil
     (try
@@ -67,7 +69,7 @@
          (.contains id "spoiler")
          nil)))
 
-(defn death-to-quotes [loc]
+(defn- death-to-quotes [loc]
   (if (zip/end? loc)
     loc
     (if (or (has-quote? (zip/node loc)) (has-spoiler? (zip/node loc)))
@@ -109,23 +111,25 @@
    (get-forum-posts)
    (#(pair-users-messages (extract-users %) (extract-messages %)))))
 
-(defn- parse-and-wait [content]
+(defn- parse-and-wait [content first-index]
   (do (Thread/sleep 1000)
       (get-user-message-pairs content)))
 
-(defn- get-player-message-maps [path]
-  (some->>
-   (fetch-certain-page path 1)
-   (only-main-content)
-   (get-page-numbers)
-   ((fn [page-numbers]
-      (map #(-> (fetch-certain-page path %)
-                (parse-and-wait))
+(defn- get-player-message-maps [path first-index]
+  (let [first-page (inc (quot first-index POSTS-PER-PAGE))]
+   (some->>
+    (fetch-certain-page path 1)
+    (only-main-content)
+    (get-page-numbers)
+    (#(nthrest % (dec first-page)))
+    ((fn [page-numbers]
+       (map #(-> (fetch-certain-page path %)
+                 (parse-and-wait first-index))
             page-numbers)))
-   (flatten)))
+    (flatten))))
 
-(defn- enumerate [posts]
-  (->> (map-indexed #(vector (inc %1) %2) posts)
+(defn- enumerate [posts first-page-index]
+  (->> (map-indexed #(vector (+ first-page-index %1) %2) posts)
        (into (sorted-map))))
 
 (defn- is-host? [index-post hosts]
@@ -227,14 +231,28 @@
 ;;               (map #(assoc  % :day day) votes)))
 ;;           votes-by-days))
 
-(defn- scan-votes [player-message-maps hosts]
-  (let [indexed (enumerate player-message-maps)
+(defn- last-cycle [day-ranges]
+  (case (count (last day-ranges))
+    0 :none
+    1 :day
+    2 :night
+    :last-cycle-error)) ;; This should never happen
+
+(defn- scan-votes [player-message-maps hosts first-index cycle-number cycle-type]
+  (let [first-page-index (* (quot first-index POSTS-PER-PAGE) POSTS-PER-PAGE)
+        indexed (->> (enumerate player-message-maps first-page-index)
+                     (drop-while #(<= (first %) first-index))
+                     (into (sorted-map)))
         day-ranges (-> (cycle-changes indexed hosts)
                        (keys)
-                       (to-day-ranges))]
+                       (#(if (= cycle-type :day)
+                           (cons first-index %)
+                           %))
+                       (to-day-ranges))
+        last-cycle (last-cycle day-ranges)]
     (days-into-votes (range 1 (inc (count day-ranges)))
                      (map #(get-votes-in-range indexed %) day-ranges))))
 
-(defn scan-all-votes [url hosts]
-  (let [player-message-maps (get-player-message-maps url)]
-    (scan-votes player-message-maps hosts)))
+(defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
+  (let [player-message-maps (get-player-message-maps url first-index)]
+    (scan-votes player-message-maps hosts first-index cycle-number cycle-type)))
