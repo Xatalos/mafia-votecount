@@ -136,14 +136,14 @@
   (contains? hosts (:user (val index-post))))
 
 (defn- is-cycle-change? [message]
-  (->> (map html/text message)
-       (remove string/blank?)
-       (first)
-       (string/trim)
-       (vector)
-       (some #(let [lowercased (string/lower-case %)]
-                (or (.startsWith lowercased "day ")
-                    (.startsWith lowercased "night "))))))
+  (some->> (map html/text message)
+           (remove string/blank?)
+           (first)
+           (string/trim)
+           (vector)
+           (some #(let [lowercased (string/lower-case %)]
+                    (or (.startsWith lowercased "day ")
+                        (.startsWith lowercased "night "))))))
 
 (defn- cycle-changes [indexed hosts]
   (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
@@ -231,9 +231,9 @@
 ;;               (map #(assoc  % :day day) votes)))
 ;;           votes-by-days))
 
-(defn- last-cycle-type [day-ranges]
+(defn- last-cycle-type [previous day-ranges]
   (case (count (last day-ranges))
-    0 :none
+    0 (if (= previous :none) :none previous)
     1 :day
     2 :night
     :last-cycle-error)) ;; This should never happen
@@ -249,13 +249,14 @@
                            (cons first-index %)
                            %))
                        (to-day-ranges))
-        last-cycle-type (last-cycle-type day-ranges)]
+        last-cycle-type (last-cycle-type cycle-type day-ranges)]
     {:cycle-number (+ cycle-number (count day-ranges))
-     :last-index (-> indexed (last) (first))
+     :last-index (-> indexed (last) (first) (#(if % % first-index)))
      :cycle-type last-cycle-type
      :votes (days-into-votes (range 1 (inc (count day-ranges)))
                       (map #(get-votes-in-range indexed %) day-ranges))}))
 
 (defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
-  (let [player-message-maps (get-player-message-maps url first-index)]
+  (let [player-message-maps (get-player-message-maps url first-index)
+        nothing (println url hosts first-index cycle-number cycle-type)]
     (scan-votes player-message-maps hosts first-index cycle-number cycle-type)))

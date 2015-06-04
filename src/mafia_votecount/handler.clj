@@ -7,10 +7,16 @@
             [compojure.route :as route]
             [ring.adapter.jetty :as jetty]
             [mafia-votecount.routes.home :refer [home-routes]]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]])
+  (:use [mafia-votecount.refresher :only [refresh]])
+  (:import [java.util.concurrent Executors]
+           [java.util.concurrent TimeUnit]))
 
 (defn init []
-  (println "mafia-votecount is starting"))
+  (println "mafia-votecount is starting")
+  (println "Scheduling refresher")
+  (.scheduleAtFixedRate (Executors/newScheduledThreadPool 1)
+                             refresh 1 15 TimeUnit/MINUTES))
 
 (defn destroy []
   (println "mafia-votecount is shutting down"))
@@ -26,4 +32,6 @@
 
 (defn -main [& [port]]
   (let [port (Integer. (or port (env :port) 5000))]
-    (jetty/run-jetty app {:port port :join? false})))
+    (do
+      (init)
+      (jetty/run-jetty app {:port port :join? false}))))

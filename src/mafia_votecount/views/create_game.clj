@@ -1,8 +1,9 @@
 (ns mafia-votecount.views.create-game
   (:refer-clojure :exclude [resolve])
-  (:use [clojurewerkz.urly.core] [clojure.pprint])
+  (:use [clojurewerkz.urly.core]
+        [clojure.pprint])
   (:require [clojure.tools.logging :as log]
-   [clojure.string :as string]
+            [clojure.string :as string]
             [mafia-votecount.models :as models]
             [mafia-votecount.scraper.team-liquid :as scraper]))
 
