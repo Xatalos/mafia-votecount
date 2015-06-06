@@ -240,6 +240,11 @@
     2 :night
     :last-cycle-error)) ;; This should never happen
 
+(defn- last-cycle-number [previous-number previous-type day-ranges]
+  (+ previous-number
+     (count day-ranges)
+     (if (= previous-type :day) -1 0)))
+
 (defn- scan-votes [player-message-maps hosts first-index cycle-number cycle-type]
   (let [first-page-index (inc (* (quot (dec first-index) POSTS-PER-PAGE) POSTS-PER-PAGE))
         indexed (->> (enumerate player-message-maps first-page-index)
@@ -252,7 +257,7 @@
                            %))
                        (to-day-ranges))
         last-cycle-type (last-cycle-type cycle-type day-ranges)]
-    {:cycle-number (+ cycle-number (count day-ranges))
+    {:cycle-number (last-cycle-number cycle-number cycle-type day-ranges)
      :last-index (-> indexed (last) (first) (#(if % % first-index)))
      :cycle-type last-cycle-type
      :votes (days-into-votes (range 1 (inc (count day-ranges)))
