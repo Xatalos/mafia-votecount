@@ -142,8 +142,10 @@
            (string/trim)
            (vector)
            (some #(let [lowercased (string/lower-case %)]
-                    (or (.startsWith lowercased "day ")
-                        (.startsWith lowercased "night "))))))
+                    (and
+                     (or (.startsWith lowercased "day ")
+                         (.startsWith lowercased "night "))
+                     (not (.contains lowercased "vot")))))))
 
 (defn- cycle-changes [indexed hosts]
   (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
