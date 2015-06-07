@@ -265,5 +265,5 @@
 
 (defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
   (let [player-message-maps (get-player-message-maps url first-index)
-        nothing (println url hosts first-index cycle-number cycle-type)]
+        nothing (println "Called scan-all-votes-after:" url hosts first-index cycle-number cycle-type)]
     (scan-votes player-message-maps hosts first-index cycle-number cycle-type)))
