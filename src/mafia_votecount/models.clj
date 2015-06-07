@@ -87,8 +87,9 @@
                      (where {:game game-id})))))
 
 (defn add-votes [votes]
-  (insert vote
-          (values votes)))
+  (if-not (empty? votes)
+    (insert vote
+            (values votes))))
 
 (defn get-votes [id]
   (select vote
