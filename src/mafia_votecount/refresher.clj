@@ -20,7 +20,9 @@
         (models/update-game (:id game)
                             (:last-index refreshed)
                             (:cycle-number refreshed)
-                            (name (:cycle-type refreshed))))))
+                            (name (:cycle-type refreshed)))
+        (-> (map #(assoc % :game (:id game)) (:votes refreshed))
+            (models/add-votes)))))
 
 (defn refresh []
   (try
