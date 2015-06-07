@@ -8,6 +8,8 @@
                    to-day-ranges analyze-vote cycle-changes enumerate
                    get-votes-in-range last-cycle-number)
 
+(def enumerated-data-void-1 (enumerate data-void 1))
+
 (fact "to-day-ranges groups sequence of message ids into day ranges"
       (to-day-ranges []) => []
       (to-day-ranges [10]) => [[11]]
@@ -41,13 +43,14 @@
       => '(61 1542 1969 2333 2477 2914 2986 3123))
 
 (fact "get-votes-in-range gets votes that happened between start and end"
-      (get-votes-in-range (enumerate data-void 1) [2987 3122])
+      (get-votes-in-range enumerated-data-void-1 [2987 3122])
       => '({:index 3044 :target "batsnacks" :voter "Vivax"}
            {:index 3062 :target "" :voter "Vivax"}
            {:index 3062 :target "Wile E. Scum" :voter "Vivax"}
            {:index 3070 :target "batsnacks" :voter "sicklucker"}
            {:index 3096 :target "Bats" :voter "Oatsmaster"}
-           {:index 3119 :target "Wile E. Coyote" :voter "batsnacks"}))
+           {:index 3119 :target "Wile E. Coyote" :voter "batsnacks"})
+      (get-votes-in-range {} '(1262)) => '())
 
 (fact "last-cycle-number determines new cycle number"
       (last-cycle-number 2 :day [[1000]]) => 2

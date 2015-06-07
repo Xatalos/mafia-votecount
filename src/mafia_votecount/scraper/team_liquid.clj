@@ -212,14 +212,16 @@
       :else false)))
 
 (defn- get-votes-in-range [indexed start-end]
-  (let [posts (select-keys indexed
-                           (range (first start-end)
-                                  (if (empty? (rest start-end))
-                                    (last (keys indexed))
-                                    (inc (last start-end)))))]
-    (->> (mapcat get-votes-from-message posts)
-         (sort vote-cmp)
-         (map #(dissoc % :subindex)))))
+  (if (empty? indexed)
+    '()
+    (let [posts (select-keys indexed
+                            (range (first start-end)
+                                   (if (empty? (rest start-end))
+                                     (last (keys indexed))
+                                     (inc (last start-end)))))]
+     (->> (mapcat get-votes-from-message posts)
+          (sort vote-cmp)
+          (map #(dissoc % :subindex))))))
 
 (defn- days-into-votes [days votes-by-days]
   (flatten (map (fn [day votes-of-day]
