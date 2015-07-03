@@ -12,7 +12,7 @@
         refreshed (scraper/scan-all-votes-after
                    (:url game)
                    hosts
-                   (:last_index game)
+                   (inc (:last_index game))
                    (:cycle_number game)
                    (keyword (:cycle_type game)))]
     (do ;; (log/info "Posts between: " (- (:last-index refreshed) (:last_index game)))

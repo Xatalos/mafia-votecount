@@ -116,7 +116,7 @@
       (get-user-message-pairs content)))
 
 (defn- get-player-message-maps [path first-index]
-  (let [first-page (inc (quot first-index POSTS-PER-PAGE))]
+  (let [first-page (inc (quot (dec first-index) POSTS-PER-PAGE))]
    (some->>
     (fetch-certain-page path 1)
     (only-main-content)
