@@ -2,7 +2,7 @@
   (:use [korma.db]
         [korma.core]))
 
-(def db (pg {:db "//localhost:5432/px"}))
+(def db (postgres {:db "//localhost:5432/px"}))
 
 (defdb korma-db db)
 
