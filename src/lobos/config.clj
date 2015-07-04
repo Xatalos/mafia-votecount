@@ -18,9 +18,9 @@
     (@lobos.connectivity/global-connections :default-connection)))
 
 
-(def h2
-  {:classname   "org.h2.Driver"
-   :subprotocol "h2"
-   :subname     "./resources/database"})
+(def db
+  {:classname "org.postgresql.Driver"
+   :subprotocol "postgresql"
+   :subname "//localhost:5432/px"})
 
-(open-global-when-necessary h2)
+(open-global-when-necessary db)
