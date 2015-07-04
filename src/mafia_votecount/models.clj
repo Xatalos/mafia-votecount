@@ -3,8 +3,7 @@
         [korma.core]))
 
 (def db
-  (postgres {:db "postgres://nqboeyfbipdulq:79gw1OolTi2gb8LxCFz4N1A06i@ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk
-"}))
+  (postgres {:db "postgres://nqboeyfbipdulq:79gw1OolTi2gb8LxCFz4N1A06i@ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"}))
 
 (defdb korma-db db)
 
