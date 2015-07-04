@@ -3,7 +3,7 @@
         [korma.core]))
 
 (def db
-  (postgres {:db "http://ec2-107-20-222-114.compute-1.amazonaws.com"}))
+  (postgres {:db "ec2-107-20-222-114.compute-1.amazonaws.com"}))
 
 (defdb korma-db db)
 
