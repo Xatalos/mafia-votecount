@@ -21,6 +21,6 @@
 (def db
   {:classname "org.postgresql.Driver"
    :subprotocol "postgresql"
-   :subname "ec2-107-20-222-114.compute-1.amazonaws.com"})
+   :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})
 
 (open-global-when-necessary db)
