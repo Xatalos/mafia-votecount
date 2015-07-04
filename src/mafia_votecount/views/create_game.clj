@@ -45,6 +45,6 @@
                      (log/info "Succesfully added game"))
                     (catch Exception e
                       (log/error e "Failed to scan game"))))
-                "Game is being added. Scanning may take long time")
-              "Game is already in database"))
-      "Invalid url")))
+                "Game is being added. Scanning may take a long time - please return to the homepage and reload the page.")
+              "Game is already in the database"))
+      "Invalid URL")))
