@@ -3,7 +3,11 @@
         [korma.core]))
 
 (def db
-  (postgres {:db "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"}))
+  {:classname "org.postgresql.Driver"
+   :subprotocol "postgresql"
+   :user "nqboeyfbipdulq"
+   :password "79gw1OolTi2gb8LxCFz4N1A06i"
+   :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})
 
 (defdb korma-db db)
 
