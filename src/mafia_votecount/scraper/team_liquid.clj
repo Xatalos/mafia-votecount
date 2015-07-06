@@ -262,7 +262,7 @@
     {:cycle-number (last-cycle-number cycle-number cycle-type day-ranges)
      :last-index (-> indexed (last) (first) (#(if % % first-index)))
      :cycle-type last-cycle-type
-     :votes (days-into-votes (range 1 (inc (count day-ranges)))
+     :votes (days-into-votes (range first-index (+ first-index (count day-ranges) 1))
                       (map #(get-votes-in-range indexed %) day-ranges))}))
 
 (defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
