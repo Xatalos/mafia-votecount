@@ -247,6 +247,9 @@
      (count day-ranges)
      (if (= previous-type :day) -1 0)))
 
+(defn- get-first-day [cycle-number cycle-type]
+  (+ cycle-number (if (= cycle-type :day) 0 1)))
+
 (defn- scan-votes [player-message-maps hosts first-index cycle-number cycle-type]
   (let [first-page-index (inc (* (quot (dec first-index) POSTS-PER-PAGE) POSTS-PER-PAGE))
         indexed (->> (enumerate player-message-maps first-page-index)
@@ -262,8 +265,9 @@
     {:cycle-number (last-cycle-number cycle-number cycle-type day-ranges)
      :last-index (-> indexed (last) (first) (#(if % % first-index)))
      :cycle-type last-cycle-type
-     :votes (days-into-votes (range (max cycle-number 1) (+ cycle-number (count day-ranges) 1))
-                      (map #(get-votes-in-range indexed %) day-ranges))}))
+     :votes (days-into-votes (range (get-first-day cycle-number cycle-type)
+                                    (+ cycle-number (count day-ranges) 1))
+                             (map #(get-votes-in-range indexed %) day-ranges))}))
 
 (defn scan-all-votes-after [url hosts first-index cycle-number cycle-type]
   (let [player-message-maps (get-player-message-maps url first-index)
