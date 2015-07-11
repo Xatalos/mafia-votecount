@@ -253,7 +253,7 @@
 (defn- scan-votes [player-message-maps hosts first-index cycle-number cycle-type]
   (let [first-page-index (inc (* (quot (dec first-index) POSTS-PER-PAGE) POSTS-PER-PAGE))
         indexed (->> (enumerate player-message-maps first-page-index)
-                     (drop-while #(<= (first %) first-index))
+                     (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
         day-ranges (-> (cycle-changes indexed hosts)
                        (keys)
