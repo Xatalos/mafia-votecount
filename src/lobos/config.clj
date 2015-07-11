@@ -19,10 +19,15 @@
 
 
 (def db
-  {:classname "org.postgresql.Driver"
-   :subprotocol "postgresql"
-   :user "nqboeyfbipdulq"
-   :password "79gw1OolTi2gb8LxCFz4N1A06i"
-   :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})
+(let [db-uri (java.net.URI. (System/getenv "DATABASE_URL"))]
+        (->> (string/split (.getUserInfo db-uri) #":")
+          (#(identity {:db (last (string/split (System/getenv "DATABASE_URL") #"\/"))
+                       :classname "org.postgresql.Driver"
+                       :subprotocol "postgresql"
+                       :host (.getHost db-uri)
+                       :port (.getPort db-uri)
+                       :user (% 0)
+                       :password (% 1)
+                       :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})))))
 
 (open-global-when-necessary db)

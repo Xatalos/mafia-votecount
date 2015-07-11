@@ -126,6 +126,10 @@ function showGame(id) {
                 }
             }
             
+            for (var i = 0; i < gameData.votes.length; i++) {
+                
+            }
+            
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
             }
