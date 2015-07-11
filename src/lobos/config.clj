@@ -1,4 +1,5 @@
 (ns lobos.config
+  (:require [clojure.string :as string])
   (:use lobos.connectivity))
 
 
@@ -24,8 +25,6 @@
           (#(identity {:db (last (string/split (System/getenv "DATABASE_URL") #"\/"))
                        :classname "org.postgresql.Driver"
                        :subprotocol "postgresql"
-                       :host (.getHost db-uri)
-                       :port (.getPort db-uri)
                        :user (% 0)
                        :password (% 1)
                        :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})))))
