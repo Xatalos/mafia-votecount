@@ -131,7 +131,7 @@ function showGame(id) {
             var targets = [];
             
             for (var i = 0; i < gameData.votes.length; i++) {
-                if (currentDay == gameData.votes[i].day) {
+                if (currentDay == gameData.votes[i].day && gameData.votes[i].target != "") {
                         if (targets.indexOf(gameData.votes[i].target) == -1) {
                             targets.push(gameData.votes[i].target);
                         }
@@ -139,7 +139,13 @@ function showGame(id) {
             }
                         
             for (var i = 0; i < targets.length; i++) {
-                        gameToHtml += "<li>" + targets[i] + ": " + "</li>";
+                var voters = [];
+                for (var j = 0; j < gameData.votes.length; j++) {
+                    if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i]) {
+                        voters.push(gameData.votes[j].voter);
+                    }
+                }
+                        gameToHtml += "<li>" + targets[i] + ": " + voters.toString() + "</li>";
             }
             
             if (gameData.votes.length === 0) {
