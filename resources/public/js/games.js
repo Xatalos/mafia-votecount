@@ -125,6 +125,20 @@ function showGame(id) {
                         " voted for " + gameData.votes[i].target + "</a></li>";
                 }
             }
+        
+            var targets = [];
+            
+            for (var i = 0; i < gameData.votes.length; i++) {
+     //           if (currentDay == gameData.votes[i].day) {
+                        if (!targets.contains(gameData.votes[i].target)) {
+                            targets.push(gameData.votes[i].target);
+                        }
+         //             }
+            }
+                        
+            for (var i = 0; i < targets.length; i++) {
+                        gameToHtml += targets[i];
+            }
             
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
