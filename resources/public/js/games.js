@@ -94,11 +94,11 @@ function showGame(id) {
                 gameToHtml += "<li>" + gameData.hosts[i] + "</li>";
             }
             
-            gameToHtml += "<br><b>Players</b>";
+//            gameToHtml += "<br><b>Players</b>";
 
-            for (var i = 0; i < gameData.players.length; i++) {
-                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
-            }
+//            for (var i = 0; i < gameData.players.length; i++) {
+//                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
+//            }
 
             var firstNewDayVote = false;
             var currentDay = 0;
