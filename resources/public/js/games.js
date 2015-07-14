@@ -132,11 +132,8 @@ function showGame(id) {
             
             for (var i = 0; i < gameData.votes.length; i++) {
                 if (currentDay == gameData.votes[i].day) {
-                        if (targets.indexOf(gameData.votes[i].target) == -1 && gameData.votes[i].target != "") {
+                        if (targets.indexOf(gameData.votes[i].target) == -1) {
                             targets.push(gameData.votes[i].target);
-                        }
-                        if (gameData.votes[i].target == "") {
-                            //
                         }
                       }
             }
@@ -144,8 +141,17 @@ function showGame(id) {
             for (var i = 0; i < targets.length; i++) {
                 var voters = [];
                 for (var j = 0; j < gameData.votes.length; j++) {
-                    if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i]) {
+                    if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
                         voters.push(gameData.votes[j].voter);
+                    }
+                    if (currentDay == gameData.votes[j].day && gameData.votes[j].target == "") {
+                        for (var k = 0; k < targets.length; k++) {
+                            for (var z = 0; z < voters.length; z++) {
+                                if (voters[z] == gameData.votes[j].voter) {
+                                    voters.splice(z,1)
+                                }
+                            }
+                        }
                     }
                 }
                         gameToHtml += "<li><b>" + targets[i] + " (" + voters.length + "):</b> " + voters.toString() + "</li>";
