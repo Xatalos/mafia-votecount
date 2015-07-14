@@ -126,7 +126,7 @@ function showGame(id) {
                 }
             }
             
-            gameToHtml += "<br>";
+            gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
         
             var targets = [];
             
@@ -139,7 +139,7 @@ function showGame(id) {
             }
                         
             for (var i = 0; i < targets.length; i++) {
-                        gameToHtml += targets[i];
+                        gameToHtml += "<li>" + targets[i] + ": " + "</li>";
             }
             
             if (gameData.votes.length === 0) {
