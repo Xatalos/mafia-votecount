@@ -125,15 +125,17 @@ function showGame(id) {
                         " voted for " + gameData.votes[i].target + "</a></li>";
                 }
             }
+            
+            gameToHtml += "<br>";
         
             var targets = [];
             
             for (var i = 0; i < gameData.votes.length; i++) {
-     //           if (currentDay == gameData.votes[i].day) {
+                if (currentDay == gameData.votes[i].day) {
                         if (targets.indexOf(gameData.votes[i].target) == -1) {
                             targets.push(gameData.votes[i].target);
                         }
-         //             }
+                      }
             }
                         
             for (var i = 0; i < targets.length; i++) {
