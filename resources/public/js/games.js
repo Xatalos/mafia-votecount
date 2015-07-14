@@ -139,6 +139,9 @@ function showGame(id) {
             }
                         
             for (var i = 0; i < targets.length; i++) {
+                if (targets[i] == "") {
+                    continue;
+                }
                 var voters = [];
                 for (var j = 0; j < gameData.votes.length; j++) {
                     if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
