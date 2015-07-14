@@ -130,7 +130,7 @@ function showGame(id) {
             
             for (var i = 0; i < gameData.votes.length; i++) {
      //           if (currentDay == gameData.votes[i].day) {
-                        if (!targets.contains(gameData.votes[i].target)) {
+                        if (targets.indexOf(gameData.votes[i].target) == -1) {
                             targets.push(gameData.votes[i].target);
                         }
          //             }
