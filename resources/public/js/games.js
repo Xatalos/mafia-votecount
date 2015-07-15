@@ -148,7 +148,7 @@ function showGame(id) {
                         for (var k = 0; k < targets.length; k++) {
                             for (var z = 0; z < voters.length; z++) {
                                 if (voters[z] == gameData.votes[j].voter) {
-                                    voters.splice(z,1)
+                                    voters[z] = "<s>" + voters[z] + "</s>";
                                 }
                             }
                         }
