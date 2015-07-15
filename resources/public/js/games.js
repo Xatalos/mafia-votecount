@@ -159,7 +159,7 @@ function showGame(id) {
                 }
                         var voterscount = 0;
                         for (var j = 0; j < voters.length; j++) {
-                            if (voters[j].indexOf("<s>") != -1) {
+                            if (voters[j].indexOf("<s>") == -1) {
                                 voterscount++;
                             }
                         }
