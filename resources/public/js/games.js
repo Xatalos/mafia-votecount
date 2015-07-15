@@ -100,31 +100,7 @@ function showGame(id) {
 //                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
 //            }
 
-            var firstNewDayVote = false;
-            var currentDay = 0;
-
-            for (var i = 0; i < gameData.votes.length; i++) {
-                var post = gameData.votes[i].index;
-                var page = Math.floor(post/20) + 1;
-                var address = gameData.game.url + "?page=" + page + "#" + post;
-
-                if (currentDay != gameData.votes[i].day) {
-                    firstNewDayVote = true;
-                    currentDay = gameData.votes[i].day;
-                }
-                if (firstNewDayVote === true) {
-                    gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1><br>";
-                    firstNewDayVote = false;
-                }
-                if (gameData.votes[i].target == "") {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a></li>";
-                } else if (gameData.votes[i].target == null) {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a></li>";
-                } else {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + 
-                        " voted for " + gameData.votes[i].target + "</a></li>";
-                }
-            }
+            var currentDay = gameData.votes[gameData.votes.length - 1].day;
             
             gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
         
@@ -164,6 +140,32 @@ function showGame(id) {
                             }
                         }
                         gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.toString() + "</li>";
+            }
+            
+            var firstNewDayVote = false;
+            currentDay = 0;
+
+            for (var i = 0; i < gameData.votes.length; i++) {
+                var post = gameData.votes[i].index;
+                var page = Math.floor(post/20) + 1;
+                var address = gameData.game.url + "?page=" + page + "#" + post;
+
+                if (currentDay != gameData.votes[i].day) {
+                    firstNewDayVote = true;
+                    currentDay = gameData.votes[i].day;
+                }
+                if (firstNewDayVote === true) {
+                    gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1><br>";
+                    firstNewDayVote = false;
+                }
+                if (gameData.votes[i].target == "") {
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a></li>";
+                } else if (gameData.votes[i].target == null) {
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a></li>";
+                } else {
+                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + 
+                        " voted for " + gameData.votes[i].target + "</a></li>";
+                }
             }
             
             if (gameData.votes.length === 0) {
