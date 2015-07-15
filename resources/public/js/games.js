@@ -157,6 +157,12 @@ function showGame(id) {
                         voters.push(gameData.votes[j].voter);
                     }
                 }
+                        var voterscount = 0;
+                        for (var j = 0; j < voters.length; j++) {
+                            if (str.indexOf("<s>") != -1) {
+                                voterscount++;
+                            }
+                        }
                         gameToHtml += "<li><b>" + targets[i] + " (" + voters.length + "):</b> " + voters.toString() + "</li>";
             }
             
