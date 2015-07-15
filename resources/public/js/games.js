@@ -139,7 +139,7 @@ function showGame(id) {
                                 voterscount++;
                             }
                         }
-                        gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.toString() + "</li>";
+                        gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
             }
             
             var firstNewDayVote = false;
