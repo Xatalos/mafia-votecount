@@ -181,7 +181,8 @@ function showGame(id) {
                 gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
             
-                gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue][br][/br]";
+                gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]
+                ";
         
                 var targets = [];
             
@@ -223,7 +224,8 @@ function showGame(id) {
                             voterscount++;
                         }
                     }
-                    gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "[br][/br]";
+                    gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "
+                                                              ";
             }
                 gameToHtml += '</textarea>';
         }
