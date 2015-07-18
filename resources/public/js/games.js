@@ -136,7 +136,7 @@ function showGame(id) {
                             }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
-                            // if the vote has an actual target and that target is this target, then push the voter of this vote to the voters of                               // this target
+                            // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
                         }
                     }
@@ -181,7 +181,7 @@ function showGame(id) {
                 gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
             
-                gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n";
+                gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 var targets = [];
             
@@ -212,13 +212,13 @@ function showGame(id) {
                             }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
-                            // if the vote has an actual target and that target is this target, then push the voter of this vote to the voters of                               // this target
+                            // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
                         }
                     }
                     var voterscount = 0;
                     for (var j = 0; j < voters.length; j++) {
-                        if (voters[j].indexOf("<s>") == -1) {
+                        if (voters[j].indexOf("[s]") == -1) {
                             // count the number of voters for this target that haven't been unvoted
                             voterscount++;
                         }
