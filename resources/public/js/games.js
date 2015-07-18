@@ -177,6 +177,57 @@ function showGame(id) {
                 }
             }
             
+            if (gameData.votes.length > 0) {
+                gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
+                currentDay = gameData.votes[gameData.votes.length - 1].day;
+            
+                gameToHtml += "[blue][b][u][big]<br>Day " + currentDay + " Votecount<br>[/big][/u][/b][/blue]";
+        
+                var targets = [];
+            
+                for (var i = 0; i < gameData.votes.length; i++) {
+                    if (currentDay == gameData.votes[i].day) {
+                        if (targets.indexOf(gameData.votes[i].target) == -1) {
+                            // push every new unique vote target to the targets array
+                            targets.push(gameData.votes[i].target);
+                        }
+                      }
+                }
+                        
+                for (var i = 0; i < targets.length; i++) {
+                    if (targets[i] == "") {
+                        // don't show the null (unvote) target in the targets listing
+                        continue;
+                    }
+                    var voters = [];
+                    for (var j = 0; j < gameData.votes.length; j++) {
+                        if (currentDay == gameData.votes[j].day) {
+                            for (var k = 0; k < targets.length; k++) {
+                                for (var z = 0; z < voters.length; z++) {
+                                    if (voters[z] == gameData.votes[j].voter) {
+                                        // every time a new vote is given, mark every previous vote by the same voter as "overwritten"
+                                        voters[z] = "[s]" + voters[z] + "[/s]";
+                                    }
+                                }
+                            }
+                        }
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
+                            // if the vote has an actual target and that target is this target, then push the voter of this vote to the voters of                               // this target
+                            voters.push(gameData.votes[j].voter);
+                        }
+                    }
+                    var voterscount = 0;
+                    for (var j = 0; j < voters.length; j++) {
+                        if (voters[j].indexOf("<s>") == -1) {
+                            // count the number of voters for this target that haven't been unvoted
+                            voterscount++;
+                        }
+                    }
+                    gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ');
+            }
+                gameToHtml += '</textarea>';
+        }
+            
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
             }
