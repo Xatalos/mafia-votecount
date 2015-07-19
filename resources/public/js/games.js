@@ -111,9 +111,9 @@ function showGame(id) {
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
-                        if (targets.indexOf(gameData.votes[i].target) == -1) {
+                        if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
-                            targets.push(gameData.votes[i].target);
+                            targets.push(gameData.votes[i].target.toLowerCase());
                         }
                       }
                 }
@@ -135,7 +135,7 @@ function showGame(id) {
                                 }
                             }
                         }
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
                             // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
                         }
@@ -211,7 +211,7 @@ function showGame(id) {
                                 }
                             }
                         }
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target == targets[i] && gameData.votes[j].target != "") {
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
                             // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
                         }
