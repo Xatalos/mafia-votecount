@@ -16,7 +16,7 @@
   (println "mafia-votecount is starting")
   (println "Scheduling refresher")
   (.scheduleAtFixedRate (Executors/newScheduledThreadPool 1)
-                             refresh 1 15 TimeUnit/MINUTES))
+                             refresh 1 5 TimeUnit/MINUTES))
 
 (defn destroy []
   (println "mafia-votecount is shutting down"))
