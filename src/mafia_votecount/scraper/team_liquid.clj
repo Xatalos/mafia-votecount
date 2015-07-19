@@ -263,7 +263,7 @@
                        (to-day-ranges))
         last-cycle-type (last-cycle-type cycle-type day-ranges)]
     {:cycle-number (last-cycle-number cycle-number cycle-type day-ranges)
-     :last-index (-> indexed (last) (first) (#(if % % first-index)))
+     :last-index (-> indexed (last) (first) (#(if % % (dec first-index))))
      :cycle-type last-cycle-type
      :votes (days-into-votes (range (get-first-day cycle-number cycle-type)
                                     (+ cycle-number (count day-ranges) 1))
