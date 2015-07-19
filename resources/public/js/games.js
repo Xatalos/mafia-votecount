@@ -187,9 +187,9 @@ function showGame(id) {
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
-                        if (targets.indexOf(gameData.votes[i].target) == -1) {
+                        if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
-                            targets.push(gameData.votes[i].target);
+                            targets.push(gameData.votes[i].target.toLowerCase());
                         }
                       }
                 }
