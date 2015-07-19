@@ -103,4 +103,5 @@
 (defn get-votes [id]
   (select vote
           (fields :id :index :day :voter :target)
-          (where {:game id})))
+          (where {:game id})
+          (order :id :ASC)))
