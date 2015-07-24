@@ -158,7 +158,7 @@
 
 (defn- cycle-changes [indexed hosts]
   (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
-          indexed))
+          (rest indexed)))
 
 (defn- dec-or-nil [num]
   (if (nil? num)
