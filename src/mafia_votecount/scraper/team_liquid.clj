@@ -273,7 +273,7 @@
                        (keys)
                        ; tähän if cycle-type :night vielä???
                        (#(if (= cycle-type :day)
-                           (cons first-index %)
+                           (cons (dec first-index) %)
                            %))
                        (to-day-ranges))
         last-cycle-type (last-cycle-type cycle-type day-ranges)]
