@@ -265,10 +265,10 @@
                      (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
         cycle-posts (cycle-changes indexed hosts)
-        first-cycle-type (-> (first cycle-changes)
-                             (val)
-                             (:message)
-                             (is-cycle-change?))
+       ; first-cycle-type (-> (first cycle-changes)
+       ;                      (val)
+       ;                      (:message)
+       ;                      (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
                        ; tähän if cycle-type :night vielä???
