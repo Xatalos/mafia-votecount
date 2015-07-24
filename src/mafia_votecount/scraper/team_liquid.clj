@@ -53,9 +53,9 @@
   (let [page-number-bar (get-page-number-bar content)
         last-page  (->> (reverse page-number-bar)
                         (filter #(Character/isDigit (first %))) ;; Filter is lazy
-                        (first)
-                        (if (integer? (Integer/parseInt)) (Integer/parseInt) 1 ))]
-    (vec (range 1 (inc last-page)))))
+                        (first))
+        last-page-number (if (integer? (Integer/parseInt last-page)) (Integer/parseInt) 1)]
+    (vec (range 1 (inc last-page-number)))))
 
 (defn- has-quote? [part]
   (and (map? (:attrs part))
