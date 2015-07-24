@@ -51,10 +51,10 @@
 
 (defn- get-page-numbers [content]
   (let [page-number-bar (get-page-number-bar content)
-        last-page  (->> (reverse page-number-bar)
+        last-page  (if (= get-page-number null) 1 (->> (reverse page-number-bar)
                         (filter #(Character/isDigit (first %))) ;; Filter is lazy
                         (first)
-                        (Integer/parseInt))]
+                        (Integer/parseInt)))]
     (vec (range 1 (inc last-page)))))
 
 (defn- has-quote? [part]
