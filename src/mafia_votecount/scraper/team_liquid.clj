@@ -225,9 +225,9 @@
     '()
     (let [posts (select-keys indexed
                             (range (first start-end)
-                                   (if (empty? (rest start-end))
-                                     (last (keys indexed))
-                                     (inc (last start-end)))))]
+                                   (inc (if (empty? (rest start-end))
+                                          (last (keys indexed))
+                                          (last start-end)))))]
      (->> (mapcat get-votes-from-message posts)
           (sort vote-cmp)
           (map #(dissoc % :subindex))))))
