@@ -49,13 +49,18 @@
       ((fn [pages] (remove string? pages)))
       ((fn [pages] (map #(first (get % :content)) pages)))))
 
+(defn parse-int [v]
+   (try
+     (Integer/parseInt v)
+     (catch NumberFormatException e 1)))
+
 (defn- get-page-numbers [content]
   (let [page-number-bar (get-page-number-bar content)
         last-page  (->> (reverse page-number-bar)
                         (filter #(Character/isDigit (first %))) ;; Filter is lazy
-                        (first))
-        last-page-number (if (integer? (Integer/parseInt last-page)) (Integer/parseInt last-page) 1)]
-    (vec (range 1 (inc last-page-number)))))
+                        (first)
+                        (parse-int))]
+    (vec (range 1 (inc last-page)))))
 
 (defn- has-quote? [part]
   (and (map? (:attrs part))
