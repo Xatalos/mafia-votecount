@@ -153,7 +153,7 @@
 
 (defn- cycle-changes [indexed hosts]
   (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
-          indexed))
+          (rest indexed)))
 
 (defn- dec-or-nil [num]
   (if (nil? num)
@@ -259,8 +259,14 @@
         indexed (->> (enumerate player-message-maps first-page-index)
                      (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
-        day-ranges (-> (cycle-changes indexed hosts)
+        cycle-posts (cycle-changes indexed hosts)
+        first-cycle-type (-> (first cycle-changes)
+                             (val)
+                             (:message)
+                             (is-cycle-change?))
+        day-ranges (-> cycle-posts
                        (keys)
+                       ; tähän if cycle-type :night vielä???
                        (#(if (= cycle-type :day)
                            (cons first-index %)
                            %))
