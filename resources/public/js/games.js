@@ -108,6 +108,8 @@ function showGame(id) {
         
                 var targets = [];
                 var nonvoters = players;
+                
+          //      var a = { name: "testname", age=123 }; maybe turn this into an object-based implementation at some point? test with something                         like http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2 ?
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -146,7 +148,7 @@ function showGame(id) {
                             // count the number of voters for this target that haven't been unvoted
                             voterscount++;
                             
-                            for (var z = 0; z < nonvoters; z++) {
+                            for (var z = nonvoters.length - 1; z >= 0; z--) {
                                 if (nonvoters[z] == voters[j]) {
                                     nonvoters.splice(z,1);
                                 }
@@ -240,7 +242,7 @@ function showGame(id) {
                             // count the number of voters for this target that haven't been unvoted
                             voterscount++;
                             
-                            for (var z = 0; z < nonvoters; z++) {
+                            for (var z = nonvoters.length - 1; z >= 0; z--) {
                                 if (nonvoters[z] == voters[j]) {
                                     nonvoters.splice(z,1);
                                 }
