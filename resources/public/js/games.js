@@ -115,14 +115,6 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
-                        if (gameData.votes[i].target == "" && nonvoters.indexOf(gameData.votes[i].voter) == -1) {
-                                nonvoters.push(gameData.votes[i].voter);
-                            }
-                        for (var j = 0; j < nonvoters; j++) {
-                            if (nonvoters[j] == gameData.votes[i].voter  && gameData.votes[i].target != "") {
-                                nonvoters.splice(j,1);
-                            }
-                        }
                       }
                 }
                         
@@ -154,6 +146,12 @@ function showGame(id) {
                         if (voters[j].indexOf("<s>") == -1) {
                             // count the number of voters for this target that haven't been unvoted
                             voterscount++;
+                            
+                            for (var z = 0; z < nonvoters; z++) {
+                                if (nonvoters[z] == voters[j]) {
+                                    nonvoters.splice(z,1);
+                                }
+                            } 
                         }
                     }
                     
@@ -167,7 +165,8 @@ function showGame(id) {
                     
                     gameToHtml += "<br><b>" + targetname + " (" + voterscount + "):</b> " + voters.join(', ');
             }
-                gameToHtml += '<br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
+        
+                gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
         }
             
             var firstNewDayVote = false;
@@ -203,11 +202,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 var targets = [];
-                var nonvoters = gameData.players;
-                
-//                for (var i = 0; gameData.players.length; i++) {
-//                    nonvoters.push(gameData.players[i]);
-//                }
+                var nonvoters = players;
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -215,14 +210,6 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
-                        if (gameData.votes[i].target == "" && nonvoters.indexOf(gameData.votes[i].voter) == -1) {
-                                nonvoters.push(gameData.votes[i].voter);
-                            }
-                        for (var j = 0; j < nonvoters; j++) {
-                                if (nonvoters[j] == gameData.votes[i].voter && gameData.votes[i].target != "") {
-                                    nonvoters.splice(j,1);
-                                }
-                            }
                       }
                 }
                         
@@ -253,6 +240,12 @@ function showGame(id) {
                         if (voters[j].indexOf("[s]") == -1) {
                             // count the number of voters for this target that haven't been unvoted
                             voterscount++;
+                            
+                            for (var z = 0; z < nonvoters; z++) {
+                                if (nonvoters[z] == voters[j]) {
+                                    nonvoters.splice(z,1);
+                                }
+                            }
                         }
                     }
                     
@@ -266,6 +259,7 @@ function showGame(id) {
                     
                     gameToHtml += "[b]" + targetname + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
             }
+                
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
