@@ -89,11 +89,13 @@ function showGame(id) {
                 gameToHtml += "<li>" + gameData.hosts[i] + "</li>";
             }
             
-            gameToHtml += "<br><b>Players</b>";
+            var players = [];
 
             for (var i = 0; i < gameData.players.length; i++) {
-                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
+                players.push(gameData.players[i].name);
             }
+            
+            gameToHtml += "<br><b>Players</b><br>" + players.join(', ');
 
             var currentDay = 0;
             
@@ -103,11 +105,7 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
         
                 var targets = [];
-                var nonvoters = gameData.players;
-                
-//                for (var i = 0; gameData.players.length; i++) {
-//                    nonvoters.push(gameData.players[i]);
- //               }
+                var nonvoters = players;
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -158,7 +156,7 @@ function showGame(id) {
                     }
                     gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
             }
-                gameToHtml += '<br><b>Not Voting - not working properly.. (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
+                gameToHtml += '<br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
         }
             
             var firstNewDayVote = false;
