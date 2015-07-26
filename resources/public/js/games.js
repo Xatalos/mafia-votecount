@@ -97,14 +97,14 @@ function showGame(id) {
                 players.push(gameData.players[i].name);
             }
             
-            gameToHtml += "<br><b>Players</b><br>" + players.join(', ');
+            gameToHtml += "<br><br><b>Players</b><br>" + players.join(', ');
 
             var currentDay = 0;
             
             if (gameData.votes.length > 0) {
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
             
-                gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
+                gameToHtml += "<br><h1>Current Day Votecount</h1>";
         
                 var targets = [];
                 var nonvoters = players;
@@ -183,7 +183,7 @@ function showGame(id) {
                     currentDay = gameData.votes[i].day;
                 }
                 if (firstNewDayVote === true) {
-                    gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1><br>";
+                    gameToHtml += "<br><h1>Day " + gameData.votes[i].day + "</h1>";
                     firstNewDayVote = false;
                 }
                 if (gameData.votes[i].target == "") {
@@ -197,7 +197,7 @@ function showGame(id) {
             }
             
             if (gameData.votes.length > 0) {
-                gameToHtml += '<br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
+                gameToHtml += '<br><br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
             
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
