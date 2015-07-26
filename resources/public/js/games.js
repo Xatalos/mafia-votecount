@@ -83,11 +83,13 @@ function showGame(id) {
             
             gameToHtml += '<a href="' + gameData.game.url +'">' + gameData.game.url + "</a><br><br>";
             
-            gameToHtml += "<b>Hosts</b>";
+            var hosts = [];
             
             for (var i = 0; i < gameData.hosts.length; i++) {
-                gameToHtml += "<li>" + gameData.hosts[i] + "</li>";
+                hosts.push(gameData.hosts[i]);
             }
+            
+            gameToHtml += "<b>Hosts</b><br>" + hosts.join(', ');
             
             var players = [];
 
@@ -154,7 +156,16 @@ function showGame(id) {
                             voterscount++;
                         }
                     }
-                    gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
+                    
+                    var targetname = targets[i];
+                    
+                    for (var z = 0; z < players.length; z++) {
+                        if (players[z].toLowerCase() == targets[i].toLowerCase()) {
+                            targetname = players[z];
+                        }
+                    }
+                    
+                    gameToHtml += "<br><b>" + targetname + " (" + voterscount + "):</b> " + voters.join(', ');
             }
                 gameToHtml += '<br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
         }
@@ -176,12 +187,12 @@ function showGame(id) {
                     firstNewDayVote = false;
                 }
                 if (gameData.votes[i].target == "") {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a></li>";
+                    gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter + " unvoted</a>";
                 } else if (gameData.votes[i].target == null) {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a></li>";
+                    gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a>";
                 } else {
-                    gameToHtml += '<li><a href="' + address + '">' + gameData.votes[i].voter + 
-                        " voted for " + gameData.votes[i].target + "</a></li>";
+                    gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter + 
+                        " voted for " + gameData.votes[i].target + "</a>";
                 }
             }
             
@@ -244,7 +255,16 @@ function showGame(id) {
                             voterscount++;
                         }
                     }
-                    gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
+                    
+                    var targetname = targets[i];
+                    
+                    for (var z = 0; z < players.length; z++) {
+                        if (players[z].toLowerCase() == targets[i].toLowerCase()) {
+                            targetname = players[z];
+                        }
+                    }
+                    
+                    gameToHtml += "[b]" + targetname + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
             }
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
