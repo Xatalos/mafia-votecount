@@ -154,7 +154,7 @@ function showGame(id) {
                     }
                     gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
             }
-                gametoHtml += '[b]Not Voting (0):[/b]' + nonvoters.join(', ');
+                gameToHtml += '<b>Not Voting (' + nonvoters.length + '):</b>' + nonvoters.join(', ');
         }
             
             var firstNewDayVote = false;
@@ -240,7 +240,7 @@ function showGame(id) {
                     }
                     gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
             }
-                gametoHtml += '[b]Not Voting (0):[/b]' + nonvoters.join(', ');
+                gameToHtml += '[b]Not Voting (' + nonvoters.length + '):[/b]' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
             
