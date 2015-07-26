@@ -111,11 +111,14 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
-                            for (var j = 0; j < nonvoters; j++) {
-                                if (nonvoters[j] == gameData.votes[j].voter) {
-                                    nonvoters.splice(j,1);
-                                }
+                        if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                                nonvoters.push(gameData.votes[j].voter);
                             }
+                        for (var j = 0; j < nonvoters; j++) {
+                            if (nonvoters[j] == gameData.votes[j].voter  && gameData.votes[j].target != "") {
+                                nonvoters.splice(j,1);
+                            }
+                        }
                       }
                 }
                         
@@ -134,9 +137,6 @@ function showGame(id) {
                                         voters[z] = "<s>" + voters[z] + "</s>";
                                     }
                                 }
-                            }
-                            if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
-                                nonvoters.push(gameData.votes[j].voter);
                             }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
@@ -198,8 +198,11 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
+                        if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                                nonvoters.push(gameData.votes[j].voter);
+                            }
                         for (var j = 0; j < nonvoters; j++) {
-                                if (nonvoters[j] == gameData.votes[j].voter) {
+                                if (nonvoters[j] == gameData.votes[j].voter && gameData.votes[j].target != "") {
                                     nonvoters.splice(j,1);
                                 }
                             }
@@ -221,9 +224,6 @@ function showGame(id) {
                                         voters[z] = "[s]" + voters[z] + "[/s]";
                                     }
                                 }
-                            }
-                            if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
-                                nonvoters.push(gameData.votes[j].voter);
                             }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
