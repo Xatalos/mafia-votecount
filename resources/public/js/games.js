@@ -135,7 +135,7 @@ function showGame(id) {
                                     }
                                 }
                             }
-                            if (gameData.votes[j].target != "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                            if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
                                 nonvoters.push(gameData.votes[j].voter);
                             }
                         }
@@ -154,7 +154,7 @@ function showGame(id) {
                     }
                     gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
             }
-                gameToHtml += '<b>Not Voting (' + nonvoters.length + '):</b>' + nonvoters.join(', ');
+                gameToHtml += '<br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
         }
             
             var firstNewDayVote = false;
@@ -222,7 +222,7 @@ function showGame(id) {
                                     }
                                 }
                             }
-                            if (gameData.votes[j].target != "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                            if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
                                 nonvoters.push(gameData.votes[j].voter);
                             }
                         }
@@ -240,7 +240,7 @@ function showGame(id) {
                     }
                     gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
             }
-                gameToHtml += '[b]Not Voting (' + nonvoters.length + '):[/b]' + nonvoters.join(', ');
+                gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
             
