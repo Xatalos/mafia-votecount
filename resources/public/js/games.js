@@ -111,11 +111,11 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
-                        if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
-                                nonvoters.push(gameData.votes[j].voter);
+                        if (gameData.votes[i].target == "" && nonvoters.indexOf(gameData.votes[i].voter) == -1) {
+                                nonvoters.push(gameData.votes[i].voter);
                             }
                         for (var j = 0; j < nonvoters; j++) {
-                            if (nonvoters[j] == gameData.votes[j].voter  && gameData.votes[j].target != "") {
+                            if (nonvoters[j] == gameData.votes[i].voter  && gameData.votes[i].target != "") {
                                 nonvoters.splice(j,1);
                             }
                         }
@@ -198,11 +198,11 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
-                        if (gameData.votes[j].target == "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
-                                nonvoters.push(gameData.votes[j].voter);
+                        if (gameData.votes[i].target == "" && nonvoters.indexOf(gameData.votes[i].voter) == -1) {
+                                nonvoters.push(gameData.votes[i].voter);
                             }
                         for (var j = 0; j < nonvoters; j++) {
-                                if (nonvoters[j] == gameData.votes[j].voter && gameData.votes[j].target != "") {
+                                if (nonvoters[j] == gameData.votes[i].voter && gameData.votes[i].target != "") {
                                     nonvoters.splice(j,1);
                                 }
                             }
