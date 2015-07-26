@@ -104,7 +104,7 @@ function showGame(id) {
             if (gameData.votes.length > 0) {
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
             
-                gameToHtml += "<br><h1>Current Day Votecount</h1>";
+                gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
         
                 var targets = [];
                 var nonvoters = players;
