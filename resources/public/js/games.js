@@ -103,7 +103,11 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
         
                 var targets = [];
-                var nonvoters = gameData.players;
+                var nonvoters = [];
+                
+                for (var i = 0; gameData.players.length; i++) {
+                    nonvoters.push(gameData.players[i]);
+                }
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -190,7 +194,11 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 var targets = [];
-                var nonvoters = gameData.players;
+                var nonvoters = [];
+                
+                for (var i = 0; gameData.players.length; i++) {
+                    nonvoters.push(gameData.players[i]);
+                }
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
