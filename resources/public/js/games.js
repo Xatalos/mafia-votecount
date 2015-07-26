@@ -67,11 +67,6 @@ function hideCreateGame() {
 }
 
 function showGame(id) {
-//                  table :vote    ---> votes!!!
-//                  (integer :day :not-null) - äänestyspäivä
-//                  (integer :index :not-null) - viestin numero #
-//                  (varchar :voter 40 :not-null) - äänestäjä
-//                  (varchar :target 40)))) - äänestyksen kohde
     "use strict";
     var req = new XMLHttpRequest();
     var address = "/game/" + id;
@@ -94,11 +89,11 @@ function showGame(id) {
                 gameToHtml += "<li>" + gameData.hosts[i] + "</li>";
             }
             
-//            gameToHtml += "<br><b>Players</b>";
+            gameToHtml += "<br><b>Players</b>";
 
-//            for (var i = 0; i < gameData.players.length; i++) {
-//                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
-//            }
+            for (var i = 0; i < gameData.players.length; i++) {
+                gameToHtml += "<li>" + gameData.players[i].name + "</li>";
+            }
 
             var currentDay = 0;
             
@@ -108,6 +103,7 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Current Day Votecount</h1><br>";
         
                 var targets = [];
+                var nonvoters = gameData.players;
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -115,6 +111,11 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
+                            for (var j = 0; j < nonvoters; j++) {
+                                if (nonvoters[j] == gameData.votes[j].voter) {
+                                    nonvoters.splice(j,1);
+                                }
+                            }
                       }
                 }
                         
@@ -134,10 +135,14 @@ function showGame(id) {
                                     }
                                 }
                             }
+                            if (gameData.votes[j].target != "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                                nonvoters.push(gameData.votes[j].voter);
+                            }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
                             // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
+                            nonvoters.splice(j,1);
                         }
                     }
                     var voterscount = 0;
@@ -149,6 +154,7 @@ function showGame(id) {
                     }
                     gameToHtml += "<li><b>" + targets[i] + " (" + voterscount + "):</b> " + voters.join(', ') + "</li>";
             }
+                gametoHtml += '[b]Not Voting (0):[/b]' + nonvoters.join(', ');
         }
             
             var firstNewDayVote = false;
@@ -184,6 +190,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 var targets = [];
+                var nonvoters = gameData.players;
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -191,6 +198,11 @@ function showGame(id) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
                         }
+                        for (var j = 0; j < nonvoters; j++) {
+                                if (nonvoters[j] == gameData.votes[j].voter) {
+                                    nonvoters.splice(j,1);
+                                }
+                            }
                       }
                 }
                         
@@ -210,6 +222,9 @@ function showGame(id) {
                                     }
                                 }
                             }
+                            if (gameData.votes[j].target != "" && nonvoters.indexOf(gameData.votes[j].voter) == -1) {
+                                nonvoters.push(gameData.votes[j].voter);
+                            }
                         }
                         if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
                             // add a new voter to an existing vote target
@@ -225,33 +240,13 @@ function showGame(id) {
                     }
                     gameToHtml += "[b]" + targets[i] + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
             }
+                gametoHtml += '[b]Not Voting (0):[/b]' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
             
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
             }
-
-
-
-//                            [b]Bill Murray (8):[/b] Holyflare, Eden1892, rsoultin, Superbia, Vivax, Breshke, raynpelikoneet, Palmar
-//                            [b]Vivax (7):[/b] [s]Holyflare[/s], Artanis[Xp], [s]Damdred[/s], LightningStrike, sicklucker, Toadesstern, Trfel, ExO_,                             [s]rsoultin[/s], [s]Palmar[/s], Damdred
-//                            [b]LightningStrike (3):[/b] Bill Murray, [s]Toadesstern[/s], FecalFeast, [s]raynpelikoneet[/s], [s]Vivax[/s], Onegu
-//                            [b]Toadesstern (1):[/b] [s]Palmar[/s], [s]Artanis[Xp][/s], [s]raynpelikoneet[/s], [s]Vivax[/s], VisceraEyes,         //                              [s]Palmar[/s]
-//                            [b]sicklucker (1):[/b] [s]Eden1892[/s], [s]Holyflare[/s], [s]rsoultin[/s], [s]Alakaslam[/s], [s]Superbia[/s],         //                              Alakaslam, [s]Eden1892[/s], [s]Breshke[/s]
-//                            [b]raynpelikoneet (0):[/b] [s]Holyflare[/s], [s]Damdred[/s], [s]rsoultin[/s], [s]Trfel[/s], [s]ExO_[/s], [s]Damdred[/s]
-//                            [b]Artanis[Xp] (0):[/b] [s]Toadesstern[/s], [s]Eden1892[/s], [s]VisceraEyes[/s], [s]Eden1892[/s]
-//                            [b]Eden1892 (0):[/b] [s]Fecalfeast[/s], [s]Onegu[/s], [s]Bill Murray[/s], [s]ExO[/s]
-//                            [b]Damdred (0):[/b] [s]raynpelikoneet[/s], [s]sicklucker[/s], [s]Artanis[Xp][/s]
-//                            [b]Superbia (0):[/b] [s]Eden1892[/s]
-//                            [b]VisceraEyes (0):[/b] [s]Artanis[Xp][/s]
-//                            [b]Alakaslam (0):[/b] [s]Holyflare[/s], [s]Artanis[/s], [s]sicklucker[/s], [s]Eden1892[/s]
-//                            [b]ExO_ (0):[/b] [s]Eden1892[/s]
-//                            [b]Palmar (0):[/b] [s]Toadesstern[/s], [s]Toadesstern[/s], [s]Bill Murray[/s]
-//                            [b]Trfel (0):[/b] [s]Artanis[/s], [s]Superbia[/s], [s]Eden1892[/s]
-//                            [b]Holyflare (0):[/b] [s]Alakaslam[/s]
-//
-//                            [b]Not Voting (0):[/b]
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
