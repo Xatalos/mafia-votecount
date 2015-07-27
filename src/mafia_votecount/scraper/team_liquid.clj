@@ -265,7 +265,7 @@
                      (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
         cycle-posts (cycle-changes indexed hosts)
-       ; first-cycle-type (-> (first cycle-changes)
+       ; first-cycle-type (-> (first cycle-posts) --- should work now that cycle-changes was changed to cycle-posts???
        ;                      (val)
        ;                      (:message)
        ;                      (is-cycle-change?))
