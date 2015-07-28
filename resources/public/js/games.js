@@ -297,7 +297,8 @@ function deletePlayer(id) {
 
 function deleteGame(id) {
     "use strict";
-    $.post("/delete-game", {id: id});
+    var gameid = "'" + id + "'";
+    $.post("/delete-game", {id: gameid});
 }
 
 function hideGame() {
