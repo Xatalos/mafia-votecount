@@ -82,7 +82,7 @@
 
 (defn delete-game-by-id [id]
   (delete game
-  (where {:id id})))
+  (where {:id (string id)})))
 
 (defn delete-player-by-id [id]
   (delete player
