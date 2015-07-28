@@ -105,7 +105,7 @@ function showGame(id) {
             
             gameToHtml += "<br><br><b>Players</b><br>" + playerLinks.join(', ');
             
-            gameToHtml += "<br>Click on a player to permanently remove him from the game!<br>";
+            gameToHtml += "<br>Click on a player to permanently remove him from the game! (reload the page to see the result)<br>";
 
             var currentDay = 0;
             
