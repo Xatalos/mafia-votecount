@@ -271,7 +271,8 @@
                              (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
-                       (#(if (or (and (= cycle-type :day) (= first-cycle-type :day)) (and (= cycle-type :night) (= first-cycle-type :night)))
+                       ; hosts can just add a line break before the night 0 message though so maybe not so important after all...?
+                       (#(if (= cycle-type :day)
                            (cons (dec first-index) %)
                            %))
                        (to-day-ranges))
