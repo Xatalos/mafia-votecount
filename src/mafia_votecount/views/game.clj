@@ -17,3 +17,6 @@
 (defresource game-resource [id]
   :handle-ok (fn [_] (game-as-json id))
   :available-media-types ["application/json"])
+
+(defn delete-game [id]
+  (models/delete-game-by-id id))

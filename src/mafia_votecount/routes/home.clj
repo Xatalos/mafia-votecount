@@ -11,6 +11,7 @@
   (GET "/" [] (resource-response "index.html" {:root "public"}))
   (GET "/games" request games/games-resource)
   (GET "/game/:id" [id] (game/game-resource id))
+  (POST "/delete-game" [id] (game/delete-game id))
   (POST "/delete-player" [id] (player/delete-player id))
   (POST "/create-game" [url hosts players]
         (create-game/add-game url hosts players)))

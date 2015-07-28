@@ -80,6 +80,10 @@
           (fields :id :name)
           (where {:game game-id})))
 
+(defn delete-game-by-id [id]
+  (delete game
+  (where {:id id})))
+
 (defn delete-player-by-id [id]
   (delete player
   (where {:id (Integer/parseInt id)})))
