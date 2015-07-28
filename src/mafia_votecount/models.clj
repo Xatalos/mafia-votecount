@@ -82,7 +82,7 @@
 
 (defn delete-player-by-id [id]
   (delete player
-  (where {:id id})))
+  (where {:id (Integer/parseInt id)})))
 
 (defn- host-make-row [game-id name]
   {:game game-id :name name})
