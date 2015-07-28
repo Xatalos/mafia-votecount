@@ -271,7 +271,8 @@
        ;                      (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
-                       ; hosts can just add a line break before the night 0 message though so maybe not so important after all...?
+                       ; hosts can just add some text before the night 0 message though so maybe not so important after all...?
+                       ; or the first night post could be automatically ignored? (every cycle post before the first day post basically)
                        (#(if (= cycle-type :day)
                            (cons (dec first-index) %)
                            %))
