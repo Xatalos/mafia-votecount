@@ -69,8 +69,8 @@ function hideCreateGame() {
 function showGame(id) {
     "use strict";
     var req = new XMLHttpRequest();
-    var address = "/game/" + id;
-    req.open("GET", address, true);
+    var url = "/game/" + id;
+    req.open("GET", url, true);
     req.setRequestHeader("accept", "application/json");
 
     req.onload = function() {
@@ -97,7 +97,15 @@ function showGame(id) {
                 players.push(gameData.players[i].name);
             }
             
-            gameToHtml += "<br><br><b>Players</b><br>" + players.join(', ');
+            var playerLinks = [];
+            
+            for (var i = 0; i < gameData.players.length; i++) {
+                playerLinks.push('<a href="#" onclick="deletePlayer(' + gameData.players[i].id + ');return false;">' + gameData.players[i].name + '</a>');
+            }
+            
+            gameToHtml += "<br><br><b>Players</b><br>" + playerLinks.join(', ');
+            
+            gameToHtml += "<br>Click on a player to permanently remove him from the game!<br>";
 
             var currentDay = 0;
             
@@ -280,6 +288,11 @@ function showGame(id) {
     document.getElementById("gameview").className =
     document.getElementById("gameview").className.replace
       ( /(?:^|\s)hidden(?!\S)/g , '' );
+}
+
+function deletePlayer(id) {
+    "use strict";
+    $.post("/delete-player", {id: id});
 }
 
 function hideGame() {

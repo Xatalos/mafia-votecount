@@ -80,6 +80,10 @@
           (fields :id :name)
           (where {:game game-id})))
 
+(defn delete-player-by-id [id]
+  (delete players
+  (where {:id id})))
+
 (defn- host-make-row [game-id name]
   {:game game-id :name name})
 
