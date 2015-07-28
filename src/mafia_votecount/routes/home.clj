@@ -4,6 +4,7 @@
             [mafia-votecount.views.create-game :as create-game]
             [mafia-votecount.views.games :as games]
             [mafia-votecount.views.game :as game]
+            [mafia-votecount.views.player :as player]
             [mafia-votecount.scraper.team-liquid :as scraper]))
 
 (defroutes home-routes
