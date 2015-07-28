@@ -265,10 +265,10 @@
                      (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
         cycle-posts (cycle-changes indexed hosts)
-        first-cycle-type (-> (first cycle-posts)
-                             (val)
-                             (:message)
-                             (is-cycle-change?))
+       ; first-cycle-type (-> (first cycle-posts)
+       ;                      (val)
+       ;                      (:message)
+       ;                      (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
                        ; hosts can just add a line break before the night 0 message though so maybe not so important after all...?
