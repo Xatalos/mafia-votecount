@@ -271,8 +271,7 @@
                              (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
-                       ; tähän if cycle-type :night vielä???
-                       (#(if (= cycle-type :day)
+                       (#(if ((or (and (= cycle-type :day) (= first-cycle-type :day)) (and (= cycle-type :night) (= first-cycle-type :night)))
                            (cons (dec first-index) %)
                            %))
                        (to-day-ranges))
