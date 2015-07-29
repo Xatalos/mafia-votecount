@@ -22,10 +22,9 @@ function requestData() {
                 gamesToHtml += "<tr>";
                 var gameurl = "/#" + gamesData.games[x].id;
                 var threadurl = gamesData.games[x].url;
-                var gameid = "" + gamesData.games[x].id;
                 gamesToHtml +=  '<td><a href="' + gameurl + '">' + gamesData.games[x].name + "</a></td>";
                 gamesToHtml += '<td><a href="' + threadurl + '">' + threadurl + "</a></td>";
-                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame(' + gameid + ');return false;" class="pure-button">Delete</button>' + "</td>";
+                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame(\'' + gamesData.games[x].id + '\');return false;" class="pure-button">Delete</button>' + "</td>";
                 gamesToHtml += "</tr>";
                 x++;
             }
