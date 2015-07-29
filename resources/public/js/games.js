@@ -24,7 +24,7 @@ function requestData() {
                 var threadurl = gamesData.games[x].url;
                 gamesToHtml +=  '<td><a href="' + gameurl + '">' + gamesData.games[x].name + "</a></td>";
                 gamesToHtml += '<td><a href="' + threadurl + '">' + threadurl + "</a></td>";
-                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame(' + gamesData.games[x].id + ');return false;" class="pure-button">Delete</button>' + "</td>";
+                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame("' + gamesData.games[x].id + '");return false;" class="pure-button">Delete</button>' + "</td>";
                 gamesToHtml += "</tr>";
                 x++;
             }
@@ -297,8 +297,7 @@ function deletePlayer(id) {
 
 function deleteGame(id) {
     "use strict";
-    var gameid = "'" + id + "'";
-    $.post("/delete-game", {id: gameid});
+    $.post("/delete-game", {id: id});
 }
 
 function hideGame() {
