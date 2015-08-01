@@ -41,12 +41,7 @@
   (map #(:content %) (html/select posts [[:.forumPost]])))
 
 (defn- get-page-number-bar [content]
-  (-> (html/select content [:table :tr ])
-      (nth 0)
-      (get :content)
-      (nth 3)
-      (get :content)
-      ((fn [pages] (remove string? pages)))
+  (-> (html/select content [:.pagination :* ])
       ((fn [pages] (map #(first (get % :content)) pages)))))
 
 (defn parse-int [v]
@@ -271,8 +266,7 @@
        ;                      (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
-                       ; hosts can just add some text before the night 0 message though so maybe not so important after all...?
-                       ; or the first night post could be automatically ignored? (every cycle post before the first day post basically)
+                       ; Handle case where first cycle is night
                        (#(if (= cycle-type :day)
                            (cons (dec first-index) %)
                            %))
