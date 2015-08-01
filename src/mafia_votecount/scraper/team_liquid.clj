@@ -32,13 +32,14 @@
 
 (defn- get-forum-posts [content]
   (html/select
-   content [[:table.solid (html/has [[:a (html/attr? :data-post)]])]]))
+   content [[:section (html/has [[:article.forumPost]])]]))
 
 (defn- extract-users [posts]
-  (map #(-> (get % :attrs) (get :data-user)) (html/select posts [[:a (html/attr? :data-user)]])))
+  (map #(-> (:content %) (nth 1) (:content) (first))
+       (html/select posts [[:div.fpost-username]])))
 
 (defn- extract-messages [posts]
-  (map #(:content %) (html/select posts [[:.forumPost]])))
+  (map #(:content %) (html/select posts [:.forumPost :> :section])))
 
 (defn- get-page-number-bar [content]
   (-> (html/select content [:.pagination :* ])
@@ -108,8 +109,8 @@
 
 (defn- get-user-message-pairs [content]
   (->> (only-main-content content)
-   (get-forum-posts)
-   (#(pair-users-messages (extract-users %) (extract-messages %)))))
+       (get-forum-posts)
+       (#(pair-users-messages (extract-users %) (extract-messages %)))))
 
 (defn- parse-and-wait [content first-index]
   (do (Thread/sleep 1000)
