@@ -106,6 +106,11 @@ function showGame(id) {
             gameToHtml += "<br><br><b>Players</b><br>" + playerLinks.join(', ');
             
             gameToHtml += "<br>Click on a player to permanently remove him from the game! (reload the page to see the result)<br>";
+            
+            var nicknames = {
+                Xatalos: ["xat", "xata"],
+                EdgarAllanPoE: ["edgar", "poe"],
+            };
 
             var currentDay = 0;
             
@@ -116,11 +121,17 @@ function showGame(id) {
         
                 var targets = [];
                 var nonvoters = players;
-                
-          //      var a = { name: "testname", age=123 }; maybe turn this into an object-based implementation at some point? test with something                         like http://www.w3schools.com/jsref/tryit.asp?filename=tryjsref_splice2 ?
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
+                        for (var key in nicknames) {
+                            var nicknameslist = nicknames[key];
+                            for (var z = 0; z < nicknameslist.length; z++) {
+                                if (nicknameslist[z] ==  gameData.votes[i].target) {
+                                    gameData.votes[i].target = key;
+                                }
+                            }
+                        }
                         if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
