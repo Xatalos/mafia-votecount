@@ -251,7 +251,7 @@ function showGame(id) {
                             voterscount++;
                             
                             for (var z = nonvoters.length - 1; z >= 0; z--) {
-                                if (nonvoters[z] == voters[j]) {
+                                if (nonvoters[z].toLowerCase() == voters[j].toLowerCase()) {
                                     nonvoters.splice(z,1);
                                 }
                             }
