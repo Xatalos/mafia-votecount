@@ -108,8 +108,41 @@ function showGame(id) {
             gameToHtml += "<br>Click on a player to permanently remove him from the game! (reload the page to see the result)<br>";
             
             var nicknames = {
-                Xatalos: ["xat", "xata"],
-                EdgarAllanPoE: ["edgar", "poe"],
+                "27ninjabunnies": ["27nb", "nb", "ninja", "ninjabunnies"],
+                "Alakaslam": ["slam"],
+                "Artanis[Xp]": ["art", "artanis"],
+                "batsnacks": ["bat", "bats"],
+                "Bill Murray": ["bm", "bill", "murray"],
+                "Blazinghand": ["bh"],
+                "boxerfred": ["bf", "boxerfred"],
+                "Chezinu": ["chez"],
+                "Clarity_nl": ["clarity"],
+                "Damdred": ["damd", "damdy"],
+                "EdgarAllanPoE": ["edgar", "poe", "edgarallenpoe"],
+                "Fecalfeast": ["ff", "fecal"],
+                "FirmTofu": ["ft", "firm", "tofu"],
+                "GlowingBear": ["gb", "glowing", "bear"],
+                "Half the Sky": ["hts"],
+                "Hapahauli": ["hapa"],
+                "Holyflare": ["hf"],
+                "justanothertownie": ["jat"],
+                "Keirathi": ["kei", "keir"],
+                "LightningStrike": ["ls", "lightning"],
+                "marvellosity": ["marv", "marvy", "marvel", "marvelocity"],
+                "Oatsmaster": ["oat", "oats"],
+                "ObiWanShinobi": ["ows", "obi", "obiwan", "shinobi"],
+                "raynpelikoneet": ["ray", "rayn", "raypelikoneet"],
+                "rsoultin": ["rs", "rsou", "rsoul"],
+                "sandroba": ["sand", "roba"],
+                "[UoN]Sentinel": ["sent", "sentinel"],
+                "scott31337": ["scott"],
+                "Stutters695": ["stutters"],
+                "The Shining": ["shining"],
+                "VayneAuthority": ["va", "vayne"],
+                "VisceraEyes": ["ve", "viscera"],
+                "WaveofShadow": ["wos", "wave"],
+                "Xatalos": ["xat", "xata"],
+                "yamato77": ["yam", "yama", "yamato"]
             };
 
             var currentDay = 0;
@@ -131,6 +164,7 @@ function showGame(id) {
                             var nicknameslist = nicknames[key];
                             for (var z = 0; z < nicknameslist.length; z++) {
                                 if (nicknameslist[z].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
+                                    // if a given vote target equals one of the nicknames, then change the vote to target the "real" name
                                     gameData.votes[i].target = key;
                                 }
                             }
