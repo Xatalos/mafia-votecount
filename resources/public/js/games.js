@@ -127,7 +127,7 @@ function showGame(id) {
                         for (var key in nicknames) {
                             var nicknameslist = nicknames[key];
                             for (var z = 0; z < nicknameslist.length; z++) {
-                                if (nicknameslist[z] ==  gameData.votes[i].target) {
+                                if (nicknameslist[z].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
                                     gameData.votes[i].target = key;
                                 }
                             }
