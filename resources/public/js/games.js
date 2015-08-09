@@ -145,7 +145,7 @@ function showGame(id) {
                                 }
                             }
                         }
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i] && gameData.votes[j].target != "") {
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase() && gameData.votes[j].target != "") {
                             // add a new voter to an existing vote target
                             voters.push(gameData.votes[j].voter);
                         }
