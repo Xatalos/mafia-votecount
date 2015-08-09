@@ -229,17 +229,6 @@ function showGame(id) {
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
-                        for (var key in nicknames) {
-                            if (!nicknames.hasOwnProperty(key)) { 
-                                continue; 
-                            }
-                            var nicknameslist = nicknames[key];
-                            for (var z = 0; z < nicknameslist.length; z++) {
-                                if (nicknameslist[z].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
-                                    gameData.votes[i].target = key;
-                                }
-                            }
-                        }
                         if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target.toLowerCase());
