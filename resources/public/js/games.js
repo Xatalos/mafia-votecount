@@ -142,6 +142,7 @@ function showGame(id) {
                 "scott31337": ["scott"],
                 "Stutters695": ["stutters"],
                 "The Shining": ["shining"],
+                "Tubesock": ["ts", "tube"],
                 "VayneAuthority": ["va", "vayne"],
                 "VisceraEyes": ["ve", "viscera"],
                 "WaveofShadow": ["wos", "wave"],
