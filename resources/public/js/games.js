@@ -169,7 +169,7 @@ function showGame(id) {
                             var nicknameslist = nicknames[key];
                             for (var j = 0; j < nicknameslist.length; j++) {
                                 if (nicknameslist[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
-                                    // if a vote target equals one of the nicknames, then change the vote to target the "real" name
+                                    // if a vote target equafls one of the nicknames, then change the vote to target the "real" name
                                     gameData.votes[i].target = key;
                                 }
                             }
@@ -199,15 +199,17 @@ function showGame(id) {
                 var activeVoters = {}; // "activeVoters" is a JavaScript object with targets as keys and ACTIVE (not unvoted) voters as values
                 var nonvoters = players; // players who aren't voting for anyone at the current time
                 
-                for (var i = 0; i < targets.length; i++) {
-                    for (var j = 0; j < gameData.votes.length; j++) {
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase()) {
-                            if(voters.hasOwnProperty(targets[i]) || activeVoters.hasOwnProperty(targets[i])){
-                                continue;
+                for (var i = 0; i < gameData.votes.length; i++) {
+                    if (currentDay = gameData.votes[i].day) {
+                        for (var j = 0; j < targets.length; j++) {
+                            if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase()) {
+                                if(voters.hasOwnProperty(targets[j]) || activeVoters.hasOwnProperty(targets[j])){
+                                    continue;
+                                }
+                                // add a new key (property) to the object for every vote target during the current day
+                                voters[targets[i]] = [];
+                                activeVoters[targets[i]] = [];
                             }
-                            // add a new key (property) to the object for every vote target during the current day
-                            voters[targets[i]] = [];
-                            activeVoters[targets[i]] = [];
                         }
                     }
                 }
