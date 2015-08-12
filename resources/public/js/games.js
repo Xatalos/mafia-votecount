@@ -250,8 +250,8 @@ function showGame(id) {
                         
                 for (var i = 0; i < targets.length; i++) {
                     var mainVotersList = activeVoters[targets[i]];
-                    for (var j = 0; j < mainVotersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(voters[targets[i]]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
+                    for (var j = 0; j < voters[targets[i]].length; j++) {
+                            if (activeVoters[targets[i]].indexOf(voters[targets[i]][j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
@@ -296,8 +296,8 @@ function showGame(id) {
         
                 for (var i = 0; i < targets.length; i++) {
                     var votersList = voters[targets[i]];
-                    for (var j = 0; j < votersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(voters[targets[i]]) == -1 && votersList[j].indexOf("[s]") == -1) {
+                    for (var j = 0; j < voters[targets[i]].length; j++) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
                                 votersList[j] = "[s]" + votersList[j] + "[/s]";
                             }
                     }
