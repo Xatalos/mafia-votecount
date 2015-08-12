@@ -16,17 +16,15 @@ function requestData() {
             var gamesjson = req.responseText;
             var gamesData = JSON.parse(gamesjson);
             var gamesToHtml = "";
-            var key, x = 0;
 
-            for (key in gamesData.games) {
+            for (var i = 0; gamesData.games.length; i++) {
                 gamesToHtml += "<tr>";
-                var gameurl = "/#" + gamesData.games[x].id;
-                var threadurl = gamesData.games[x].url;
-                gamesToHtml +=  '<td><a href="' + gameurl + '">' + gamesData.games[x].name + "</a></td>";
+                var gameurl = "/#" + gamesData.games[i].id;
+                var threadurl = gamesData.games[i].url;
+                gamesToHtml +=  '<td><a href="' + gameurl + '">' + gamesData.games[i].name + "</a></td>";
                 gamesToHtml += '<td><a href="' + threadurl + '">' + threadurl + "</a></td>";
-                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame(\'' + gamesData.games[x].id + '\');return false;" class="pure-button">Delete</button>' + "</td>";
+                gamesToHtml += "<td>" + '<button type="button" onclick="deleteGame(\'' + gamesData.games[i].id + '\');return false;" class="pure-button">Delete</button>' + "</td>";
                 gamesToHtml += "</tr>";
-                x++;
             }
 
             document.getElementById("games").innerHTML = gamesToHtml;
