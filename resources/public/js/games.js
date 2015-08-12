@@ -239,7 +239,7 @@ function showGame(id) {
                     var votersList = voters[targets[i]];
                     for (var j = 0; j < votersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
-                                votersList = "<s>" + votersList + "</s>";
+                                votersList[j] = "<s>" + votersList + "</s>";
                             }
                     }
                     
@@ -285,7 +285,7 @@ function showGame(id) {
                     var votersList = voters[targets[i]];
                     for (var j = 0; j < votersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
-                                votersList = "[s]" + votersList[j] + "[/s]";
+                                votersList[j] = "[s]" + votersList[j] + "[/s]";
                             }
                     }
                     
