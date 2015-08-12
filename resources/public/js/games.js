@@ -196,9 +196,13 @@ function showGame(id) {
                 var nonvoters = players; // players who aren't voting for anyone at the current time
                 
                 for (var i = 0; i < targets.length; i++) {
-                    // add a new key (property) to the object for every vote target
-                    voters[targets[i]] = [];
-                    activeVoters[targets[i]] = [];
+                    for (var j = 0; j < gameData.votes.length; j++) {
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase()) {
+                            // add a new key (property) to the object for every vote target during the current day
+                            voters[targets[i]] = [];
+                            activeVoters[targets[i]] = [];
+                        }
+                    }
                 }
                 
                 for (var i = 0; i < gameData.votes.length; i++) {
