@@ -208,14 +208,14 @@ function showGame(id) {
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
-                            for (var z = 0; z < activeVoters[targets[j]].length; z++) {
-                                var remainingVoters = activeVoters[targets[j]];
+                            var remainingVoters = activeVoters[targets[j]];
+                            for (var z = 0; z < remainingVoters.length; z++) {
                                 if (remainingVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, remove every previous ACTIVE vote from the voter
                                     remainingVoters.splice(z, 1);
                                 }
-                                activeVoters[targets[j]] = remainingVoters;
                             }
+                            activeVoters[targets[j]] = remainingVoters;
                             if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[j].target != "") {
                                 // push every voter of the current day to the objects as a value of their vote target
                                 voters[targets[j]].push(gameData.votes[i].voter);
