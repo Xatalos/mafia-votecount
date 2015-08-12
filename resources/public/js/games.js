@@ -254,7 +254,7 @@ function showGame(id) {
                 var orderedWagons = {};
                 
                 for(var i = 0; i < orderedWagonKeys.length; i++){
-                    key = orderedWagonKeys[i];
+                    var key = orderedWagonKeys[i];
                     orderedWagons[key] = voters[key];
                 }
                 
