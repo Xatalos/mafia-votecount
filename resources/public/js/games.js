@@ -227,10 +227,10 @@ function showGame(id) {
                 }
                 
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = activeVoters[targets[i]];
-                    for (var j = 0; j < votersList.length; j++) {
+                    var activesList = activeVoters[targets[i]];
+                    for (var j = 0; j < activesList.length; j++) {
                         for (var z = 0; z < nonvoters; z++) {
-                            if (votersList[j] == nonvoters[z]) {
+                            if (activesList[j] == nonvoters[z]) {
                                 // remove every currently active voter from the "Not Voting" list
                                 nonvoters.splice(z, 1);
                             }
@@ -241,10 +241,10 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = voters[targets[i]];
-                    for (var j = 0; j < votersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("<s>") == -1) {
-                                votersList[j] = "<s>" + votersList[j] + "</s>";
+                    var mainVotersList = voters[targets[i]];
+                    for (var j = 0; j < mainVotersList.length; j++) {
+                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
+                                mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
                     
