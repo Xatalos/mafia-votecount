@@ -227,8 +227,8 @@ function showGame(id) {
                 }
                 
                 for (var i = 0; i < targets.length; i++) {
-                    for (var j = 0; j < activeVoters[targets[i]].length; j++) {
-                        var votersList = activeVoters[targets[i]];
+                    var votersList = activeVoters[targets[i]];
+                    for (var j = 0; j < votersList.length; j++) {
                         for (var z = 0; z < nonvoters; z++) {
                             if (votersList[j] == nonvoters[z]) {
                                 // remove every currently active voter from the "Not Voting" list
@@ -289,7 +289,7 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var votersList = voters[targets[i]];
                     for (var j = 0; j < votersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
                                 votersList[j] = "[s]" + votersList[j] + "[/s]";
                             }
                     }
