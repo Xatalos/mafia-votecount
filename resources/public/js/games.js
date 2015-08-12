@@ -180,7 +180,7 @@ function showGame(id) {
                                 gameData.votes[i].target = players[j];
                             }
                         }
-                        if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
+                        if (targets.indexOf(gameData.votes[i].target) == -1) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target);
                         }
