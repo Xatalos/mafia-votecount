@@ -236,13 +236,14 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    for (var j = 0; j < voters[targets[i]].length; j++) {
-                            if (activeVoters[targets[i]].indexOf(voters[targets[i]][j]) == -1) {
-                                voters[targets[i]][j] = "<s>" + voters[targets[i]][j] + "</s>";
+                    var votersList = voters[targets[i]];
+                    for (var j = 0; j < votersList.length; j++) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
+                                votersList = "<s>" + votersList + "</s>";
                             }
                     }
                     
-                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + voters[targets[i]].join(', ');
+                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + votersList.join(', ');
             }
         
                 gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
@@ -281,13 +282,14 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    for (var j = 0; j < voters[targets[i]].length; j++) {
-                            if (activeVoters[targets[i]].indexOf(voters[targets[i]][j]) == -1) {
-                                voters[targets[i]][j] = "[s]" + voters[targets[i]][j] + "[/s]";
+                    var votersList = voters[targets[i]];
+                    for (var j = 0; j < votersList.length; j++) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
+                                votersList = "[s]" + votersList[j] + "[/s]";
                             }
                     }
                     
-                    gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + voters[targets[i]].join(', ') + "\r\n";
+                    gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + votersList.join(', ') + "\r\n";
             }
         
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
