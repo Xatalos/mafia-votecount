@@ -171,6 +171,12 @@ function showGame(id) {
                                 }
                             }
                         }
+                        for (var j = 0; j < players.length; j++) {
+                            if (players[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
+                                // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name
+                                gameData.votes[i].target = players[j];
+                            }
+                        }
                         if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
                             targets.push(gameData.votes[i].target);
@@ -179,12 +185,6 @@ function showGame(id) {
                 }
                 
                 for (var i = 0; i < targets.length; i++) {
-                    for (var j = 0; j < players.length; j++) {
-                        if (players[j].toLowerCase() == targets[i].toLowerCase()) {
-                            // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name
-                            targets[i] = players[j];
-                        }
-                    }
                     if (targets[i] == "") {
                         // remove the null (unvote) target from the list of vote targets
                         targets.splice(i, 1);
