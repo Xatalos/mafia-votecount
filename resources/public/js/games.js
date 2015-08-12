@@ -263,7 +263,7 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = voters[targets[i]];
+                    var mainVotersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
