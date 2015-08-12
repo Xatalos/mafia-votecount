@@ -18,7 +18,10 @@ function requestData() {
             var gamesToHtml = "";
             var x = 0;
 
-            for (key in gamesData.games) {
+            for (var key in gamesData.games) {
+                if (!gamesData.games.hasOwnProperty(key)) { 
+                    continue; 
+                }
                 gamesToHtml += "<tr>";
                 var gameurl = "/#" + gamesData.games[x].id;
                 var threadurl = gamesData.games[x].url;
