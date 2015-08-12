@@ -250,8 +250,8 @@ function showGame(id) {
                     }
                 }
                 
-                var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
-                var orderedWagons = {};
+           //     var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
+           //        var orderedWagons = {};
                 
            //     for(var i = 0; i < orderedWagonKeys.length; i++){
             //        var key = orderedWagonKeys[i];
@@ -265,7 +265,7 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var mainVotersList = voters[targets[i]];
                     for (var j = 0; j < mainVotersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1) {
+                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
