@@ -241,14 +241,14 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = voters[targets[i]];
+                    var mainVotersList = activeVoters[targets[i]];
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
                     
-                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + votersList.join(', ');
+                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + mainVotersList.join(', ');
             }
         
                 gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
