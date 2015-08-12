@@ -206,7 +206,7 @@ function showGame(id) {
                         for (var j = 0; j < targets.length; j++) {
                             for (var z = 0; z < activeVoters[targets[j]].length; z++) {
                                 var remainingVoters = activeVoters[targets[j]];
-                                if (remainingVoters[z] == gameData.votes[j].voter) {
+                                if (remainingVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, remove every previous ACTIVE vote from the voter
                                     remainingVoters.splice(z, 1);
                                 }
@@ -223,9 +223,9 @@ function showGame(id) {
                 
                 for (var i = 0; i < targets.length; i++) {
                     for (var j = 0; j < activeVoters[targets[i]].length; j++) {
-                        var targetsVoters = activeVoters[targets[i]];
+                        var votersList = activeVoters[targets[i]];
                         for (var z = 0; z < nonvoters; z++) {
-                            if (targetsVoters[j] == nonvoters[z]) {
+                            if (votersList[j] == nonvoters[z]) {
                                 // remove every currently active voter from the "Not Voting" list
                                 nonvoters.splice(z, 1);
                             }
