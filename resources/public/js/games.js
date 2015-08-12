@@ -304,6 +304,9 @@ function showGame(id) {
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
             }
+            
+            console.log(voters[targets[0]]);
+            console.log(activeVoters[targets[0]]);
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
