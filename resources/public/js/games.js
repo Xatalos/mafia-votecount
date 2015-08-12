@@ -224,11 +224,19 @@ function showGame(id) {
                             var remainingVoters = activeVoters[targets[j]];
                             for (var z = remainingVoters.length - 1; z >= 0; z--) {
                                 if (remainingVoters[z] == gameData.votes[i].voter) {
-                                    // every time a new vote is given, remove every previous ACTIVE vote from the voters
+                                    // every time a new vote is given, remove every previous vote from the active votes
                                     remainingVoters.splice(z, 1);
                                 }
                             }
+                            var markedVoters = voters[targets[j]];
+                            for (var z = markedVoters.length - 1; z >= 0; z--) {
+                                if (markedVoters[z] == gameData.votes[i].voter) {
+                                    // every time a new vote is given, mark every previous vote with the mark "!" (unvoted) in the general votes
+                                    markedVoters[z] = "!" + markedVoters[z];
+                                }
+                            }
                             activeVoters[targets[j]] = remainingVoters;
+                            voters[targets[j]] = markedVoters;
                             if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[j].target != "") {
                                 // push every voter of the current day to the objects as a value of their vote target
                                 voters[targets[j]].push(gameData.votes[i].voter);
@@ -265,7 +273,8 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var mainVotersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
+                            if (mainVotersList[j].indexOf("!") != -1) {
+                                mainVotersList[j].splice(0, 1);
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
@@ -311,8 +320,9 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var votersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
-                                votersList[j] = "[s]" + votersList[j] + "[/s]";
+                            if (votersList[j].indexOf("!") != -1) {
+                                votersList[j].splice(0, 1);
+                                votersList[j] = "[s]" + mainVotersList[j] + "[/s]";
                             }
                     }
                     
