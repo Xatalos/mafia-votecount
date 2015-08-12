@@ -253,17 +253,17 @@ function showGame(id) {
                 var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
                 var orderedWagons = {};
                 
-                for(var i = 0; i < orderedWagonKeys.length; i++){
-                    var key = orderedWagonKeys[i];
-                    orderedWagons[key] = voters[key];
-                }
+           //     for(var i = 0; i < orderedWagonKeys.length; i++){
+            //        var key = orderedWagonKeys[i];
+            //        orderedWagons[key] = voters[key];
+            //    }
                 
-                console.log(orderedWagons);
+           //     console.log(orderedWagons);
                 
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = orderedWagons[targets[i]];
+                    var mainVotersList = voters[targets[i]];
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
@@ -309,7 +309,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = orderedWagons[targets[i]];
+                    var votersList = voters[targets[i]];
                     for (var j = 0; j < votersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
                                 votersList[j] = "[s]" + votersList[j] + "[/s]";
