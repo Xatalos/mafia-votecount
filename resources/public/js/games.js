@@ -202,7 +202,7 @@ function showGame(id) {
                 }
                 
                 for (var i = 0; i < gameData.votes.length; i++) {
-                    if (currentDay == gameData.votes[j].day) {
+                    if (currentDay == gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
                             for (var z = 0; z < activeVoters[targets[j]].length; z++) {
                                 var remainingVoters = activeVoters[targets[j]];
