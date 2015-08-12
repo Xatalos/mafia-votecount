@@ -322,16 +322,8 @@ function showGame(id) {
                 console.log(propName);
             }
             
-            var propValue;
-            for(var propName in activeVoters) {
-                propValue = voters[propName]
-                console.log(propName, propValue);
-            }
-            
-            var propValue;
-            for(var propName in voters) {
-                propValue = voters[propName]
-                console.log(propName, propValue);
+            for (var i = 0; i < targets.length; i++) {
+                console.log(targets[i]);
             }
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
