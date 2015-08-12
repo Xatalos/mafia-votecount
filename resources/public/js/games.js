@@ -252,6 +252,8 @@ function showGame(id) {
                 
                 var orderedWagons = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
                 
+                console.log(orderedWagons);
+                
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
@@ -317,19 +319,6 @@ function showGame(id) {
             
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
-            }
-            
-            console.log(voters[targets[0]]);
-            console.log(activeVoters[targets[0]]);
-            
-            var propValue;
-            for(var propName in voters) {
-                propValue = voters[propName]
-                console.log(propName);
-            }
-            
-            for (var i = 0; i < targets.length; i++) {
-                console.log(targets[i]);
             }
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
