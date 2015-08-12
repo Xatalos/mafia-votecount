@@ -250,12 +250,14 @@ function showGame(id) {
                     }
                 }
                 
+                var orderedWagons = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
+                
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = voters[targets[i]];
-                    for (var j = 0; j < voters[targets[i]].length; j++) {
-                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1 && mainVotersList[j].indexOf("<s>") == -1) {
+                    var mainVotersList = orderedWagons[targets[i]];
+                    for (var j = 0; j < mainVotersList.length; j++) {
+                            if (activeVoters[targets[i]].indexOf(mainVotersList[j]) == -1) {
                                 mainVotersList[j] = "<s>" + mainVotersList[j] + "</s>";
                             }
                     }
@@ -299,12 +301,12 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = activeVoters[targets[i]];
-                  //  for (var j = 0; j < voters[targets[i]].length; j++) {
-                    //        if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
-                      //          votersList[j] = "[s]" + votersList[j] + "[/s]";
-                      //      }
-                //    }
+                    var votersList = orderedWagons[targets[i]];
+                    for (var j = 0; j < votersList.length; j++) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
+                                votersList[j] = "[s]" + votersList[j] + "[/s]";
+                            }
+                    }
                     
                     gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + votersList.join(', ') + "\r\n";
             }
