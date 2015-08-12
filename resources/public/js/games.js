@@ -207,8 +207,8 @@ function showGame(id) {
                                     continue;
                                 }
                                 // add a new key (property) to the object for every vote target during the current day
-                                voters[targets[i]] = [];
-                                activeVoters[targets[i]] = [];
+                                voters[targets[j]] = [];
+                                activeVoters[targets[j]] = [];
                             }
                         }
                     }
