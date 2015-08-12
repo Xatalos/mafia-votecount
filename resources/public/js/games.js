@@ -310,6 +310,12 @@ function showGame(id) {
             
             console.log(voters[targets[0]]);
             console.log(activeVoters[targets[0]]);
+            
+            var propValue;
+            for(var propName in voters) {
+                propValue = voters[propName]
+                console.log(propName);
+            }
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
