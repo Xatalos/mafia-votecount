@@ -198,7 +198,10 @@ function showGame(id) {
                 
                 for (var i = 0; i < targets.length; i++) {
                     for (var j = 0; j < gameData.votes.length; j++) {
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase() && !voters.hasOwnProperty(targets[i])) {
+                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase()) {
+                            if(voters.hasOwnProperty(targets[i]) || activeVoters.hasOwnProperty(targets[i])){
+                                continue;
+                            }
                             // add a new key (property) to the object for every vote target during the current day
                             voters[targets[i]] = [];
                             activeVoters[targets[i]] = [];
