@@ -188,6 +188,7 @@ function showGame(id) {
                     if (targets[i] == "") {
                         // remove the null (unvote) target from the list of vote targets
                         targets.splice(i, 1);
+                        break;
                     }
                 }
                 
@@ -242,7 +243,7 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var votersList = voters[targets[i]];
                     for (var j = 0; j < votersList.length; j++) {
-                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1) {
+                            if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("<s>") == -1) {
                                 votersList[j] = "<s>" + votersList[j] + "</s>";
                             }
                     }
