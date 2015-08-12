@@ -154,11 +154,8 @@ function showGame(id) {
             
             if (gameData.votes.length > 0) {
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
-            
-                gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
         
                 var targets = [];
-                var nonvoters = players;
             
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
@@ -167,65 +164,86 @@ function showGame(id) {
                                 continue; 
                             }
                             var nicknameslist = nicknames[key];
-                            for (var z = 0; z < nicknameslist.length; z++) {
-                                if (nicknameslist[z].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
-                                    // if a given vote target equals one of the nicknames, then change the vote to target the "real" name
+                            for (var j = 0; j < nicknameslist.length; j++) {
+                                if (nicknameslist[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
+                                    // if a vote target equals one of the nicknames, then change the vote to target the "real" name
                                     gameData.votes[i].target = key;
+                                }
+                            }
+                            for (var j = 0; j < players.length; j++) {
+                                if (players[j].toLowerCase() == targets[i].toLowerCase()) {
+                                    // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name
+                                    gameData.votes[i].target = players[j];
                                 }
                             }
                         }
                         if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
                             // push every new unique vote target to the targets array
-                            targets.push(gameData.votes[i].target.toLowerCase());
+                            targets.push(gameData.votes[i].target);
                         }
                       }
                 }
-                        
+                
                 for (var i = 0; i < targets.length; i++) {
                     if (targets[i] == "") {
-                        // don't show the null (unvote) target in the targets listing
-                        continue;
+                        // remove the null (unvote) target from the list of vote targets
+                        targets.splice(i, 1);
+                        break;
                     }
-                    var voters = [];
-                    for (var j = 0; j < gameData.votes.length; j++) {
-                        if (currentDay == gameData.votes[j].day) {
-                            for (var k = 0; k < targets.length; k++) {
-                                for (var z = 0; z < voters.length; z++) {
-                                    if (voters[z] == gameData.votes[j].voter) {
-                                        // every time a new vote is given, mark every previous vote by the same voter as "overwritten"
-                                        voters[z] = "<s>" + voters[z] + "</s>";
-                                    }
+                }
+                
+                var voters = {}; // "voters" is a JavaScript object with targets as keys and their voters as values
+                var activeVoters = {}; // "activeVoters" is a JavaScript object with targets as keys and ACTIVE (not unvoted) voters as values
+                var nonvoters = players; // players who aren't voting for anyone at the current time
+                
+                for (var i = 0; i < targets.length; i++) {
+                    // add a new key (property) to the object for every vote target
+                    voters[targets[i]] = [];
+                    activeVoters[targets[i]] = [];
+                }
+                
+                for (var i = 0; i < gameData.votes.length; i++) {
+                    if (currentDay == gameData.votes[j].day) {
+                        for (var j = 0; j < targets.length; j++) {
+                            for (var z = 0; z < activeVoters[targets[j]].length; z++) {
+                                var remainingVoters = activeVoters[targets[j]];
+                                if (remainingVoters[z] == gameData.votes[j].voter) {
+                                    // every time a new vote is given, remove every previous ACTIVE vote from the voter
+                                    remainingVoters.splice(z, 1);
                                 }
+                                activeVoters[targets[j]] = remainingVoters;
+                            }
+                            if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[j].target != "") {
+                                // push every voter of the current day to the objects as a value of their vote target
+                                voters[targets[j]].push(gameData.votes[i].voter);
+                                activeVoters[targets[j]].push(gameData.votes[i].voter);
                             }
                         }
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase() && gameData.votes[j].target != "") {
-                            // add a new voter to an existing vote target
-                            voters.push(gameData.votes[j].voter);
+                    }
+                }
+                
+                for (var i = 0; i < targets.length; i++) {
+                    for (var j = 0; j < activeVoters[targets[i]].length; j++) {
+                        targetsVoters = activeVoters[targets[i]];
+                        for (var z = 0; z < nonvoters; z++) {
+                            if (targetsVoters[j] == nonvoters[z]) {
+                                // remove every currently active voter from the "Not Voting" list
+                                nonvoters.splice(z, 1);
+                            }
                         }
                     }
-                    var voterscount = 0;
-                    for (var j = 0; j < voters.length; j++) {
-                        if (voters[j].indexOf("<s>") == -1) {
-                            // count the number of voters for this target that haven't been unvoted
-                            voterscount++;
-                            
-                            for (var z = nonvoters.length - 1; z >= 0; z--) {
-                                if (nonvoters[z].toLowerCase() == voters[j].toLowerCase()) {
-                                    nonvoters.splice(z,1);
-                                }
-                            } 
-                        }
+                }
+                
+                gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
+                        
+                for (var i = 0; i < targets.length; i++) {
+                    for (var j = 0; j < voters[targets[i]].length; j++) {
+                            if (activeVoters[targets[i]].indexOf(voters[targets[i]][j]) == -1) {
+                                voters[targets[i]][j] = "<s>" + voters[targets[i]][j] + "</s>";
+                            }
                     }
                     
-                    var targetname = targets[i];
-                    
-                    for (var z = 0; z < players.length; z++) {
-                        if (players[z].toLowerCase() == targets[i].toLowerCase()) {
-                            targetname = players[z];
-                        }
-                    }
-                    
-                    gameToHtml += "<br><b>" + targetname + " (" + voterscount + "):</b> " + voters.join(', ');
+                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + voters[targets[i]].join(', ');
             }
         
                 gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
@@ -263,65 +281,16 @@ function showGame(id) {
             
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
-                var targets = [];
-                var nonvoters = players;
-            
-                for (var i = 0; i < gameData.votes.length; i++) {
-                    if (currentDay == gameData.votes[i].day) {
-                        if (targets.indexOf(gameData.votes[i].target.toLowerCase()) == -1) {
-                            // push every new unique vote target to the targets array
-                            targets.push(gameData.votes[i].target.toLowerCase());
-                        }
-                      }
-                }
-                        
                 for (var i = 0; i < targets.length; i++) {
-                    if (targets[i] == "") {
-                        // don't show the null (unvote) target in the targets listing
-                        continue;
-                    }
-                    var voters = [];
-                    for (var j = 0; j < gameData.votes.length; j++) {
-                        if (currentDay == gameData.votes[j].day) {
-                            for (var k = 0; k < targets.length; k++) {
-                                for (var z = 0; z < voters.length; z++) {
-                                    if (voters[z] == gameData.votes[j].voter) {
-                                        // every time a new vote is given, mark every previous vote by the same voter as "overwritten"
-                                        voters[z] = "[s]" + voters[z] + "[/s]";
-                                    }
-                                }
+                    for (var j = 0; j < voters[targets[i]].length; j++) {
+                            if (activeVoters[targets[i]].indexOf(voters[targets[i]][j]) == -1) {
+                                voters[targets[i]][j] = "[s]" + voters[targets[i]][j] + "[/s]";
                             }
-                        }
-                        if (currentDay == gameData.votes[j].day && gameData.votes[j].target.toLowerCase() == targets[i].toLowerCase() && gameData.votes[j].target != "") {
-                            // add a new voter to an existing vote target
-                            voters.push(gameData.votes[j].voter);
-                        }
-                    }
-                    var voterscount = 0;
-                    for (var j = 0; j < voters.length; j++) {
-                        if (voters[j].indexOf("[s]") == -1) {
-                            // count the number of voters for this target that haven't been unvoted
-                            voterscount++;
-                            
-                            for (var z = nonvoters.length - 1; z >= 0; z--) {
-                                if (nonvoters[z].toLowerCase() == voters[j].toLowerCase()) {
-                                    nonvoters.splice(z,1);
-                                }
-                            }
-                        }
                     }
                     
-                    var targetname = targets[i];
-                    
-                    for (var z = 0; z < players.length; z++) {
-                        if (players[z].toLowerCase() == targets[i].toLowerCase()) {
-                            targetname = players[z];
-                        }
-                    }
-                    
-                    gameToHtml += "[b]" + targetname + " (" + voterscount + "):[/b] " + voters.join(', ') + "\r\n";
+                    gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + voters[targets[i]].join(', ') + "\r\n";
             }
-                
+        
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
