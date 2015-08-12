@@ -182,7 +182,7 @@ function showGame(id) {
                     for (var j = 0; j < players.length; j++) {
                         if (players[j].toLowerCase() == targets[i].toLowerCase()) {
                             // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name
-                            gameData.votes[i].target = players[j];
+                            targets[i] = players[j];
                         }
                     }
                     if (targets[i] == "") {
@@ -223,7 +223,7 @@ function showGame(id) {
                 
                 for (var i = 0; i < targets.length; i++) {
                     for (var j = 0; j < activeVoters[targets[i]].length; j++) {
-                        targetsVoters = activeVoters[targets[i]];
+                        var targetsVoters = activeVoters[targets[i]];
                         for (var z = 0; z < nonvoters; z++) {
                             if (targetsVoters[j] == nonvoters[z]) {
                                 // remove every currently active voter from the "Not Voting" list
