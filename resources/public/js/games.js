@@ -316,6 +316,18 @@ function showGame(id) {
                 propValue = voters[propName]
                 console.log(propName);
             }
+            
+            var propValue;
+            for(var propName in activeVoters) {
+                propValue = voters[propName]
+                console.log(propName, propValue);
+            }
+            
+            var propValue;
+            for(var propName in voters) {
+                propValue = voters[propName]
+                console.log(propName, propValue);
+            }
 
             document.getElementById("gamedata").innerHTML = gameToHtml;
         } else {
