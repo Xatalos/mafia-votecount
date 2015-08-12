@@ -182,7 +182,7 @@ function showGame(id) {
                       }
                 }
                 
-                for (var i = 0; i < targets.length; i++) {
+                for (var i = targets.length - 1; i >= 0; i--) {
                     if (targets[i] == "") {
                         // remove the null (unvote) target from the list of vote targets
                         targets.splice(i, 1);
@@ -211,9 +211,9 @@ function showGame(id) {
                     if (currentDay == gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
                             var remainingVoters = activeVoters[targets[j]];
-                            for (var z = 0; z < remainingVoters.length; z++) {
+                            for (var z = remainingVoters.length - 1; z >= 0; z--) {
                                 if (remainingVoters[z] == gameData.votes[i].voter) {
-                                    // every time a new vote is given, remove every previous ACTIVE vote from the voter
+                                    // every time a new vote is given, remove every previous ACTIVE vote from the voters
                                     remainingVoters.splice(z, 1);
                                 }
                             }
@@ -230,7 +230,7 @@ function showGame(id) {
                 for (var i = 0; i < targets.length; i++) {
                     var activesList = activeVoters[targets[i]];
                     for (var j = 0; j < activesList.length; j++) {
-                        for (var z = 0; z < nonvoters; z++) {
+                        for (var z = nonvoters.length - 1; z >= 0; z--) {
                             if (activesList[j] == nonvoters[z]) {
                                 // remove every currently active voter from the "Not Voting" list
                                 nonvoters.splice(z, 1);
