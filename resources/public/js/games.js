@@ -309,7 +309,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = voters[targets[i]];
+                    var votersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
                             if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
                                 votersList[j] = "[s]" + votersList[j] + "[/s]";
