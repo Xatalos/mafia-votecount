@@ -299,7 +299,7 @@ function showGame(id) {
                   //  for (var j = 0; j < voters[targets[i]].length; j++) {
                     //        if (activeVoters[targets[i]].indexOf(votersList[j]) == -1 && votersList[j].indexOf("[s]") == -1) {
                       //          votersList[j] = "[s]" + votersList[j] + "[/s]";
-                            }
+                      //      }
                     }
                     
                     gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + votersList.join(', ') + "\r\n";
