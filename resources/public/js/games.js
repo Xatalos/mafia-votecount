@@ -258,15 +258,16 @@ function showGame(id) {
                     }
                 }
                 
-           //     var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
-           //        var orderedWagons = {};
+                var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
+                   var orderedWagons = {};
                 
-           //     for(var i = 0; i < orderedWagonKeys.length; i++){
-            //        var key = orderedWagonKeys[i];
-            //        orderedWagons[key] = voters[key];
-            //    }
+                for(var i = 0; i < orderedWagonKeys.length; i++){
+                    var key = orderedWagonKeys[i];
+                    orderedWagons[key] = voters[key];
+                }
                 
-           //     console.log(orderedWagons);
+                console.log(orderedWagonKeys);
+                console.log(orderedWagons);
                 
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
