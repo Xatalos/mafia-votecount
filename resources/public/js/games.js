@@ -258,8 +258,8 @@ function showGame(id) {
                     }
                 }
                 
-                var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return voters[b]-voters[a]});
-                   var orderedWagons = {};
+                var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return activeVoters[b].length - activeVoters[a].length});
+                var orderedWagons = {};
                 
                 for(var i = 0; i < orderedWagonKeys.length; i++){
                     var key = orderedWagonKeys[i];
