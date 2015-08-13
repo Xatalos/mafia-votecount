@@ -272,7 +272,7 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = orderedWagons[targets[i]].slice(0);
+                    var mainVotersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (mainVotersList[j].indexOf("!") != -1) {
                                 var nameWithoutMark = mainVotersList[j].substring(1);
