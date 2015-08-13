@@ -263,7 +263,7 @@ function showGame(id) {
                 
                 for(var i = 0; i < orderedWagonKeys.length; i++){
                     var key = orderedWagonKeys[i];
-                    orderedWagons[key] = voters[key];
+                    orderedWagons[key] = activeVoters[key];
                 }
                 
                 console.log(orderedWagonKeys);
@@ -272,7 +272,7 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = voters[targets[i]].slice(0);
+                    var mainVotersList = orderedWagons[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (mainVotersList[j].indexOf("!") != -1) {
                                 var nameWithoutMark = mainVotersList[j].substring(1);
@@ -319,7 +319,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = voters[targets[i]].slice(0);
+                    var votersList = orderedWagons[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
                             if (votersList[j].indexOf("!") != -1) {
                                 var nameWithoutMark = votersList[j].substring(1);
