@@ -171,18 +171,18 @@ function showGame(id) {
                             for (var j = 0; j < nicknameslist.length; j++) {
                                 if (nicknameslist[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
                                     // if a vote target equafls one of the nicknames, then change the vote to target the "real" name
-                                  //  gameData.votes[i].target = key;
+                                    gameData.votes[i].target = key;
                                 }
                                 if (key.toLowerCase() == gameData.votes[i].target.toLowerCase()) {
                                     // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name                                     // (if it's in the nicknames list)
-                                //    gameData.votes[i].target = key;
+                                    gameData.votes[i].target = key;
                                 }
                             }
                         }
                         for (var j = 0; j < players.length; j++) {
                             if (players[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
                                 // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name                                     // (if it's in the players list)
-                              //  gameData.votes[i].target = players[j];
+                                gameData.votes[i].target = players[j];
                             }
                         }
                         if (targets.indexOf(gameData.votes[i].target) == -1) {
@@ -259,16 +259,16 @@ function showGame(id) {
                     }
                 }
                 
-                var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return activeVoters[b].length - activeVoters[a].length});
-                var orderedWagons = {};
+             //   var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return activeVoters[b].length - activeVoters[a].length});
+            //    var orderedWagons = {};
                 
-                for(var i = 0; i < orderedWagonKeys.length; i++){
-                    var key = orderedWagonKeys[i];
-                    orderedWagons[key] = voters[key];
-                }
+            //    for(var i = 0; i < orderedWagonKeys.length; i++){
+            //        var key = orderedWagonKeys[i];
+            //        orderedWagons[key] = voters[key];
+            //    }
                 
-                console.log(orderedWagonKeys);
-                console.log(orderedWagons);
+            //    console.log(orderedWagonKeys);
+            //    console.log(orderedWagons);
                 
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
@@ -320,7 +320,7 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    var votersList = orderedWagons[targets[i]].slice(0);
+                    var votersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
                             if (votersList[j].indexOf("!") != -1) {
                                 var nameWithoutMark = votersList[j].substring(1);
