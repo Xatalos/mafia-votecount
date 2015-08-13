@@ -172,9 +172,9 @@ function showGame(id) {
                                     // if a vote target equafls one of the nicknames, then change the vote to target the "real" name
                                     gameData.votes[i].target = key;
                                 }
-                                if (nicknameslist[j].toLowerCase() == gameData.votes[i].target.toLowerCase()) {
+                                if (key.toLowerCase() == gameData.votes[i].target.toLowerCase()) {
                                     // if a vote target equals a name with the wrong capitalization, then change the vote to target the "real" name                                     // (if it's in the nicknames list)
-                                    gameData.votes[i].target = players[j];
+                                    gameData.votes[i].target = key;
                                 }
                             }
                         }
