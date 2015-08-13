@@ -263,7 +263,7 @@ function showGame(id) {
                 
                 for(var i = 0; i < orderedWagonKeys.length; i++){
                     var key = orderedWagonKeys[i];
-                    orderedWagons[key] = activeVoters[key];
+                    orderedWagons[key] = voters[key];
                 }
                 
                 console.log(orderedWagonKeys);
