@@ -189,7 +189,6 @@ function showGame(id) {
                                 }
                             }
                             var markedVoters = voters[targets[j]].slice(0);
-                            console.log(markedVoters);
                             for (var z = markedVoters.length - 1; z >= 0; z--) {
                                 if (markedVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, mark every previous vote with the mark "!" (unvoted) in the general votes
@@ -197,9 +196,8 @@ function showGame(id) {
                                 }
                             }
                             activeVoters[targets[j]] = remainingVoters;
-                            console.log(markedVoters);
                             voters[targets[j]] = markedVoters;
-                            if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[j].target != "") {
+                            if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[i].target != "") {
                                 // push every voter of the current day to the objects as a value of their vote target
                                 voters[targets[j]].push(gameData.votes[i].voter);
                                 activeVoters[targets[j]].push(gameData.votes[i].voter);
