@@ -1,10 +1,3 @@
-function centerWindow() {
-    "use strict";
-    var centeredWidth = $('.centered').width() / 2,
-        centeredHeight = $('.centered').height() / 2;
-    $('.centered').css({ 'margin-left' : -centeredWidth , 'margin-top' : -centeredHeight });
-}
-
 function requestData() {
     "use strict";
     var req = new XMLHttpRequest();
@@ -53,19 +46,14 @@ function locationHashChanged() {
 
 function showCreateGame() {
     "use strict";
-    var createGame = document.getElementById("creategame");
-    document.getElementById("index").className += ' hidden';
-    createGame.className = createGame.className.replace( /(?:^|\s)hidden(?!\S)/g , '' );
-
-    centerWindow();
+    $("index").addClass("hidden");
+    $("#creategame").removeClass("hidden");
 }
 
 function hideCreateGame() {
     "use strict";
-    document.getElementById("creategame").className += ' hidden';
-    document.getElementById("index").className =
-    document.getElementById("index").className.replace
-      ( /(?:^|\s)hidden(?!\S)/g , '' );
+    $("creategame").addClass("hidden");
+    $("#index").removeClass("hidden");
     window.location.hash = "";
 }
 
@@ -218,17 +206,6 @@ function showGame(id) {
                     }
                 }
                 
-             //   var orderedWagonKeys = Object.keys(voters).sort(function(a,b){return activeVoters[b].length - activeVoters[a].length});
-            //    var orderedWagons = {};
-                
-            //    for(var i = 0; i < orderedWagonKeys.length; i++){
-            //        var key = orderedWagonKeys[i];
-            //        orderedWagons[key] = voters[key];
-            //    }
-                
-            //    console.log(orderedWagonKeys);
-            //    console.log(orderedWagons);
-                
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
@@ -305,10 +282,8 @@ function showGame(id) {
     };
 
     req.send(null);
-    document.getElementById("index").className += ' hidden';
-    document.getElementById("gameview").className =
-    document.getElementById("gameview").className.replace
-      ( /(?:^|\s)hidden(?!\S)/g , '' );
+    $("index").addClass("hidden");
+    $("#gameview").removeClass("hidden");
 }
 
 function deletePlayer(id) {
@@ -323,10 +298,8 @@ function deleteGame(id) {
 
 function hideGame() {
     "use strict";
-    document.getElementById("gameview").className += ' hidden';
-    document.getElementById("index").className =
-    document.getElementById("index").className.replace
-      ( /(?:^|\s)hidden(?!\S)/g , '' );
+    $("gameview").addClass("hidden");
+    $("#index").removeClass("hidden");
     window.location.hash = "";
 }
 
