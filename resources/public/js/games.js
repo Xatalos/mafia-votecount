@@ -189,6 +189,7 @@ function showGame(id) {
                                 }
                             }
                             var markedVoters = voters[targets[j]].slice(0);
+                            console.log(markedVoters);
                             for (var z = markedVoters.length - 1; z >= 0; z--) {
                                 if (markedVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, mark every previous vote with the mark "!" (unvoted) in the general votes
@@ -196,6 +197,7 @@ function showGame(id) {
                                 }
                             }
                             activeVoters[targets[j]] = remainingVoters;
+                            console.log(markedVoters);
                             voters[targets[j]] = markedVoters;
                             if (gameData.votes[i].target.toLowerCase() == targets[j].toLowerCase() && gameData.votes[j].target != "") {
                                 // push every voter of the current day to the objects as a value of their vote target
@@ -228,9 +230,6 @@ function showGame(id) {
                 
             //    console.log(orderedWagonKeys);
             //    console.log(orderedWagons);
-                
-                console.log(voters);
-                console.log(activeVoters);
                 
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
