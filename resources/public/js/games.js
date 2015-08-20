@@ -229,6 +229,9 @@ function showGame(id) {
             //    console.log(orderedWagonKeys);
             //    console.log(orderedWagons);
                 
+                console.log(voters);
+                console.log(activeVoters);
+                
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
