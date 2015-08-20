@@ -232,9 +232,6 @@ function showGame(id) {
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
                         
                 for (var i = 0; i < targets.length; i++) {
-                    if (players.indexOf(targets[i]) == -1) {
-                        continue;
-                    }
                     var mainVotersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
                             if (mainVotersList[j].indexOf("!") != -1) {
@@ -282,9 +279,6 @@ function showGame(id) {
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
         
                 for (var i = 0; i < targets.length; i++) {
-                    if (players.indexOf(targets[i]) == -1) {
-                        continue;
-                    }
                     var votersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
                             if (votersList[j].indexOf("!") != -1) {
