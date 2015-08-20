@@ -181,14 +181,14 @@ function showGame(id) {
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
-                            var remainingVoters = activeVoters[targets[j]];
+                            var remainingVoters = activeVoters[targets[j]].slice(0);
                             for (var z = remainingVoters.length - 1; z >= 0; z--) {
                                 if (remainingVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, remove every previous vote from the active votes
                                     remainingVoters.splice(z, 1);
                                 }
                             }
-                            var markedVoters = voters[targets[j]];
+                            var markedVoters = voters[targets[j]].slice(0);
                             for (var z = markedVoters.length - 1; z >= 0; z--) {
                                 if (markedVoters[z] == gameData.votes[i].voter) {
                                     // every time a new vote is given, mark every previous vote with the mark "!" (unvoted) in the general votes
