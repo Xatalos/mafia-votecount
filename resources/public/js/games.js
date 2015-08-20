@@ -52,7 +52,7 @@ function showCreateGame() {
 
 function hideCreateGame() {
     "use strict";
-    $("creategame").addClass("hidden");
+    $("#creategame").addClass("hidden");
     $("#index").removeClass("hidden");
     window.location.hash = "";
 }
@@ -282,7 +282,7 @@ function showGame(id) {
     };
 
     req.send(null);
-    $("index").addClass("hidden");
+    $("#index").addClass("hidden");
     $("#gameview").removeClass("hidden");
 }
 
@@ -298,7 +298,7 @@ function deleteGame(id) {
 
 function hideGame() {
     "use strict";
-    $("gameview").addClass("hidden");
+    $("#gameview").addClass("hidden");
     $("#index").removeClass("hidden");
     window.location.hash = "";
 }
