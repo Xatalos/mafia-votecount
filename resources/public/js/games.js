@@ -1,5 +1,6 @@
+"use strict";
+
 function requestData() {
-    "use strict";
     var req = new XMLHttpRequest();
     req.open("GET", "/games", true);
     req.setRequestHeader("accept", "application/json");
@@ -36,7 +37,6 @@ function requestData() {
 }
 
 function locationHashChanged() {
-    "use strict";
     if (window.location.hash != "") {
         var id = "" + window.location.hash;
         id = id.slice(1, id.length);
@@ -45,20 +45,17 @@ function locationHashChanged() {
 }
 
 function showCreateGame() {
-    "use strict";
-    $("index").addClass("hidden");
+    $("#index").addClass("hidden");
     $("#creategame").removeClass("hidden");
 }
 
 function hideCreateGame() {
-    "use strict";
     $("#creategame").addClass("hidden");
     $("#index").removeClass("hidden");
     window.location.hash = "";
 }
 
 function showGame(id) {
-    "use strict";
     var req = new XMLHttpRequest();
     var url = "/game/" + id;
     req.open("GET", url, true);
@@ -287,17 +284,14 @@ function showGame(id) {
 }
 
 function deletePlayer(id) {
-    "use strict";
     $.post("/delete-player", {id: id});
 }
 
 function deleteGame(id) {
-    "use strict";
     $.post("/delete-game", {id: id});
 }
 
 function hideGame() {
-    "use strict";
     $("#gameview").addClass("hidden");
     $("#index").removeClass("hidden");
     window.location.hash = "";
