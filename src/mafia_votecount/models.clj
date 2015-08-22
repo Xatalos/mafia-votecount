@@ -11,7 +11,7 @@
                        :subprotocol "postgresql"
                        :user (% 0)
                        :password (% 1)
-                       :subname "//ec2-54-197-253-142.compute-1.amazonaws.com:5432/dfnp55jvc64kc4"})))))
+                       :subname "//localhost:5432/tlmafia"})))))
 
 (defdb korma-db db)
 
