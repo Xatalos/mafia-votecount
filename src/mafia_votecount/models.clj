@@ -9,9 +9,9 @@
           (#(identity {:db (last (string/split (System/getenv "DATABASE_URL") #"\/"))
                        :classname "org.postgresql.Driver"
                        :subprotocol "postgresql"
-                       :user (% 0)
-                       :password (% 1)
-                       :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})))))
+                       :user "mkfmmlvmpvyedr"
+                       :password "PA2yo5LpKTNQvnux4YdS1tODE4"
+                       :subname "//ec2-54-197-253-142.compute-1.amazonaws.com:5432/dfnp55jvc64kc4"})))))
 
 (defdb korma-db db)
 
