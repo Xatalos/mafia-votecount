@@ -98,7 +98,7 @@ function showGame(id) {
 
             gameToHtml += "<br>Click on a player to permanently remove him from the game!<br>";
 
-            gameToHtml += '<br><div class="pure-control-group"><b>Add Player</b><br><form id="AddPlayerForm">Name: <input type="text" id="newPlayer"> <input type="button" class="pure-button" onclick="addPlayer(\'' + id + '\')" value="Submit"></form></div>'
+            gameToHtml += '<br><b>Add Player</b><br><form id="AddPlayerForm">Name: <input type="text" id="newPlayer"> <input type="button" class="pure-button" onclick="addPlayer(\'' + id + '\')" value="Submit"></form>'
 
             var nicknames = getNicknames();
 
