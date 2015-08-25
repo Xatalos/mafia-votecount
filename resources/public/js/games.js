@@ -12,8 +12,8 @@ function requestData() {
             var x = 0;
 
             for (var key in gamesData.games) {
-                if (!gamesData.games.hasOwnProperty(key)) { 
-                    continue; 
+                if (!gamesData.games.hasOwnProperty(key)) {
+                    continue;
                 }
                 gamesToHtml += "<tr>";
                 var gameurl = "/#" + gamesData.games[x].id;
@@ -68,51 +68,54 @@ function showGame(id) {
         if (req.status >= 200 && req.status < 400){
             var gamejson = req.responseText;
             var gameData = JSON.parse(gamejson);
+            console.log(gameData);
             var gameToHtml = "";
 
             document.getElementById("gameheader").innerHTML = gameData.game.name;
-            
+
             gameToHtml += '<a href="' + gameData.game.url +'">' + gameData.game.url + "</a><br><br>";
-            
+
             var hosts = [];
-            
+
             for (var i = 0; i < gameData.hosts.length; i++) {
                 hosts.push(gameData.hosts[i]);
             }
-            
+
             gameToHtml += "<b>Hosts</b><br>" + hosts.join(', ');
-            
+
             var players = [];
 
             for (var i = 0; i < gameData.players.length; i++) {
                 players.push(gameData.players[i].name);
             }
-            
+
             var playerLinks = [];
-            
+
             for (var i = 0; i < gameData.players.length; i++) {
                 playerLinks.push('<a href="#" onclick="deletePlayer(' + gameData.players[i].id + ');return false;">' + gameData.players[i].name + '</a>');
             }
-            
+
             gameToHtml += "<br><br><b>Players</b><br>" + playerLinks.join(', ');
-            
+
             gameToHtml += "<br>Click on a player to permanently remove him from the game! (reload the page to see the result)<br>";
-            
+
+            gameToHtml += '<br><br><b>Add Player</b><br><form id="AddPlayerForm">Name: <input type="text" id="newPlayer"><br><input type="button" onclick="addPlayer()" value="Submit"></form>'
+
             var nicknames = getNicknames();
 
             var currentDay = 0;
-            
+
             if (gameData.votes.length > 0) {
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
-        
+
                 var targets = [];
-            
+
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
                         gameData.votes[i].target = gameData.votes[i].target.toLowerCase();
                         for (var key in nicknames) {
-                            if (!nicknames.hasOwnProperty(key)) { 
-                                continue; 
+                            if (!nicknames.hasOwnProperty(key)) {
+                                continue;
                             }
                             var nicknameslist = nicknames[key];
                             for (var j = 0; j < nicknameslist.length; j++) {
@@ -138,7 +141,7 @@ function showGame(id) {
                         }
                       }
                 }
-                
+
                 for (var i = targets.length - 1; i >= 0; i--) {
                     if (targets[i] == "") {
                         // remove the null (unvote) target from the list of vote targets
@@ -146,11 +149,11 @@ function showGame(id) {
                         break;
                     }
                 }
-                
+
                 var voters = {}; // "voters" is a JavaScript object with targets as keys and their voters as values
                 var activeVoters = {}; // "activeVoters" is a JavaScript object with targets as keys and ACTIVE (not unvoted) voters as values
                 var nonvoters = players; // players who aren't voting for anyone at the current time
-                
+
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay = gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
@@ -165,7 +168,7 @@ function showGame(id) {
                         }
                     }
                 }
-                
+
                 for (var i = 0; i < gameData.votes.length; i++) {
                     if (currentDay == gameData.votes[i].day) {
                         for (var j = 0; j < targets.length; j++) {
@@ -193,7 +196,7 @@ function showGame(id) {
                         }
                     }
                 }
-                
+
                 for (var i = 0; i < targets.length; i++) {
                     var activesList = activeVoters[targets[i]];
                     for (var j = 0; j < activesList.length; j++) {
@@ -205,9 +208,9 @@ function showGame(id) {
                         }
                     }
                 }
-                
+
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
-                        
+
                 for (var i = 0; i < targets.length; i++) {
                     var mainVotersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < mainVotersList.length; j++) {
@@ -216,13 +219,13 @@ function showGame(id) {
                                 mainVotersList[j] = "<s>" + nameWithoutMark + "</s>";
                             }
                     }
-                    
+
                     gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + mainVotersList.join(', ');
             }
-        
+
                 gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
         }
-            
+
             var firstNewDayVote = false;
             currentDay = 0;
 
@@ -244,17 +247,17 @@ function showGame(id) {
                 } else if (gameData.votes[i].target == null) {
                     gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter + " gave an invalid vote!</a>";
                 } else {
-                    gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter + 
+                    gameToHtml += '<br><a href="' + address + '">' + gameData.votes[i].voter +
                         " voted for " + gameData.votes[i].target + "</a>";
                 }
             }
-            
+
             if (gameData.votes.length > 0) {
                 gameToHtml += '<br><br><textarea id="reply_area" cols=80 rows=25 name="bericht" style="font:10pt Arial; margin-bottom: 4px; width:732px">';
                 currentDay = gameData.votes[gameData.votes.length - 1].day;
-            
+
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
-        
+
                 for (var i = 0; i < targets.length; i++) {
                     var votersList = voters[targets[i]].slice(0);
                     for (var j = 0; j < votersList.length; j++) {
@@ -263,14 +266,14 @@ function showGame(id) {
                                 votersList[j] = "[s]" + nameWithoutMark + "[/s]";
                             }
                     }
-                    
+
                     gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + votersList.join(', ') + "\r\n";
             }
-        
+
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
         }
-            
+
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
             }
@@ -303,4 +306,10 @@ function hideGame() {
     window.location.hash = "";
 }
 
+function addPlayer(gameID) {
+	//document.getElementById("newPlayer").value
+	if (document.getElementById("newPlayer").value) {
+		window.location.reload();
+	}
+}
 requestData();

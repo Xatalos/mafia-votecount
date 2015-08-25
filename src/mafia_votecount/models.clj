@@ -66,6 +66,10 @@
   (let [rows (map (fn [name] {:game game-id :name name}) names)]
    (insert player
         (values rows))))
+        
+(defn add-player [name]
+  (insert player 
+  		(values name)))
  
 (defn get-players [game-id]
   (select player
