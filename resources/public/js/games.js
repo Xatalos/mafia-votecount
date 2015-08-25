@@ -68,7 +68,6 @@ function showGame(id) {
         if (req.status >= 200 && req.status < 400){
             var gamejson = req.responseText;
             var gameData = JSON.parse(gamejson);
-            console.log(gameData);
             var gameToHtml = "";
 
             document.getElementById("gameheader").innerHTML = gameData.game.name;
@@ -97,9 +96,9 @@ function showGame(id) {
 
             gameToHtml += "<br><br><b>Players</b><br>" + playerLinks.join(', ');
 
-            gameToHtml += "<br>Click on a player to permanently remove him from the game! (reload the page to see the result)<br>";
+            gameToHtml += "<br>Click on a player to permanently remove him from the game!<br>";
 
-            gameToHtml += '<br><br><b>Add Player</b><br><form id="AddPlayerForm">Name: <input type="text" id="newPlayer"><br><input type="button" onclick="addPlayer()" value="Submit"></form>'
+            gameToHtml += '<br><br><b>Add Player</b><br><form id="AddPlayerForm">Name: <input type="text" id="newPlayer"> <input type="button" onclick="addPlayer(\'' + id + '\')" value="Submit"></form>'
 
             var nicknames = getNicknames();
 
@@ -292,6 +291,7 @@ function showGame(id) {
 function deletePlayer(id) {
     "use strict";
     $.post("/delete-player", {id: id});
+    window.location.reload();
 }
 
 function deleteGame(id) {
@@ -306,9 +306,11 @@ function hideGame() {
     window.location.hash = "";
 }
 
-function addPlayer(gameID) {
-	//document.getElementById("newPlayer").value
+function addPlayer(gameid) {
+	"use strict";
 	if (document.getElementById("newPlayer").value) {
+		var player = {"game": gameid, "name": document.getElementById("newPlayer").value}
+		$.post("/add-player", player);
 		window.location.reload();
 	}
 }
