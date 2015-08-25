@@ -75,6 +75,11 @@
    (insert player
         (values rows))))
 
+(defn add-player [game name]
+  (insert player
+  		(values {:game game
+  				 :name name})))
+
 (defn get-players [game-id]
   (select player
           (fields :id :name)

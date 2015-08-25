@@ -14,4 +14,5 @@
   (POST "/delete-game" [id] (game/delete-game id))
   (POST "/delete-player" [id] (player/delete-player id))
   (POST "/create-game" [url hosts players]
-        (create-game/add-game url hosts players)))
+        (create-game/add-game url hosts players))
+  (POST "/add-player" [game name] (player/add-player game name)))
