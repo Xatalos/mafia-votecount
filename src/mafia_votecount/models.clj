@@ -2,17 +2,9 @@
   (:require [clojure.string :as string])
   (:use [korma.db]
         [korma.core]))
-
-(def db
-(let [db-uri (java.net.URI. (System/getenv "DATABASE_URL"))]
-        (->> (string/split (.getUserInfo db-uri) #":")
-          (#(identity {:db (last (string/split (System/getenv "DATABASE_URL") #"\/"))
-                       :classname "org.postgresql.Driver"
-                       :subprotocol "postgresql"
-                       :user (% 0)
-                       :password (% 1)
-                       :subname "//ec2-107-20-222-114.compute-1.amazonaws.com:5432/dbsa7cb9rv7jtk"})))))
-
+ 
+(def db (h2 {:db "./resources/database"}))
+ 
 (defdb korma-db db)
 
 (declare game host player vote)
