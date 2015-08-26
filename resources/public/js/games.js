@@ -322,13 +322,6 @@ function addPlayer(gameid) {
 }
 
 function sort(activeVoters) {
-	/*for (var target in activeVoters) {
-		console.log(activeVoters[target].length);
-	}*/
-	/*var test = activeVoters.sort(function(a,b) {
-		return activeVoters[a].length - activeVoters[b].length;
-	})
-	console.log(test);*/
 	var arr = [];
     for (var target in activeVoters) {
         if (activeVoters.hasOwnProperty(target)) {
@@ -344,7 +337,6 @@ function sort(activeVoters) {
     for (var i=0; i<arr.length; i++) {
     	sorted[arr[i].key] = activeVoters[arr[i].key];
     }
-    //console.log(sorted);
 	return sorted;
 }
 
