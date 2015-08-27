@@ -206,24 +206,28 @@ function showGame(id) {
                             }
                         }
                     }
-                }
+                }               
+                
+                var sortedTargets = sort(activeVoters);
 
                 gameToHtml += "<br><h1>Day " + currentDay + " Votecount</h1>";
 
-                for (var i = 0; i < targets.length; i++) {
-                    var mainVotersList = voters[targets[i]].slice(0);
-                    for (var j = 0; j < mainVotersList.length; j++) {
-                            if (mainVotersList[j].indexOf("!") != -1) {
-                                var nameWithoutMark = mainVotersList[j].substring(1);
-                                mainVotersList[j] = "<s>" + nameWithoutMark + "</s>";
-                            }
-                    }
-
-                    gameToHtml += "<br><b>" + targets[i] + " (" + activeVoters[targets[i]].length + "):</b> " + mainVotersList.join(', ');
-            }
+                for (var target in sortedTargets) {
+                	if (sortedTargets.hasOwnProperty(target)) {
+                		var mainVotersList = voters[target].slice(0);
+                		for (var i = 0; i<mainVotersList.length; i++) {
+                			if (mainVotersList[i].indexOf("!") != -1) {
+                				var nameWithoutMark = mainVotersList[i].substring(1);
+                				mainVotersList[i] = "<s>" + nameWithoutMark + "</s>";
+                			}
+                		}
+                	}
+                	
+                	gameToHtml += "<br><b>" + target + " (" + sortedTargets[target].length + "):</b> " + mainVotersList.join(', ');
+                }
 
                 gameToHtml += '<br><br><b>Not Voting (' + nonvoters.length + '):</b> ' + nonvoters.join(', ');
-        }
+            }
 
             var firstNewDayVote = false;
             currentDay = 0;
@@ -257,21 +261,23 @@ function showGame(id) {
 
                 gameToHtml += "[blue][b][u][big]Day " + currentDay + " Votecount[/big][/u][/b][/blue]\r\n\r\n";
 
-                for (var i = 0; i < targets.length; i++) {
-                    var votersList = voters[targets[i]].slice(0);
-                    for (var j = 0; j < votersList.length; j++) {
-                            if (votersList[j].indexOf("!") != -1) {
-                                var nameWithoutMark = votersList[j].substring(1);
-                                votersList[j] = "[s]" + nameWithoutMark + "[/s]";
-                            }
-                    }
-
-                    gameToHtml += "[b]" + targets[i] + " (" + activeVoters[targets[i]].length + "):[/b] " + votersList.join(', ') + "\r\n";
-            }
+                for (var target in sortedTargets) {
+                	if (sortedTargets.hasOwnProperty(target)) {
+                		var mainVotersList = voters[target].slice(0);
+                		for (var i = 0; i<mainVotersList.length; i++) {
+                			if (mainVotersList[i].indexOf("!") != -1) {
+                				var nameWithoutMark = mainVotersList[i].substring(1);
+                				mainVotersList[i] = "[s]" + nameWithoutMark + "[/s]";
+                			}
+                		}
+                	}
+                	
+                	gameToHtml += "[b]" + target + " (" + sortedTargets[target].length + "):[/b] " + mainVotersList.join(', ') + "\r\n";
+                }
 
                 gameToHtml += '\r\n' + '[b]Not Voting (' + nonvoters.length + '):[/b] ' + nonvoters.join(', ');
                 gameToHtml += '</textarea>';
-        }
+            }
 
             if (gameData.votes.length === 0) {
                 gameToHtml += "<p>No votes have been extracted from the given thread yet (this may take more time or there may have been an error while reading the thread)</p>";
@@ -314,4 +320,24 @@ function addPlayer(gameid) {
 		window.location.reload();
 	}
 }
+
+function sort(activeVoters) {
+	var arr = [];
+    for (var target in activeVoters) {
+        if (activeVoters.hasOwnProperty(target)) {
+            arr.push({
+                'key': target,
+                'value': activeVoters[target].length
+            });
+        }
+    }
+    arr.sort(function(a, b) { return b.value - a.value; });
+    var sorted = {};
+    
+    for (var i=0; i<arr.length; i++) {
+    	sorted[arr[i].key] = activeVoters[arr[i].key];
+    }
+	return sorted;
+}
+
 requestData();
