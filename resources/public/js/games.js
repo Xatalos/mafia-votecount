@@ -323,20 +323,20 @@ function addPlayer(gameid) {
 }
 
 function sort(activeVoters) {
-	var arr = [];
+	var targetLengthObjects = [];
     for (var target in activeVoters) {
         if (activeVoters.hasOwnProperty(target)) {
-            arr.push({
+            targetLengthObjects.push({
                 'key': target,
                 'value': activeVoters[target].length
             });
         }
     }
-    arr.sort(function(a, b) { return b.value - a.value; });
+    targetLengthObjects.sort(function(a, b) { return b.value - a.value; });
     var sorted = {};
     
-    for (var i=0; i<arr.length; i++) {
-    	sorted[arr[i].key] = activeVoters[arr[i].key];
+    for (var i = 0; i < targetLengthObjects.length; i++) {
+    	sorted[targetLengthObjects[i].key] = activeVoters[targetLengthObjects[i].key];
     }
 	return sorted;
 }
