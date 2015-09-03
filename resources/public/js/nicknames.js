@@ -38,6 +38,7 @@ function getNicknames() {
                 "scott31337": ["scott"],
                 "Stutters695": ["stutters"],
                 "The Shining": ["shining"],
+                "Tictock": ["ticktock"],
                 "Tubesock": ["ts", "tube"],
                 "VayneAuthority": ["va", "vayne"],
                 "VisceraEyes": ["ve", "viscera"],
