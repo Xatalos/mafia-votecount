@@ -13,6 +13,7 @@ function getNicknames() {
                 "Chezinu": ["che", "chez"],
                 "Clarity_nl": ["clarity"],
                 "Damdred": ["damd", "damdy"],
+                "Dandel Ion": ["di", "dandel", "dandelion"],
                 "EdgarAllanPoE": ["edgar", "allan", "poe", "edgarallenpoe"],
                 "Fecalfeast": ["ff", "fecal"],
                 "Fidei86": ["fidei"],
