@@ -234,7 +234,7 @@ function showGame(id) {
 
             for (var i = 0; i < gameData.votes.length; i++) {
                 var post = gameData.votes[i].index;
-                var page = Math.floor(post/20) + 1;
+                var page = Math.floor(post/20 - 1) + 1;
                 var address = gameData.game.url + "?page=" + page + "#" + post;
 
                 if (currentDay != gameData.votes[i].day) {
