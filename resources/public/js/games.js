@@ -303,7 +303,7 @@ function deletePlayer(id) {
 function deleteGame(id) {
     "use strict";
     $.post("/delete-game", {id: id});
-    window.location.reload();
+   // window.location.reload();
 }
 
 function hideGame() {
