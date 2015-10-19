@@ -297,13 +297,13 @@ function showGame(id) {
 function deletePlayer(id) {
     "use strict";
     $.post("/delete-player", {id: id});
-    window.location.href = "/#" + id;
+    locationHashChanged();
 }
 
 function deleteGame(id) {
     "use strict";
     $.post("/delete-game", {id: id});
-    window.location.href = "/#";
+    requestData();
 }
 
 function hideGame() {
@@ -318,7 +318,7 @@ function addPlayer(gameid) {
 	if (document.getElementById("newPlayer").value) {
 		var player = {"game": gameid, "name": document.getElementById("newPlayer").value}
 		$.post("/add-player", player);
-        window.location.href = "/#" + gameid;
+        locationHashChanged();
 	}
 }
 
