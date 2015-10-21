@@ -3,7 +3,7 @@ function getNicknames() {
     
     var nicknames = {
                 "27ninjabunnies": ["27nb", "nb", "ninja", "bunnies", "ninjabunnies"],
-                "Alakaslam": ["slam"],
+                "Alakaslam": ["slam, kaslam"],
                 "Artanis[Xp]": ["art", "artanis"],
                 "batsnacks": ["bat", "bats"],
                 "Beneather": ["ben"],
@@ -11,6 +11,7 @@ function getNicknames() {
                 "Blazinghand": ["bh", "blazing"],
                 "boxerfred": ["bf", "boxer"],
                 "Chezinu": ["che", "chez"],
+                "Chromatically": ["chrom", "chromatic"],
                 "Clarity_nl": ["clarity"],
                 "CopCake": ["cc", "cop", "cake", "cupcake", "cop cake"],
                 "Damdred": ["damd", "damdy"],
@@ -25,7 +26,7 @@ function getNicknames() {
                 "Half the Sky": ["hts", "sky"],
                 "Hapahauli": ["hapa"],
                 "Holyflare": ["hf"],
-                "IAmRobik": ["robik"],
+                "Hopeless1der": ["hope", "hopeless"],
                 "JudgeJudy": ["jj", "judge", "judy"],
                 "justanothertownie": ["jat"],
                 "Keirathi": ["kei", "keir"],
@@ -36,6 +37,7 @@ function getNicknames() {
                 "Oatsmaster": ["oat", "oats"],
                 "ObiWanShinobi": ["ows", "obi", "obiwan", "shinobi"],
                 "Onegu": ["o", "oneg"],
+                "Palmar": ["plammar", "plumber", "ass"],
                 "raynpelikoneet": ["ray", "rayn", "raypelikoneet"],
                 "rsoultin": ["rs", "rsou", "rsoul"],
                 "sandroba": ["sand", "roba"],
