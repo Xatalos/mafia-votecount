@@ -3,7 +3,7 @@ function getNicknames() {
     
     var nicknames = {
                 "27ninjabunnies": ["27nb", "nb", "ninja", "bunnies", "ninjabunnies"],
-                "Alakaslam": ["slam, kaslam"],
+                "Alakaslam": ["slam", "kaslam"],
                 "Artanis[Xp]": ["art", "artanis"],
                 "batsnacks": ["bat", "bats"],
                 "Beneather": ["ben"],
