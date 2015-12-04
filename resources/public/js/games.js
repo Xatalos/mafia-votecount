@@ -149,6 +149,7 @@ function showGame(id) {
                             targets.push(gameData.votes[i].target);
                         }
                 }
+                }
 
                 for (var i = targets.length - 1; i >= 0; i--) {
                     if (targets[i] == "") {
