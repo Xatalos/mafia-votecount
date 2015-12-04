@@ -140,7 +140,10 @@ function showGame(id) {
                             var fuzzySet = FuzzySet(players);
                             var fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
                             var fuzzyResult = fuzzyResults[0][1]; // first ("top") result, then the name (second value in the result array)
-                            gameData.votes[i].target = fuzzyResult;
+                            if (fuzzyResult != null) {
+                                gameData.votes[i].target = fuzzyResult;
+                            }
+                            console.log(fuzzyResults);
                         }
                         if (targets.indexOf(gameData.votes[i].target) == -1) {
                             // push every new unique vote target to the targets array
