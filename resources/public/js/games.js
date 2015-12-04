@@ -134,7 +134,7 @@ function showGame(id) {
                                 gameData.votes[i].target = players[j];
                             }
                         }
-                        if (players.length > 1 && target.length > 1) {
+                        if (players.length > 1 && gameData.votes[i].target.length > 1) {
                             // here we use the FuzzySet.js library to get the "most correct" vote 
                             // target from the players list if the target is misspelled
                             var fuzzySet = FuzzySet(players);
