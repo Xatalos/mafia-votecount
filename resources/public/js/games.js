@@ -139,7 +139,7 @@ function showGame(id) {
                             // target from the players list if the target is misspelled
                             var fuzzySet = FuzzySet(players);
                             var fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
-                            var fuzzyResult = fuzzyResults[0];
+                            var fuzzyResult = fuzzyResults[0][1]; // first ("top") result, then the name (second value in the result array)
                             gameData.votes[i].target = fuzzyResult;
                             console.log(fuzzyResults);
                             console.log(fuzzyResult);
