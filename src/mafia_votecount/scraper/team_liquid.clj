@@ -153,7 +153,7 @@
                          :else false)))))
 
 (defn- cycle-changes [indexed hosts]
-  (filter #(and (is-host? % hosts) (= (is-cycle-change? (:message (val %)) :day)))
+  (filter #(and (is-host? % hosts) (= :day (is-cycle-change? (:message (val %)))))
           indexed))
 
 (defn- dec-or-nil [num]
