@@ -13,8 +13,8 @@
 (fact "to-day-ranges groups sequence of message ids into day ranges"
       (to-day-ranges []) => []
       (to-day-ranges [10]) => [[11]]
-      (to-day-ranges [10 43]) => [[11 42]]
-      (to-day-ranges [10 43 60]) => [[11 42] [61]])
+      (to-day-ranges [10 43]) => [[11 42] [44]]
+      (to-day-ranges [10 43 60]) => [[11 42] [44 59] [61]])
 
 (fact "analyze-vote reads posts with ##vote or ##unvote gets the part after ##vote"
       ;; The correct input
@@ -40,7 +40,7 @@
 
 (fact "cycle changes gives the post id's where admin has changed cycle"
       (keys (cycle-changes (enumerate data-void 1) #{"Artanis[Xp]" "GlowingBear"}))
-      => '(61 1542 1969 2333 2477 2914 2986 3123))
+      => '(61 1969 2477 2986))
 
 (fact "get-votes-in-range gets votes that happened between start and end"
       (get-votes-in-range enumerated-data-void-1 [2987 3122])

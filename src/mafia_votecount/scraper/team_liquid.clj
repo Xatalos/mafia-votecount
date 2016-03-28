@@ -153,7 +153,7 @@
                          :else false)))))
 
 (defn- cycle-changes [indexed hosts]
-  (filter #(and (is-host? % hosts) (is-cycle-change? (:message (val %))))
+  (filter #(and (is-host? % hosts) (= (is-cycle-change? (:message (val %)) :day)))
           indexed))
 
 (defn- dec-or-nil [num]
@@ -169,7 +169,7 @@
               start (inc (first next))
               end (first (rest next))]
           (recur (conj pairs (remove nil? [start (dec-or-nil end)]))
-                 (drop 2 left))))))
+                 (drop 1 left))))))
 
 (defn content-flatter [li]
   (->>
@@ -233,13 +233,6 @@
                   (map #(assoc % :day day) votes-of-day))
                 days votes-by-days)))
 
-;; (defn- days-into-votes [votes-by-days]
-;;   (mapcat (fn [day-and-votes]
-;;             (let [day (first day-and-votes)
-;;                   votes (second day-and-votes)]
-;;               (map #(assoc  % :day day) votes)))
-;;           votes-by-days))
-
 (defn- last-cycle-type [previous day-ranges]
   (case (count (last day-ranges))
     0 (if (= previous :none) :none previous)
@@ -261,13 +254,8 @@
                      (drop-while #(< (first %) first-index))
                      (into (sorted-map)))
         cycle-posts (cycle-changes indexed hosts)
-       ; first-cycle-type (-> (first cycle-posts)
-       ;                      (val)
-       ;                      (:message)
-       ;                      (is-cycle-change?))
         day-ranges (-> cycle-posts
                        (keys)
-                       ; Handle case where first cycle is night
                        (#(if (= cycle-type :day)
                            (cons (dec first-index) %)
                            %))
