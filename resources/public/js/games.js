@@ -143,9 +143,11 @@ function showGame(id) {
                                 var noLynchArray = ["No-Lynch"];
                                 fuzzySet = FuzzySet(noLynchArray);
                                 fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
+                                gameData.votes[i].target = fuzzyResult;
                                 if (!fuzzyResults) {
                                     console.log("Not a valid vote: " + gameData.votes[i].target.toLowerCase());
                                 } else {
+                                    var fuzzyResult = fuzzyResults[0][1];
                                     gameData.votes[i].target = fuzzyResult;
                                 }
                             } else {
