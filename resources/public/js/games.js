@@ -145,6 +145,8 @@ function showGame(id) {
                                 fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
                                 if (!fuzzyResults) {
                                     console.log("Not a valid vote: " + gameData.votes[i].target.toLowerCase());
+                                } else {
+                                    gameData.votes[i].target = fuzzyResult;
                                 }
                             } else {
                                 var fuzzyResult = fuzzyResults[0][1]; // first ("top") result, then the name (second value in the result array)
