@@ -139,7 +139,14 @@ function showGame(id) {
                             // target from the players list if the target is misspelled
                             var fuzzySet = FuzzySet(players);
                             var fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
-                            if (fuzzyResults.length > 0) {
+                            if (!fuzzyResults) {
+                                var noLynchArray = ["No-Lynch"];
+                                fuzzySet = FuzzySet(noLynchArray);
+                                fuzzyResults = fuzzySet.get(gameData.votes[i].target.toLowerCase());
+                                if (!fuzzyResults) {
+                                    console.log("Not a valid vote: " + gameData.votes[i].target.toLowerCase());
+                                }
+                            } else {
                                 var fuzzyResult = fuzzyResults[0][1]; // first ("top") result, then the name (second value in the result array)
                                 gameData.votes[i].target = fuzzyResult;
                             }
